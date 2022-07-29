@@ -1,0 +1,51 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+a {
+    color: transparent;
+    text-decoration: none;
+}
+
+.begin-content {
+    height: 100vh;
+    border: 0;
+    border-radius: 0;
+}
+
+.begin-content>.card-header {
+    border-bottom: 0;
+}
+
+.btn-pelanggan-baru {
+    background-color: #01b03b;
+    color: white;
+    transition: 0.3s all;
+}
+
+.btn-pelanggan-baru:hover {
+    cursor: pointer;
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.1);
+}
+
+.btn-pelanggan-lama {
+    background-color: #324395;
+    color: white;
+    transition: 0.3s all;
+}
+
+.btn-pelanggan-lama:hover {
+    cursor: pointer;
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.1);
+}
+
+@media only screen and (max-width: 768px) {
+    .sw .toolbar {
+        display: grid;
+        gap: .4em;
+        padding: .8rem;
+        text-align: right;
+    }
+}

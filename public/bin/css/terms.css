@@ -1,0 +1,9 @@
+#terms-and-condition {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+#terms-and-condition * {
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 13px;
+}
