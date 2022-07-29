@@ -7,7 +7,7 @@
 @endsection
 
 @section('content-wrapper')
-    <div class="container p-0 p-sm-5">
+    <div class="container p-0 p-sm-5 mb-3 mb-md-0">
         <div class="card mx-0 mx-sm-5">
             <div class="card-body">
                 <h2 class="text-center fw-bold mt-2 mb-4">Form Registrasi Layanan Baru</h2>

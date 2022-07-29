@@ -1,8 +1,8 @@
 @extends('user.layouts.main')
 
 @section('content-wrapper')
-    <div class="container d-flex align-items-center justify-content-center" style="height: 100%;">
-        <div class="card p-4" style="width: 35em;">
+    <div class="container d-flex flex-column align-items-center justify-content-between" style="height: 100%;">
+        <div class="card p-4 mt-5">
             <div class="card-body">
                 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                     <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -46,13 +46,13 @@
                 </form>
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        <a href="{{ URL::to('/') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-arrow-alt-circle-left me-1"></i>
-            Kembali Ke Halaman Utama
-        </a>
+        <div class="container align-items-end">
+            <a href="{{ URL::to('/') }}" class="btn btn-primary mb-3">
+                <i class="fas fa-arrow-alt-circle-left me-1"></i>
+                Kembali Ke Halaman Utama
+            </a>
+        </div>
     </div>
 
     @php
