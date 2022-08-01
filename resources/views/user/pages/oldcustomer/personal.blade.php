@@ -173,32 +173,35 @@
                             </div>
                             <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
                                 style="height: 100%; overflow:auto;">
-                                <div class="mb-3">
-                                    <label for="service_product" class="form-label">Daftar Layanan Terdaftar<span
-                                            class="text-danger">*</span></label>
-                                    <ol id="service_product">
-                                        @foreach (json_decode($oldDataCustomer['service_package']) as $services)
-                                            <li style="margin-left: -15px;">
-                                                <ul class="mx-0 px-0">
-                                                    <li class="row">
-                                                        <div class="col-sm-3 fw-bold">Nama Layanan</div>
-                                                        <div class="col-sm-9">{{ $services->service_name }}</div>
-                                                    </li>
-                                                    <li class="row">
-                                                        <div class="col-sm-3 fw-bold">Harga Layanan</div>
-                                                        <div class="col-sm-9">{{ $services->service_price }}</div>
-                                                    </li>
-                                                    <li class="row">
-                                                        <div class="col-sm-3 fw-bold">Jenis Pembayaran</div>
-                                                        <div class="col-sm-9">{{ $services->termofpaymentDeals }}</div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        @endforeach
-                                    </ol>
-                                </div>
-
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
+                                    @if (isset($oldDataCustomer['service_package']))
+                                        <div class="mb-3">
+                                            <label for="service_product" class="form-label">
+                                                Daftar Layanan
+                                            </label>
+                                            <ol>
+                                                @foreach (json_decode($oldDataCustomer['service_package']) as $item)
+                                                    <li style="margin-left: -15px;">
+                                                        <ul>
+                                                            <li class="row">
+                                                                <p class="col-sm-3 fw-bold p-0 m-0">Nama Layanan</p>
+                                                                <p class="col-sm-9 p-0 m-0">{{ $item->service_name }}</p>
+                                                            </li>
+                                                            <li class="row">
+                                                                <p class="col-sm-3 fw-bold p-0 m-0">Harga Layanan</p>
+                                                                <p class="col-sm-9 p-0 m-0">{{ $item->service_price }}</p>
+                                                            </li>
+                                                            <li class="row">
+                                                                <p class="col-sm-3 fw-bold p-0 m-0">Jenis Pembayaran</p>
+                                                                <p class="col-sm-9 p-0 m-0">
+                                                                    {{ $item->termofpaymentDeals }}</p>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                @endforeach
+                                            </ol>
+                                        </div>
+                                    @endif
                                     <div class="" id="serviceOptionPersonal">
                                         <label for="service_product" class="form-label">Pilihan Layanan
                                             <span class="text-danger">*</span>
@@ -281,6 +284,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="service_identity_photo" class="form-label">Upload Foto KTP</label>
+                                    <input class="form-control @error('service_identity_photo') is-invalid @enderror"
+                                        type="file" id="service_identity_photo" name="service_identity_photo">
+                                    @error('service_identity_photo')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="service_selfie_photo" class="form-label">Upload Foto Selfie dengan
+                                        KTP</label>
+                                    <input class="form-control @error('service_selfie_photo') is-invalid @enderror"
+                                        type="file" id="service_selfie_photo" name="service_selfie_photo">
+                                    @error('service_selfie_photo')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
                             <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info">
                                 <div class="container-fluid p-5 mb-3" id="terms-and-condition">
@@ -358,7 +382,7 @@
                 disabledSteps: [], // Array Steps disabled
                 errorSteps: [], // Array Steps error
                 warningSteps: [], // Array Steps warning
-                hiddenSteps: [], // Hidden steps
+                hiddenSteps: [1, 2], // Hidden steps
                 getContent: null // Callback function for content loading
             });
 
