@@ -18,7 +18,29 @@ class NewCustomerController extends Controller
     public function indexPersonal(Request $request)
     {
         $datas = [
-            'titlePage' => 'Form Registrasi Layanan Baru'
+            'titlePage' => 'Form Registrasi Layanan Baru',
+            'serviceData' => json_encode([
+                [
+                    'nama_layanan' => 'Dedicated Fiber Optic',
+                    'harga_layanan' => '1000'
+                ],
+                [
+                    'nama_layanan' => 'Dedicated Wireless',
+                    'harga_layanan' => '2000'
+                ],
+                [
+                    'nama_layanan' => 'Broadband Fiber Optic',
+                    'harga_layanan' => '3000'
+                ],
+                [
+                    'nama_layanan' => 'Broadband Wireless',
+                    'harga_layanan' => '4000'
+                ],
+                [
+                    'nama_layanan' => 'Broadband Home',
+                    'harga_layanan' => '5000'
+                ]
+            ])
         ];
 
         return view('user.pages.newcustomer.personal', $datas);
@@ -106,11 +128,13 @@ class NewCustomerController extends Controller
             $request->all(),
             [
                 'service_product' => 'required',
+                'topRadioBtnPersonal' => 'required',
                 'service_identity_photo' => 'required|mimes:jpeg,jpg,png|max:2048',
                 'service_selfie_photo' => 'required|mimes:jpeg,jpg,png|max:2048'
             ],
             [
                 'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
+                'topRadioBtnPersonal.required' => 'Field Jenis Pembayaran Wajib Diisi',
                 'service_identity_photo.required' => 'Field Foto Identitas Wajib Diisi',
                 'service_identity_photo.mimes' => 'Field Foto Identitas harus berformat jpeg,jpg,png',
                 'service_identity_photo.max' => 'Field Foto Identitas harus berukuran min. 2 MB',
@@ -161,19 +185,25 @@ class NewCustomerController extends Controller
         $newBilling->billing_email = json_encode([$validator2->validated()['email_address_biller_primary'], $request->get('email_address_biller_one'), $request->get('email_address_biller_two')]);
         $newBilling->save();
 
-        $newBilling = new Technical();
-        $newBilling->id = $validator1->validated()['uuid'];
-        $newBilling->technical_name = $validator3->validated()['fullname_technical'];
-        $newBilling->technical_contact = $validator3->validated()['phone_number_technical'];
-        $newBilling->technical_email = $validator3->validated()['email_address_technical'];
-        $newBilling->save();
-
-        $newTechnical = new Service();
+        $newTechnical = new Technical();
         $newTechnical->id = $validator1->validated()['uuid'];
-        $newTechnical->service_package = json_encode([$validator4->validated()['service_product']]);
-        $newTechnical->id_photo_url = $tujuan_upload . '/' . $fileIdentityPhoto->getClientOriginalName();
-        $newTechnical->selfie_id_photo_url = $tujuan_upload . '/' . $fileSelfiePhoto->getClientOriginalName();
+        $newTechnical->technical_name = $validator3->validated()['fullname_technical'];
+        $newTechnical->technical_contact = $validator3->validated()['phone_number_technical'];
+        $newTechnical->technical_email = $validator3->validated()['email_address_technical'];
         $newTechnical->save();
+
+        $newService = new Service();
+        $newService->id = $validator1->validated()['uuid'];
+        $newService->service_package = json_encode([
+            [
+                'service_name' => $request->get('serviceName'),
+                'service_price' => $request->get('servicePrice'),
+                'termofpaymentDeals' => $request->get('termofpaymentDeals')
+            ],
+        ]);
+        $newService->id_photo_url = $tujuan_upload . '/' . $fileIdentityPhoto->getClientOriginalName();
+        $newService->selfie_id_photo_url = $tujuan_upload . '/' . $fileSelfiePhoto->getClientOriginalName();
+        $newService->save();
 
         $newApprovals = new Approval();
         $newApprovals->id = $validator1->validated()['uuid'];
@@ -187,7 +217,29 @@ class NewCustomerController extends Controller
     public function indexBussiness()
     {
         $datas = [
-            'titlePage' => 'Form Registrasi Layanan Baru'
+            'titlePage' => 'Form Registrasi Layanan Baru',
+            'serviceData' => json_encode([
+                [
+                    'nama_layanan' => 'Dedicated Fiber Optic',
+                    'harga_layanan' => '1000'
+                ],
+                [
+                    'nama_layanan' => 'Dedicated Wireless',
+                    'harga_layanan' => '2000'
+                ],
+                [
+                    'nama_layanan' => 'Broadband Fiber Optic',
+                    'harga_layanan' => '3000'
+                ],
+                [
+                    'nama_layanan' => 'Broadband Wireless',
+                    'harga_layanan' => '4000'
+                ],
+                [
+                    'nama_layanan' => 'Broadband Home',
+                    'harga_layanan' => '5000'
+                ]
+            ])
         ];
 
         return view('user.pages.newcustomer.bussiness', $datas);
@@ -283,11 +335,13 @@ class NewCustomerController extends Controller
             $request->all(),
             [
                 'service_product' => 'required',
+                'topRadioBtnBussiness' => 'required',
                 'service_identity_photo' => 'required|mimes:jpeg,jpg,png|max:2048',
                 'service_selfie_photo' => 'required|mimes:jpeg,jpg,png|max:2048'
             ],
             [
                 'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
+                'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi',
                 'service_identity_photo.required' => 'Field Foto Identitas Wajib Diisi',
                 'service_identity_photo.mimes' => 'Field Foto Identitas harus berformat jpeg,jpg,png',
                 'service_identity_photo.max' => 'Field Foto Identitas harus berukuran min. 2 MB',
@@ -353,7 +407,13 @@ class NewCustomerController extends Controller
 
         $newService = new Service();
         $newService->id = $validator1->validated()['uuid'];
-        $newService->service_package = json_encode([$validator4->validated()['service_product']]);
+        $newService->service_package = json_encode([
+            [
+                'service_name' => $request->get('serviceName'),
+                'service_price' => $request->get('servicePrice'),
+                'termofpaymentDeals' => $request->get('termofpaymentDeals')
+            ],
+        ]);
         $newService->id_photo_url = $tujuan_upload . '/' . $fileIdentityPhoto->getClientOriginalName();
         $newService->selfie_id_photo_url = $tujuan_upload . '/' . $fileSelfiePhoto->getClientOriginalName();
         $newService->save();

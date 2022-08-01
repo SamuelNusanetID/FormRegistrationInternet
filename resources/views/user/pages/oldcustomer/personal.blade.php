@@ -171,47 +171,115 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="technical-info">
+                            <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
+                                style="height: 100%; overflow:auto;">
                                 <div class="mb-3">
                                     <label for="service_product" class="form-label">Daftar Layanan Terdaftar<span
                                             class="text-danger">*</span></label>
                                     <ol id="service_product">
-                                        @foreach (json_decode($oldDataCustomer['service_package']) as $service)
-                                            <li style="margin-left: -15px;">{{ $service }}</li>
+                                        @foreach (json_decode($oldDataCustomer['service_package']) as $services)
+                                            <li style="margin-left: -15px;">
+                                                <ul class="mx-0 px-0">
+                                                    <li class="row">
+                                                        <div class="col-sm-3 fw-bold">Nama Layanan</div>
+                                                        <div class="col-sm-9">{{ $services->service_name }}</div>
+                                                    </li>
+                                                    <li class="row">
+                                                        <div class="col-sm-3 fw-bold">Harga Layanan</div>
+                                                        <div class="col-sm-9">{{ $services->service_price }}</div>
+                                                    </li>
+                                                    <li class="row">
+                                                        <div class="col-sm-3 fw-bold">Jenis Pembayaran</div>
+                                                        <div class="col-sm-9">{{ $services->termofpaymentDeals }}</div>
+                                                    </li>
+                                                </ul>
+                                            </li>
                                         @endforeach
                                     </ol>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="new_service_product" class="form-label">Pilihan Layanan Baru
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    @php
-                                        $servicesData = ['Dedicated Fiber Optic', 'Dedicated Wireless', 'Broadband Fiber Optic', 'Broadband Wireless'];
-                                    @endphp
-                                    <select
-                                        class="form-select @error('new_service_product') is-invalid @else @if (session()->has('errMessages')) is-invalid @endif @enderror"
-                                        name="new_service_product" id="new_service_product">
-                                        <option disabled selected>Pilih Jenis Layanan...</option>
-                                        @foreach ($servicesData as $service)
-                                            @if (old('new_service_product') == $service)
-                                                <option value="{{ $service }}" selected>{{ $service }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $service }}">{{ $service }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    @error('new_service_product')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @else
-                                        @if (session()->has('errMessages'))
-                                            <div class="d-block invalid-feedback">
-                                                {{ session('errMessages') }}
+
+                                <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
+                                    <div class="" id="serviceOptionPersonal">
+                                        <label for="service_product" class="form-label">Pilihan Layanan
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        @php
+                                            $servicesData = json_decode($serviceData);
+                                            setlocale(LC_MONETARY, 'id_ID');
+                                        @endphp
+                                        <select class="form-select @error('new_service_product') is-invalid @enderror"
+                                            name="new_service_product" id="new_service_product">
+                                            <option disabled selected>Pilih Jenis Layanan...</option>
+                                            @foreach ($servicesData as $service)
+                                                @if (old('new_service_product') == $service->nama_layanan)
+                                                    <option value="{{ $service->nama_layanan }}" selected>
+                                                        {{ $service->nama_layanan }} - Rp. {{ $service->harga_layanan }},-
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $service->nama_layanan }}">
+                                                        {{ $service->nama_layanan }} => Rp. @convert((int) $service->harga_layanan) / Bulan
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        @error('new_service_product')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
                                             </div>
-                                        @endif
-                                    @enderror
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 d-none" id="termOfPaymentPersonal">
+                                        <p class="m-0 p-0 mb-1">
+                                            Jenis Pembayaran
+                                            <span class="text-danger">*</span>
+                                        </p>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="topRadioBtnPersonal"
+                                                id="topRadioBtnMonthlyPersonal" value="Bulanan">
+                                            <label class="form-check-label"
+                                                for="topRadioBtnMonthlyPersonal">Bulanan</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="topRadioBtnPersonal"
+                                                id="topRadioBtnAnuallyPersonal" value="Tahunan">
+                                            <label class="form-check-label"
+                                                for="topRadioBtnAnuallyPersonal">Tahunan</label>
+                                        </div>
+                                    </div>
+                                    <div class="border rounded px-3 py-2 bg-white text-dark d-none"
+                                        id="detailPaymentPersonal">
+                                        <div class="row">
+                                            <p class="fw-bold mb-3">Rincian Pembayaran</p>
+                                            <div class="mb-0 row">
+                                                <label for="serviceName" class="col-8 col-md-3 col-form-label fw-bold">-
+                                                    Nama
+                                                    Layanan</label>
+                                                <div class="col-8 col-md-9">
+                                                    <input type="text" readonly class="form-control-plaintext"
+                                                        id="serviceName" name="serviceName">
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row">
+                                                <label for="servicePrice" class="col-8 col-sm-3 col-form-label fw-bold">-
+                                                    Harga
+                                                    Layanan</label>
+                                                <div class="col-8 col-sm-9">
+                                                    <input type="text" readonly class="form-control-plaintext"
+                                                        id="servicePrice" name="servicePrice">
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row">
+                                                <label for="termofpaymentDeals"
+                                                    class="col-8 col-sm-3 col-form-label fw-bold">-
+                                                    Jenis
+                                                    Pembayaran</label>
+                                                <div class="col-8 col-sm-9">
+                                                    <input type="text" readonly class="form-control-plaintext"
+                                                        id="termofpaymentDeals" name="termofpaymentDeals">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info">
@@ -309,6 +377,12 @@
     <script src="{{ URL::to('bin/js/newCustomer/personal/cboConfig.js') }}"></script>
     <script>
         $(document).ready(function() {
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+            });
+
             // Nomor KTP
             var IDNumberPersonal = {!! json_encode($oldDataCustomer['identity_number']) !!};
             $('#id_number_personal').val(masking(IDNumberPersonal, 10));
@@ -320,6 +394,44 @@
             // Nomor HP
             var NoHPPersonal = {!! json_encode($oldDataCustomer['phone_number']) !!};
             $('#phone_number_personal').val(masking(NoHPPersonal, 5));
+
+            $('#new_service_product').on('change', function() {
+                $('#serviceOptionPersonal').addClass('mb-3');
+                $('#termOfPaymentPersonal').removeClass('d-none');
+                $('#termOfPaymentPersonal').removeClass('mb-3');
+                $('input[type=radio][name=topRadioBtnPersonal]').prop('checked', false);
+                $('#detailPaymentPersonal').addClass('d-none');
+
+                $('input[type=radio][name=topRadioBtnPersonal]').change(function() {
+                    if (this.value == 'Bulanan') {
+                        $('#detailPaymentPersonal').removeClass('d-none');
+                        $('#termOfPaymentPersonal').addClass('mb-3');
+
+                        var serviceData = {!! json_encode($servicesData) !!};
+                        serviceData.forEach(element => {
+                            if (element.nama_layanan == $('#new_service_product').val()) {
+                                $('#serviceName').val(element.nama_layanan);
+                                $('#servicePrice').val(formatter.format(element
+                                    .harga_layanan));
+                                $('#termofpaymentDeals').val("Bulanan");
+                            }
+                        });
+                    } else if (this.value == 'Tahunan') {
+                        $('#detailPaymentPersonal').removeClass('d-none');
+                        $('#termOfPaymentPersonal').addClass('mb-3');
+
+                        var serviceData = {!! json_encode($servicesData) !!};
+                        serviceData.forEach(element => {
+                            if (element.nama_layanan == $('#new_service_product').val()) {
+                                $('#serviceName').val(element.nama_layanan);
+                                $('#servicePrice').val(formatter.format(element
+                                    .harga_layanan * 12));
+                                $('#termofpaymentDeals').val("Tahunan");
+                            }
+                        });
+                    }
+                });
+            });
         });
 
         function masking(value, maskingSum) {

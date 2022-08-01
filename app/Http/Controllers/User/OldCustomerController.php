@@ -33,14 +33,58 @@ class OldCustomerController extends Controller
                     if ($content['company_name'] == null || $content['company_name'] == "") {
                         $datas = [
                             'titlePage' => 'Form Registrasi Layanan Baru - Kategori Personal',
-                            'oldDataCustomer' => $content
+                            'oldDataCustomer' => $content,
+                            'serviceData' => json_encode([
+                                [
+                                    'nama_layanan' => 'Dedicated Fiber Optic',
+                                    'harga_layanan' => '1000'
+                                ],
+                                [
+                                    'nama_layanan' => 'Dedicated Wireless',
+                                    'harga_layanan' => '2000'
+                                ],
+                                [
+                                    'nama_layanan' => 'Broadband Fiber Optic',
+                                    'harga_layanan' => '3000'
+                                ],
+                                [
+                                    'nama_layanan' => 'Broadband Wireless',
+                                    'harga_layanan' => '4000'
+                                ],
+                                [
+                                    'nama_layanan' => 'Broadband Home',
+                                    'harga_layanan' => '5000'
+                                ]
+                            ])
                         ];
 
                         return view('user.pages.oldcustomer.personal', $datas);
                     } else {
                         $datas = [
                             'titlePage' => 'Form Registrasi Layanan Baru - Kategori Bussiness',
-                            'oldDataCustomer' => $content
+                            'oldDataCustomer' => $content,
+                            'serviceData' => json_encode([
+                                [
+                                    'nama_layanan' => 'Dedicated Fiber Optic',
+                                    'harga_layanan' => '1000'
+                                ],
+                                [
+                                    'nama_layanan' => 'Dedicated Wireless',
+                                    'harga_layanan' => '2000'
+                                ],
+                                [
+                                    'nama_layanan' => 'Broadband Fiber Optic',
+                                    'harga_layanan' => '3000'
+                                ],
+                                [
+                                    'nama_layanan' => 'Broadband Wireless',
+                                    'harga_layanan' => '4000'
+                                ],
+                                [
+                                    'nama_layanan' => 'Broadband Home',
+                                    'harga_layanan' => '5000'
+                                ]
+                            ])
                         ];
 
                         return view('user.pages.oldcustomer.bussiness', $datas);
@@ -69,7 +113,29 @@ class OldCustomerController extends Controller
 
                             $datas = [
                                 'titlePage' => 'Form Registrasi Layanan Baru - Kategori Personal',
-                                'oldDataCustomer' => $oldDataCustomer
+                                'oldDataCustomer' => $oldDataCustomer,
+                                'serviceData' => json_encode([
+                                    [
+                                        'nama_layanan' => 'Dedicated Fiber Optic',
+                                        'harga_layanan' => '1000'
+                                    ],
+                                    [
+                                        'nama_layanan' => 'Dedicated Wireless',
+                                        'harga_layanan' => '2000'
+                                    ],
+                                    [
+                                        'nama_layanan' => 'Broadband Fiber Optic',
+                                        'harga_layanan' => '3000'
+                                    ],
+                                    [
+                                        'nama_layanan' => 'Broadband Wireless',
+                                        'harga_layanan' => '4000'
+                                    ],
+                                    [
+                                        'nama_layanan' => 'Broadband Home',
+                                        'harga_layanan' => '5000'
+                                    ]
+                                ])
                             ];
 
                             return view('user.pages.oldcustomer.personal', $datas);
@@ -91,7 +157,29 @@ class OldCustomerController extends Controller
 
                             $datas = [
                                 'titlePage' => 'Form Registrasi Layanan Baru - Kategori Bisnis',
-                                'oldDataCustomer' => $oldDataCustomer
+                                'oldDataCustomer' => $oldDataCustomer,
+                                'serviceData' => json_encode([
+                                    [
+                                        'nama_layanan' => 'Dedicated Fiber Optic',
+                                        'harga_layanan' => '1000'
+                                    ],
+                                    [
+                                        'nama_layanan' => 'Dedicated Wireless',
+                                        'harga_layanan' => '2000'
+                                    ],
+                                    [
+                                        'nama_layanan' => 'Broadband Fiber Optic',
+                                        'harga_layanan' => '3000'
+                                    ],
+                                    [
+                                        'nama_layanan' => 'Broadband Wireless',
+                                        'harga_layanan' => '4000'
+                                    ],
+                                    [
+                                        'nama_layanan' => 'Broadband Home',
+                                        'harga_layanan' => '5000'
+                                    ]
+                                ])
                             ];
 
                             return view('user.pages.oldcustomer.bussiness', $datas);
@@ -154,7 +242,13 @@ class OldCustomerController extends Controller
 
             $newService = new Service();
             $newService->id = $newUUIDUpdate;
-            $newService->service_package = json_encode([$request->get('new_service_product')]);
+            $newService->service_package = json_encode([
+                [
+                    'service_name' => $request->get('serviceName'),
+                    'service_price' => $request->get('servicePrice'),
+                    'termofpaymentDeals' => $request->get('termofpaymentDeals')
+                ]
+            ]);
             $newService->id_photo_url = "";
             $newService->selfie_id_photo_url = "";
             $newService->save();
@@ -187,7 +281,7 @@ class OldCustomerController extends Controller
             }
 
             // Checking Same Data
-            $duplicateChecker = in_array($validator4->validated()['new_service_product'], json_decode(Service::find($uuidCust)->service_package));
+            $duplicateChecker = $validator4->validated()['new_service_product'] == json_decode(Service::find($uuidCust)->service_package)[0]->service_name;
 
             if ($duplicateChecker) {
                 return redirect('old-member?id=' . $id_customer . '#service-info')
@@ -195,14 +289,20 @@ class OldCustomerController extends Controller
                     ->with('errMessages', 'Nilai field layanan baru tidak boleh sama dengan yang lama');
             }
 
-            $oldArray = json_decode(Service::find($uuidCust)->service_package);
-            array_push($oldArray, $validator4->validated()['new_service_product']);
+            // $oldArray = json_decode(Service::find($uuidCust)->service_package);
+            // array_push($oldArray, $validator4->validated()['new_service_product']);
 
-            $updatedData = Service::find($uuidCust);
-            $updatedData->service_package = json_encode($oldArray);
-            $updatedData->save();
+            // $updatedData = Service::find($uuidCust);
+            // $updatedData->service_package = json_encode([
+            //     [
+            //         'service_name' => $request->get('serviceName'),
+            //         'service_price' => $request->get('servicePrice'),
+            //         'termofpaymentDeals' => $request->get('termofpaymentDeals')
+            //     ]
+            // ]);
+            // $updatedData->save();
 
-            return redirect()->to('old-member')->with('message', 'Selamat, Anda Berhasil Update Data Layanan.');
+            // return redirect()->to('old-member')->with('message', 'Selamat, Anda Berhasil Update Data Layanan.');
         }
     }
 }
