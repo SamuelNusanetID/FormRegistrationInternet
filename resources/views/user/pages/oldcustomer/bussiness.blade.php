@@ -50,208 +50,145 @@
                         </ul>
 
                         <div class="tab-content">
-                            <div id="person-in-charge" class="tab-pane" role="tabpanel" aria-labelledby="person-in-charge">
-                                <div class="container row">
-                                    <div class="col-0 col-md-6">
-                                        <div class="mb-3">
-                                            <label for="idpelanggan_bussiness" class="form-label">ID Pelanggan <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="idpelanggan_bussiness"
-                                                name="idpelanggan_bussiness" value="{{ $_GET['id'] }}" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="personal_name" class="form-label">Nama
-                                                Lengkap <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="personal_name"
-                                                name="personal_name" value="{{ $oldDataCustomer['name'] }}" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="identity_number" class="form-label">Nomor Identitas
-                                                (KTP/SIM/KITAS) <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="identity_number"
-                                                name="identity_number" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="email_address" class="form-label">Alamat Email
-                                                <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" id="email_address"
-                                                name="email_address" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="personal_address" class="form-label">Alamat Lengkap <span
-                                                    class="text-danger">*</span></label>
-                                            <textarea class="form-control" id="personal_address" name="personal_address" rows="3" readonly>{{ $oldDataCustomer['address'] }}</textarea>
-                                            @error('personal_address')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-0 col-md-6">
-                                        <div class="mb-3">
-                                            <label for="company_name" class="form-label">Nama Perusahaan
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="company_name" name="company_name"
-                                                value="{{ $oldDataCustomer['company_name'] }}" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="company_address" class="form-label">Alamat Perusahaan
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="company_address"
-                                                name="company_address" value="{{ $oldDataCustomer['company_address'] }}"
-                                                readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="company_npwp" class="form-label">No. NPWP Perusahaan
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="company_npwp"
-                                                name="company_npwp" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="company_employees" class="form-label">Jumlah Karyawan <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="company_employees"
-                                                name="company_employees"
-                                                value="{{ $oldDataCustomer['company_employees'] }}" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="billing-info" class="tab-pane" role="tabpanel" aria-labelledby="billing-info">
-                                <div class="container row">
-                                    <div class="col-0 col-md-6">
-                                        <div class="mb-3">
-                                            <label for="fullname_biller" class="form-label">Nama
-                                                Lengkap <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="fullname_biller"
-                                                name="fullname_biller" value="{{ $oldDataCustomer['billing_name'] }}"
-                                                readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="phone_number_biller" class="form-label">Nomor Handphone
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="phone_number_biller"
-                                                name="phone_number_biller"
-                                                value="{{ $oldDataCustomer['billing_contact'] }}" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-0 col-md-6">
-                                        @php
-                                            $dataArr = [];
-                                            if (gettype(json_decode($oldDataCustomer['billing_email'])) == 'array') {
-                                                $dataArr = json_decode($oldDataCustomer['billing_email']);
-                                            } else {
-                                                $dataArr = explode(',', $oldDataCustomer['billing_email']);
-                                            }
-                                        @endphp
-                                        <div class="mb-3">
-                                            <label for="email_address_one" class="form-label">Alamat Email
-                                            </label>
-                                            <input type="email" class="form-control" id="email_address_one"
-                                                name="email_address_one" value="{{ $dataArr[0] }}" readonly>
-                                        </div>
-                                        @if (count($dataArr) > 1)
-                                            <div class="mb-3">
-                                                <label for="email_address_two" class="form-label">Alamat Email Alternatif
-                                                    1
-                                                </label>
-                                                <input type="email" class="form-control" id="email_address_two"
-                                                    name="email_address_two" value="{{ $dataArr[1] }}" readonly>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email_address_three" class="form-label">Alamat Email
-                                                    Alternatif 2
-                                                </label>
-                                                <input type="email" class="form-control" id="email_address_three"
-                                                    name="email_address_three" value="{{ $dataArr[2] }}" readonly>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="technical-info" class="tab-pane" role="tabpanel" aria-labelledby="technical-info">
-                                <div class="container row">
-                                    <div class="col-0 col-md-6">
-                                        <div class="mb-3">
-                                            <label for="fullname_technical" class="form-label">Nama Lengkap<span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="fullname_technical"
-                                                name="fullname_technical"
-                                                value="{{ $oldDataCustomer['technical_name'] }}" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="phone_number_technical" class="form-label">Nomor Handphone
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="phone_number_technical"
-                                                name="phone_number_technical"
-                                                value="{{ $oldDataCustomer['technical_contact'] }}" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-0 col-md-6">
-                                        <div class="mb-3">
-                                            <label for="email_address_technical" class="form-label">Alamat Email
-                                                <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" id="email_address_technical"
-                                                name="email_address_technical"
-                                                value="{{ $oldDataCustomer['technical_email'] }}" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="technical-info">
-                                @if (isset($oldDataCustomer['service_package']))
+                            <div class="container row">
+                                <div class="col-0 col-md-6">
+                                    <input type="hidden" name="uuid" value="{{ Request::segment(3) }}">
                                     <div class="mb-3">
-                                        <label for="service_product" class="form-label">Daftar Layanan Terdaftar<span
-                                                class="text-danger">*</span></label>
-                                        <ol id="service_product">
-                                            @foreach (json_decode($oldDataCustomer['service_package']) as $service)
-                                                <li style="margin-left: -15px;">{{ $service }}</li>
-                                            @endforeach
-                                        </ol>
-                                    </div>
-                                @endif
-                                <div class="mb-3">
-                                    <label for="new_service_product" class="form-label">Pilihan Layanan Baru
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    @php
-                                        $servicesData = ['Dedicated Fiber Optic', 'Dedicated Wireless', 'Broadband Fiber Optic', 'Broadband Wireless'];
-                                    @endphp
-                                    <select
-                                        class="form-select @error('new_service_product') is-invalid @else @if (session()->has('errMessages')) is-invalid @endif @enderror"
-                                        name="new_service_product" id="new_service_product">
-                                        <option disabled selected>Pilih Jenis Layanan...</option>
-                                        @foreach ($servicesData as $service)
-                                            @if (old('new_service_product') == $service)
-                                                <option value="{{ $service }}" selected>{{ $service }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $service }}">{{ $service }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    @error('new_service_product')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @else
-                                        @if (session()->has('errMessages'))
-                                            <div class="d-block invalid-feedback">
-                                                {{ session('errMessages') }}
+                                        <label for="pic_name" class="form-label">Nama
+                                            Lengkap <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control @error('pic_name') is-invalid @enderror"
+                                            id="pic_name" name="pic_name" placeholder="Masukkan Nama Lengkap Anda..."
+                                            value="{{ old('pic_name', $oldDataCustomer['name']) }}" readonly>
+                                        @error('pic_name')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
                                             </div>
-                                        @endif
-                                    @enderror
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="identity_number" class="form-label">Nomor Identitas
+                                            (KTP/SIM/KITAS) <span class="text-danger">*</span></label>
+                                        <input type="text"
+                                            class="form-control @error('identity_number') is-invalid @enderror"
+                                            id="identity_number" name="identity_number"
+                                            placeholder="Masukkan Nomor Identitas Anda..."
+                                            value="{{ old('identity_number') }}" readonly>
+                                        @error('identity_number')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email_address" class="form-label">Alamat Email
+                                            <span class="text-danger">*</span></label>
+                                        <input type="email"
+                                            class="form-control @error('email_address') is-invalid @enderror"
+                                            id="email_address" name="email_address"
+                                            placeholder="Masukkan Alamat E-Mail Anda..." value="{{ old('email_address') }}"
+                                            readonly>
+                                        @error('email_address')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone_number" class="form-label">Nomor HP/WA yang aktif
+                                            <span class="text-danger">*</span></label>
+                                        <input type="tel"
+                                            class="form-control @error('phone_number') is-invalid @enderror"
+                                            id="phone_number" name="phone_number"
+                                            placeholder="Masukkan Nomor Handphone/Whatsapp Anda..."
+                                            value="{{ old('phone_number') }}" readonly>
+                                        @error('phone_number')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pic_address" class="form-label">Alamat Lengkap <span
+                                                class="text-danger">*</span></label>
+                                        <textarea class="form-control @error('pic_address') is-invalid @enderror" id="pic_address" name="pic_address"
+                                            aria-describedby="pic_address_help" rows="4" placeholder="Masukkan Alamat Lengkap Anda..." readonly>{{ old('pic_address') }}</textarea>
+                                        <div id="pic_address_help" class="form-text mb-1">Alamat ini digunakan
+                                            sebagai
+                                            alamat pemasangan perangkat.</div>
+                                        @error('pic_address')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info">
-                                <div class="container-fluid p-5 mb-3" id="terms-and-condition">
-                                    @include('user.pages.terms.index')
-                                </div>
-
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="termsCbo" name="termsCbo">
-                                    <label class="form-check-label" for="termsCbo">Saya menyetujui syarat dan
-                                        ketentuan yang berlaku</label>
+                                <div class="col-0 col-md-6">
+                                    <div class="mb-3">
+                                        <label for="company_name" class="form-label">Nama Perusahaan
+                                            <span class="text-danger">*</span></label>
+                                        <input type="text"
+                                            class="form-control @error('company_name') is-invalid @enderror"
+                                            id="company_name" name="company_name"
+                                            placeholder="Masukkan Nama Perusahaan Anda..."
+                                            value="{{ old('company_name') }}" readonly>
+                                        @error('company_name')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="company_address" class="form-label">Alamat Perusahaan
+                                            <span class="text-danger">*</span></label>
+                                        <textarea class="form-control @error('company_address') is-invalid @enderror" id="company_address"
+                                            name="company_address" placeholder="Masukkan Alamat Perusahaan Anda..." rows="4" readonly>{{ old('company_address') }}</textarea>
+                                        @error('company_address')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="company_npwp" class="form-label">No. NPWP Perusahaan
+                                            <span class="text-danger">*</span></label>
+                                        <input type="text"
+                                            class="form-control @error('company_npwp') is-invalid @enderror"
+                                            id="company_npwp" name="company_npwp"
+                                            placeholder="Masukkan Nomor NPWP Perusahaan Anda..."
+                                            value="{{ old('company_npwp') }}" readonly>
+                                        @error('company_npwp')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="company_phone_number" class="form-label">No. Telepon Perusahaan
+                                            <span class="text-danger">*</span></label>
+                                        <input type="text"
+                                            class="form-control @error('company_phone_number') is-invalid @enderror"
+                                            id="company_phone_number" name="company_phone_number"
+                                            placeholder="Masukkan Nomor Telepon Perusahaan Anda..."
+                                            value="{{ old('company_phone_number') }}" readonly>
+                                        @error('company_phone_number')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="company_employees" class="form-label">Jumlah Karyawan</label>
+                                        <input type="text"
+                                            class="form-control @error('company_employees') is-invalid @enderror"
+                                            id="company_employees" name="company_employees"
+                                            placeholder="Masukkan Jumlah Karyawan di Perusahaan Anda..."
+                                            value="{{ old('company_employees') }}" readonly>
+                                        @error('company_employees')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -262,10 +199,9 @@
                         <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0"
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                </form>
             </div>
-            </form>
         </div>
-    </div>
     </div>
 
     <div class="container">
@@ -318,10 +254,10 @@
                     next: 'Selanjutnya >>',
                     previous: '<< Sebelumnya'
                 },
-                disabledSteps: [1, 2], // Array Steps disabled
+                disabledSteps: [], // Array Steps disabled
                 errorSteps: [], // Array Steps error
                 warningSteps: [], // Array Steps warning
-                hiddenSteps: [], // Hidden steps
+                hiddenSteps: [1, 2], // Hidden steps
                 getContent: null // Callback function for content loading
             });
 
@@ -384,7 +320,7 @@
 
             // Nomor HP
             var NPWPBussiness = {!! json_encode($oldDataCustomer['company_npwp']) !!};
-            $('#company_npwp').val(masking(NPWPBussiness, 10));
+            $('#phone_number').val(masking(NPWPBussiness, 10));
         });
 
         function masking(value, maskingSum) {

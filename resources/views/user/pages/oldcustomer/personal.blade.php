@@ -355,7 +355,7 @@
                     next: 'Selanjutnya >>',
                     previous: '<< Sebelumnya'
                 },
-                disabledSteps: [1, 2], // Array Steps disabled
+                disabledSteps: [], // Array Steps disabled
                 errorSteps: [], // Array Steps error
                 warningSteps: [], // Array Steps warning
                 hiddenSteps: [], // Hidden steps
