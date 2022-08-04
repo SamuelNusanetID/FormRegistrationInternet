@@ -4,6 +4,13 @@
     <!-- Smart Wizard -->
     <link href="{{ URL::to('lib/jquery-smartwizard/dist/css/smart_wizard_dots.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ URL::to('bin/css/terms.css') }}">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
+    <!-- Leaflet Locate Plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.1/dist/L.Control.Locate.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 @endsection
 
 @section('content-wrapper')
@@ -12,15 +19,15 @@
             <div class="card-body">
                 <h2 class="text-center fw-bold mt-2 mb-4">Form Registrasi Layanan Baru</h2>
                 <!-- SmartWizard html -->
-                <form action="{{ URL::to('old-member/personal/' . $_GET['id']) }}" method="POST" id="personalForm"
-                    enctype="multipart/form-data">
+                <form action="{{ URL::to('/old-member/' . $customerClass . '/' . $_GET['id']) }}" method="POST"
+                    id="oldCustomerForm" enctype="multipart/form-data">
                     @csrf
                     <div id="smartwizard">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#personal-info">
+                                <a class="nav-link" href="#person-in-charge">
                                     <div class="num"><i class="fa-solid fa-user"></i></div>
-                                    Data Personal
+                                    {{ $customerClass == 'Personal' ? 'Data Personal' : 'Data Penanggung Jawab' }}
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -50,47 +57,28 @@
                         </ul>
 
                         <div class="tab-content">
-                            <div id="personal-info" class="tab-pane" role="tabpanel" aria-labelledby="personal-info">
+                            <div id="person-in-charge" class="tab-pane" role="tabpanel" aria-labelledby="person-in-charge">
                                 <div class="container row">
-                                    <div class="col-0 col-md-6">
+                                    <div class="col-12">
                                         <input type="hidden" name="uuid" value="{{ Request::segment(3) }}">
                                         <div class="mb-3">
-                                            <label for="idpelanggan_personal" class="form-label">ID Pelanggan <span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="idpelanggan_personal"
-                                                name="idpelanggan_personal" value="{{ $_GET['id'] }}" readonly>
+                                            <label for="customer_id" class="form-label">ID Pelanggan</label>
+                                            <input type="text" class="form-control" id="customer_id" name="customer_id"
+                                                value="{{ $_GET['id'] }}" readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="fullname_personal" class="form-label">Nama
+                                            <label for="full_name" class="form-label">Nama
                                                 Lengkap <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="fullname_personal"
-                                                name="fullname_personal" value="{{ $oldDataCustomer['name'] }}" readonly>
+                                            <input type="text" class="form-control" id="full_name" name="full_name"
+                                                value="{{ $customerData->name }}" readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="id_number_personal" class="form-label">Nomor Identitas
-                                                (KTP/SIM/KITAS) <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="id_number_personal"
-                                                name="id_number_personal" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-0 col-md-6">
-                                        <div class="mb-3">
-                                            <label for="email_address_personal" class="form-label">Alamat Email
-                                                <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" id="email_address_personal"
-                                                name="email_address_personal" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="phone_number_personal" class="form-label">Nomor HP/WA yang aktif
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="phone_number_personal"
-                                                name="phone_number_personal" readonly>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="address_personal" class="form-label">Alamat Lengkap <span
+                                            <label for="address" class="form-label">Alamat Lengkap <span
                                                     class="text-danger">*</span></label>
-                                            <textarea class="form-control" id="address_personal" name="address_personal" rows="5"
-                                                placeholder="Masukkan Alamat Lengkap Anda..." readonly>{{ $oldDataCustomer['address'] }}</textarea>
+                                            <textarea class="form-control" id="address" name="address" aria-describedby="address" rows="4" readonly>{{ $customerData->address }}</textarea>
+                                            <div id="pic_address_help" class="form-text mb-1">Alamat ini digunakan
+                                                sebagai
+                                                alamat pemasangan perangkat.</div>
                                         </div>
                                     </div>
                                 </div>
@@ -98,75 +86,146 @@
                             <div id="billing-info" class="tab-pane" role="tabpanel" aria-labelledby="billing-info">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
-                                        <div class="mb-3">
-                                            <label for="fullname_biller" class="form-label">Nama
-                                                Lengkap <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control-plaintext" id="fullname_biller"
-                                                name="fullname_biller" value="{{ $oldDataCustomer['billing_name'] }}">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="true"
+                                                id="isdataBillersamewithdataPic" name="isdataBillersamewithdataPic">
+                                            <label class="form-check-label" for="isdataBillersamewithdataPic"
+                                                {{ old('isdataBillersamewithdataPic') == 'true' ? ' checked' : '' }}>
+                                                Data biller sama dengan data penanggung jawab
+                                            </label>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="phone_number_biller" class="form-label">Nomor Handphone
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control-plaintext" id="phone_number_biller"
-                                                name="phone_number_biller"
-                                                value="{{ $oldDataCustomer['billing_contact'] }}">
+                                            <label for="billing_name" class="form-label">Nama
+                                                Biller <span class="text-danger">*</span></label>
+                                            <input type="text"
+                                                class="form-control @error('billing_name') is-invalid @enderror"
+                                                id="billing_name" name="billing_name"
+                                                placeholder="Masukkan Nama Lengkap Anda..."
+                                                value="{{ old('billing_name') }}">
+                                            @error('billing-info')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="email_address_biller" class="form-label">Alamat Email
+                                            <label for="billing_phone" class="form-label">Nomor Handphone
                                                 <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control-plaintext"
-                                                id="email_address_biller" name="email_address_biller"
-                                                value="{{ json_decode($oldDataCustomer['billing_email'])[0] }}">
+                                            <input type="text"
+                                                class="form-control @error('billing_phone') is-invalid @enderror"
+                                                id="billing_phone" name="billing_phone"
+                                                placeholder="Masukkan Nomor Handphone Anda..."
+                                                value="{{ old('billing_phone') }}">
+                                            @error('billing_phone')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="billing_email" class="form-label">Alamat Email
+                                                <span class="text-danger">*</span></label>
+                                            <input type="email"
+                                                class="form-control @error('billing_email') is-invalid @enderror"
+                                                id="billing_email" name="billing_email"
+                                                placeholder="Masukkan Alamat E-Mail Anda..."
+                                                value="{{ old('billing_email') }}">
+                                            @error('billing_email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-0 col-md-6">
-                                        @if (count(json_decode($oldDataCustomer['billing_email'])) > 1)
-                                            <div class="mb-3">
-                                                <label for="email_address_one" class="form-label">Alamat Email Alternatif
-                                                    1
-                                                </label>
-                                                <input type="email" class="form-control-plaintext"
-                                                    id="email_address_one" name="email_address_one"
-                                                    value="{{ json_decode($oldDataCustomer['billing_email'])[1] == null ? 'Data Belum Ada' : json_decode($oldDataCustomer['billing_email'])[1] }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email_address_two" class="form-label">Alamat Email Alternatif
-                                                    2
-                                                </label>
-                                                <input type="email" class="form-control-plaintext"
-                                                    id="email_address_two" name="email_address_two"
-                                                    value="{{ json_decode($oldDataCustomer['billing_email'])[2] == null ? 'Data Belum Ada' : json_decode($oldDataCustomer['billing_email'])[2] }}">
-                                            </div>
-                                        @endif
+                                        <div class="mb-3">
+                                            <label for="email_address_biller_one" class="form-label">Alamat Email
+                                                Alternatif 1
+                                            </label>
+                                            <input type="email"
+                                                class="form-control @error('email_address_biller_one') is-invalid @enderror"
+                                                id="email_address_biller_one" name="email_address_biller_one"
+                                                placeholder="Masukkan Alamat E-Mail Anda..."
+                                                value="{{ old('email_address_biller_one') }}">
+                                            @error('email_address_biller_one')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email_address_biller_two" class="form-label">Alamat Email
+                                                Alternatif 2
+                                            </label>
+                                            <input type="email"
+                                                class="form-control @error('email_address_biller_two') is-invalid @enderror"
+                                                id="email_address_biller_two" name="email_address_biller_two"
+                                                placeholder="Masukkan Alamat E-Mail Anda..."
+                                                value="{{ old('email_address_biller_two') }}">
+                                            @error('email_address_biller_two')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div id="technical-info" class="tab-pane" role="tabpanel" aria-labelledby="technical-info">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="true"
+                                                id="isdataTechnicalsamewithdataPic" name="isdataTechnicalsamewithdataPic"
+                                                {{ old('isdataTechnicalsamewithdataPic') == 'true' ? ' checked' : '' }}>
+                                            <label class="form-check-label" for="isdataTechnicalsamewithdataPic">
+                                                Data teknikal sama dengan data penanggung jawab
+                                            </label>
+                                        </div>
                                         <div class="mb-3">
                                             <label for="fullname_technical" class="form-label">Nama Lengkap<span
-                                                    class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control-plaintext" id="fullname_technical"
-                                                name="fullname_technical"
-                                                value="{{ $oldDataCustomer['technical_name'] }}">
+                                                    class="text-danger">*</span></label>
+                                            <input type="text"
+                                                class="form-control @error('fullname_technical') is-invalid @enderror"
+                                                id="fullname_technical" name="fullname_technical"
+                                                placeholder="Masukkan Nama Lengkap Anda..."
+                                                value="{{ old('fullname_technical') }}">
+                                            @error('fullname_technical')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                         <div class="mb-3">
                                             <label for="phone_number_technical" class="form-label">Nomor Handphone
                                                 <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control-plaintext"
+                                            <input type="text"
+                                                class="form-control @error('phone_number_technical') is-invalid @enderror"
                                                 id="phone_number_technical" name="phone_number_technical"
-                                                value="{{ $oldDataCustomer['technical_contact'] }}">
+                                                placeholder="Masukkan Nomor Handphone Anda..."
+                                                value="{{ old('phone_number_technical') }}">
+                                            @error('phone_number_technical')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
+
                                     </div>
                                     <div class="col-0 col-md-6">
                                         <div class="mb-3">
                                             <label for="email_address_technical" class="form-label">Alamat Email
                                                 <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control-plaintext"
+                                            <input type="email"
+                                                class="form-control @error('email_address_technical') is-invalid @enderror"
                                                 id="email_address_technical" name="email_address_technical"
-                                                value="{{ $oldDataCustomer['technical_email'] }}">
+                                                placeholder="Masukkan Alamat E-Mail Anda..."
+                                                value="{{ old('email_address_technical') }}">
+                                            @error('email_address_technical')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -174,35 +233,7 @@
                             <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
                                 style="height: 100%; overflow:auto;">
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
-                                    @if (isset($oldDataCustomer['service_package']))
-                                        <div class="mb-3">
-                                            <label for="service_product" class="form-label">
-                                                Daftar Layanan
-                                            </label>
-                                            <ol>
-                                                @foreach (json_decode($oldDataCustomer['service_package']) as $item)
-                                                    <li style="margin-left: -15px;">
-                                                        <ul>
-                                                            <li class="row">
-                                                                <p class="col-sm-3 fw-bold p-0 m-0">Nama Layanan</p>
-                                                                <p class="col-sm-9 p-0 m-0">{{ $item->service_name }}</p>
-                                                            </li>
-                                                            <li class="row">
-                                                                <p class="col-sm-3 fw-bold p-0 m-0">Harga Layanan</p>
-                                                                <p class="col-sm-9 p-0 m-0">{{ $item->service_price }}</p>
-                                                            </li>
-                                                            <li class="row">
-                                                                <p class="col-sm-3 fw-bold p-0 m-0">Jenis Pembayaran</p>
-                                                                <p class="col-sm-9 p-0 m-0">
-                                                                    {{ $item->termofpaymentDeals }}</p>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                @endforeach
-                                            </ol>
-                                        </div>
-                                    @endif
-                                    <div class="" id="serviceOptionPersonal">
+                                    <div class="" id="serviceOptionBussiness">
                                         <label for="service_product" class="form-label">Pilihan Layanan
                                             <span class="text-danger">*</span>
                                         </label>
@@ -210,11 +241,11 @@
                                             $servicesData = json_decode($serviceData);
                                             setlocale(LC_MONETARY, 'id_ID');
                                         @endphp
-                                        <select class="form-select @error('new_service_product') is-invalid @enderror"
-                                            name="new_service_product" id="new_service_product">
+                                        <select class="form-select @error('service_product') is-invalid @enderror"
+                                            name="service_product" id="service_product">
                                             <option disabled selected>Pilih Jenis Layanan...</option>
                                             @foreach ($servicesData as $service)
-                                                @if (old('new_service_product') == $service->nama_layanan)
+                                                @if (old('service_product') == $service->nama_layanan)
                                                     <option value="{{ $service->nama_layanan }}" selected>
                                                         {{ $service->nama_layanan }} - Rp. {{ $service->harga_layanan }},-
                                                     </option>
@@ -225,32 +256,32 @@
                                                 @endif
                                             @endforeach
                                         </select>
-                                        @error('new_service_product')
+                                        @error('service_product')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="mb-3 d-none" id="termOfPaymentPersonal">
+                                    <div class="mb-3 d-none" id="termOfPaymentBussiness">
                                         <p class="m-0 p-0 mb-1">
                                             Jenis Pembayaran
                                             <span class="text-danger">*</span>
                                         </p>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="topRadioBtnPersonal"
-                                                id="topRadioBtnMonthlyPersonal" value="Bulanan">
+                                            <input class="form-check-input" type="radio" name="topRadioBtnBussiness"
+                                                id="topRadioBtnMonthlyBussiness" value="Bulanan">
                                             <label class="form-check-label"
-                                                for="topRadioBtnMonthlyPersonal">Bulanan</label>
+                                                for="topRadioBtnMonthlyBussiness">Bulanan</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="topRadioBtnPersonal"
-                                                id="topRadioBtnAnuallyPersonal" value="Tahunan">
+                                            <input class="form-check-input" type="radio" name="topRadioBtnBussiness"
+                                                id="topRadioBtnAnuallyBussiness" value="Tahunan">
                                             <label class="form-check-label"
-                                                for="topRadioBtnAnuallyPersonal">Tahunan</label>
+                                                for="topRadioBtnAnuallyBussiness">Tahunan</label>
                                         </div>
                                     </div>
                                     <div class="border rounded px-3 py-2 bg-white text-dark d-none"
-                                        id="detailPaymentPersonal">
+                                        id="detailPaymentBussiness">
                                         <div class="row">
                                             <p class="fw-bold mb-3">Rincian Pembayaran</p>
                                             <div class="mb-0 row">
@@ -330,7 +361,7 @@
     </div>
 
     <div class="container">
-        <a href="{{ URL::to('/old-member') }}" class="btn btn-primary mb-3">
+        <a href="{{ URL::to('/new-member') }}" class="btn btn-primary mb-3">
             <i class="fas fa-arrow-alt-circle-left me-1"></i>
             Kembali Ke Halaman Sebelumnya
         </a>
@@ -359,8 +390,8 @@
                 toolbar: {
                     position: 'bottom', // none|top|bottom|both
                     showNextButton: true, // show/hide a Next button
-                    showPreviousButton: true, // show/hide a Previous button
-                    extraHtml: '<button class="btn btn-success" id="btnSubmitPersonalForms" type="button"><i class="fas fa-save me-1"></i> Submit Form</button>' // Extra html to show on toolbar
+                    showPreviousButton: true,
+                    extraHtml: '<button class="btn btn-success" id="btnSubmitBussinessForms" type="submit"><i class="fas fa-save me-1"></i> Submit Form</button>' // show/hide a Previous button
                 },
                 anchor: {
                     enableNavigation: true, // Enable/Disable anchor navigation
@@ -379,61 +410,47 @@
                     next: 'Selanjutnya >>',
                     previous: '<< Sebelumnya'
                 },
-                disabledSteps: [], // Array Steps disabled
+                disabledSteps: [1, 2], // Array Steps disabled
                 errorSteps: [], // Array Steps error
                 warningSteps: [], // Array Steps warning
-                hiddenSteps: [1, 2], // Hidden steps
+                hiddenSteps: [], // Hidden steps
                 getContent: null // Callback function for content loading
             });
 
-            $("#btnSubmitPersonalForms").toggle(false);
+            $("#btnSubmitBussinessForms").toggle(false);
 
             $('#termsCbo').click(function() {
-                $("#btnSubmitPersonalForms").toggle(this.checked);
+                $("#btnSubmitBussinessForms").toggle(this.checked);
             });
 
-            $("#btnSubmitPersonalForms").on('click', () => {
-                $("#personalForm").trigger('submit');
+            $("#btnSubmitBussinessForms").on('click', () => {
+                $("#bussinessForm").trigger('submit');
             })
         });
     </script>
-    <script src="{{ URL::to('bin/js/newCustomer/personal/inputFilter.js') }}"></script>
-    <script src="{{ URL::to('bin/js/newCustomer/personal/cboConfig.js') }}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(() => {
             var formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'IDR',
                 minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
             });
 
-            // Nomor KTP
-            var IDNumberPersonal = {!! json_encode($oldDataCustomer['identity_number']) !!};
-            $('#id_number_personal').val(masking(IDNumberPersonal, 10));
+            $('#service_product').on('change', function() {
+                $('#serviceOptionBussiness').addClass('mb-3');
+                $('#termOfPaymentBussiness').removeClass('d-none');
+                $('#termOfPaymentBussiness').removeClass('mb-3');
+                $('input[type=radio][name=topRadioBtnBussiness]').prop('checked', false);
+                $('#detailPaymentBussiness').addClass('d-none');
 
-            // Alamat Email
-            var EmailPersonal = {!! json_encode($oldDataCustomer['email']) !!};
-            $('#email_address_personal').val(masking(EmailPersonal, 15));
-
-            // Nomor HP
-            var NoHPPersonal = {!! json_encode($oldDataCustomer['phone_number']) !!};
-            $('#phone_number_personal').val(masking(NoHPPersonal, 5));
-
-            $('#new_service_product').on('change', function() {
-                $('#serviceOptionPersonal').addClass('mb-3');
-                $('#termOfPaymentPersonal').removeClass('d-none');
-                $('#termOfPaymentPersonal').removeClass('mb-3');
-                $('input[type=radio][name=topRadioBtnPersonal]').prop('checked', false);
-                $('#detailPaymentPersonal').addClass('d-none');
-
-                $('input[type=radio][name=topRadioBtnPersonal]').change(function() {
+                $('input[type=radio][name=topRadioBtnBussiness]').change(function() {
                     if (this.value == 'Bulanan') {
-                        $('#detailPaymentPersonal').removeClass('d-none');
-                        $('#termOfPaymentPersonal').addClass('mb-3');
+                        $('#detailPaymentBussiness').removeClass('d-none');
+                        $('#termOfPaymentBussiness').addClass('mb-3');
 
                         var serviceData = {!! json_encode($servicesData) !!};
                         serviceData.forEach(element => {
-                            if (element.nama_layanan == $('#new_service_product').val()) {
+                            if (element.nama_layanan == $('#service_product').val()) {
                                 $('#serviceName').val(element.nama_layanan);
                                 $('#servicePrice').val(formatter.format(element
                                     .harga_layanan));
@@ -441,12 +458,12 @@
                             }
                         });
                     } else if (this.value == 'Tahunan') {
-                        $('#detailPaymentPersonal').removeClass('d-none');
-                        $('#termOfPaymentPersonal').addClass('mb-3');
+                        $('#detailPaymentBussiness').removeClass('d-none');
+                        $('#termOfPaymentBussiness').addClass('mb-3');
 
                         var serviceData = {!! json_encode($servicesData) !!};
                         serviceData.forEach(element => {
-                            if (element.nama_layanan == $('#new_service_product').val()) {
+                            if (element.nama_layanan == $('#service_product').val()) {
                                 $('#serviceName').val(element.nama_layanan);
                                 $('#servicePrice').val(formatter.format(element
                                     .harga_layanan * 12));
@@ -457,20 +474,5 @@
                 });
             });
         });
-
-        function masking(value, maskingSum) {
-            return value.replace(value.substr(value.length - maskingSum),
-                generateMask(
-                    maskingSum));
-        }
-
-        function generateMask(jumlahMask) {
-            var newStr = [];
-            for (let index = 0; index < jumlahMask; index++) {
-                newStr[index] = '*';
-            }
-
-            return newStr.join('');
-        }
     </script>
 @endsection

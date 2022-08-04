@@ -49,7 +49,7 @@ class NewCustomerController extends Controller
     public function storePersonal(Request $request)
     {
         $uuid = $request->get('uuid');
-        $idPelanggan = 'PC' . date('YmdHis');
+        $idPelanggan = '02' . date('jnyHi');
 
         // Personal Validation
         $validator1 = Validator::make(
@@ -248,7 +248,7 @@ class NewCustomerController extends Controller
     public function storeBussiness(Request $request)
     {
         $uuid = $request->get('uuid');
-        $idPelanggan = 'BC' . date('YmdHis');
+        $idPelanggan = '02' . date('jnyHi');
 
         // Personal Validation
         $validator1 = Validator::make(
