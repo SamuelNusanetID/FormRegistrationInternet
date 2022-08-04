@@ -111,11 +111,11 @@ class OldCustomerController extends Controller
                 $request->all(),
                 [
                     'service_product' => 'required',
-                    'topRadioBtnPersonal' => 'required'
+                    'topRadioBtnBussiness' => 'required'
                 ],
                 [
                     'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
-                    'topRadioBtnPersonal.required' => 'Field Jenis Pembayaran Wajib Diisi'
+                    'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi'
                 ]
             );
 
@@ -132,11 +132,11 @@ class OldCustomerController extends Controller
                 $request->all(),
                 [
                     'service_product' => 'required',
-                    'topRadioBtnPersonal' => 'required'
+                    'topRadioBtnBussiness' => 'required'
                 ],
                 [
                     'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
-                    'topRadioBtnPersonal.required' => 'Field Jenis Pembayaran Wajib Diisi'
+                    'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi'
                 ]
             );
 
