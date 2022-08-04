@@ -232,9 +232,53 @@
                             </div>
                             <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
                                 style="height: 100%; overflow:auto;">
+                                @if (isset($customerData->service->service_package))
+                                    <div class="mb-3">
+                                        <label for="product_detail" class="mb-2">
+                                            Detail Layanan
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <ol>
+                                            @foreach (json_decode($customerData->service->service_package) as $service)
+                                                <li class="align-middle">
+                                                    <table class="table border" style="width:100%;">
+                                                        <colgroup>
+                                                            <col style="width: 30%;">
+                                                            <col style="width: 5%;">
+                                                            <col style="width: 65%;">
+                                                        </colgroup>
+                                                        <tbody>
+                                                            @foreach ($service as $key => $value)
+                                                                @if ($key == 'service_name')
+                                                                    <tr>
+                                                                        <td class="fw-bold">Nama Produk</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $value }}</td>
+                                                                    </tr>
+                                                                @elseif ($key == 'service_price')
+                                                                    <tr>
+                                                                        <td class="fw-bold">Harga Produk</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $value }}</td>
+                                                                    </tr>
+                                                                @elseif ($key == 'termofpaymentDeals')
+                                                                    <tr>
+                                                                        <td class="fw-bold">Jangka Waktu Pembayaran</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $value }}</td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </li>
+                                            @endforeach
+                                        </ol>
+                                    </div>
+                                @endif
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
                                     <div class="" id="serviceOptionBussiness">
-                                        <label for="service_product" class="form-label">Pilihan Layanan
+                                        <label for="service_product" class="form-label">Pilihan Layanan Baru
                                             <span class="text-danger">*</span>
                                         </label>
                                         @php
@@ -314,27 +358,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="service_identity_photo" class="form-label">Upload Foto KTP</label>
-                                    <input class="form-control @error('service_identity_photo') is-invalid @enderror"
-                                        type="file" id="service_identity_photo" name="service_identity_photo">
-                                    @error('service_identity_photo')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="service_selfie_photo" class="form-label">Upload Foto Selfie dengan
-                                        KTP</label>
-                                    <input class="form-control @error('service_selfie_photo') is-invalid @enderror"
-                                        type="file" id="service_selfie_photo" name="service_selfie_photo">
-                                    @error('service_selfie_photo')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info">
