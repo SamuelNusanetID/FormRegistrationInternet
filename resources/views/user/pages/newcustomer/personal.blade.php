@@ -333,17 +333,26 @@
                                             <span class="text-danger">*</span>
                                         </p>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="topRadioBtnPersonal"
-                                                id="topRadioBtnMonthlyPersonal" value="Bulanan">
+                                            <input
+                                                class="form-check-input @error('topRadioBtnPersonal') is-invalid @enderror"
+                                                type="radio" name="topRadioBtnPersonal" id="topRadioBtnMonthlyPersonal"
+                                                value="Bulanan"
+                                                {{ old('topRadioBtnPersonal') === 'Bulanan' ? 'checked' : null }} />
                                             <label class="form-check-label"
                                                 for="topRadioBtnMonthlyPersonal">Bulanan</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="topRadioBtnPersonal"
-                                                id="topRadioBtnAnuallyPersonal" value="Tahunan">
+                                            <input
+                                                class="form-check-input @error('topRadioBtnPersonal') is-invalid @enderror"
+                                                type="radio" name="topRadioBtnPersonal" id="topRadioBtnAnuallyPersonal"
+                                                value="Tahunan"
+                                                {{ old('topRadioBtnPersonal') === 'Tahunan' ? 'checked' : null }} />
                                             <label class="form-check-label"
                                                 for="topRadioBtnAnuallyPersonal">Tahunan</label>
                                         </div>
+                                        @error('topRadioBtnPersonal')
+                                            <p class="small text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="border rounded px-3 py-2 bg-white text-dark d-none"
                                         id="detailPaymentPersonal">
@@ -486,9 +495,46 @@
                 $('#termOfPaymentPersonal').removeClass('mb-3');
                 $('input[type=radio][name=topRadioBtnPersonal]').prop('checked', false);
                 $('#detailPaymentPersonal').addClass('d-none');
+            });
 
-                $('input[type=radio][name=topRadioBtnPersonal]').change(function() {
-                    if (this.value == 'Bulanan') {
+            $('input[type=radio][name=topRadioBtnPersonal]').change(function() {
+                if (this.value == 'Bulanan') {
+                    $('#detailPaymentPersonal').removeClass('d-none');
+                    $('#termOfPaymentPersonal').addClass('mb-3');
+
+                    var serviceData = {!! json_encode($servicesData) !!};
+                    serviceData.forEach(element => {
+                        if (element.nama_layanan == $('#service_product').val()) {
+                            $('#serviceName').val(element.nama_layanan);
+                            $('#servicePrice').val(formatter.format(element
+                                .harga_layanan));
+                            $('#termofpaymentDeals').val("Bulanan");
+                        }
+                    });
+                } else if (this.value == 'Tahunan') {
+                    $('#detailPaymentPersonal').removeClass('d-none');
+                    $('#termOfPaymentPersonal').addClass('mb-3');
+
+                    var serviceData = {!! json_encode($servicesData) !!};
+                    serviceData.forEach(element => {
+                        if (element.nama_layanan == $('#service_product').val()) {
+                            $('#serviceName').val(element.nama_layanan);
+                            $('#servicePrice').val(formatter.format(element
+                                .harga_layanan * 12));
+                            $('#termofpaymentDeals').val("Tahunan");
+                        }
+                    });
+                }
+            });
+
+            if ($('#service_product').val() != null) {
+                $('#serviceOptionPersonal').addClass('mb-3');
+                $('#termOfPaymentPersonal').removeClass('d-none');
+                $('#termOfPaymentPersonal').removeClass('mb-3');
+                $('#detailPaymentPersonal').addClass('d-none');
+
+                if ($('input[type=radio][name=topRadioBtnPersonal]').is(':checked')) {
+                    if ($('input[type=radio][name=topRadioBtnPersonal]').val() == 'Bulanan') {
                         $('#detailPaymentPersonal').removeClass('d-none');
                         $('#termOfPaymentPersonal').addClass('mb-3');
 
@@ -501,7 +547,7 @@
                                 $('#termofpaymentDeals').val("Bulanan");
                             }
                         });
-                    } else if (this.value == 'Tahunan') {
+                    } else if ($('input[type=radio][name=topRadioBtnPersonal]').val() == 'Tahunan') {
                         $('#detailPaymentPersonal').removeClass('d-none');
                         $('#termOfPaymentPersonal').addClass('mb-3');
 
@@ -515,8 +561,8 @@
                             }
                         });
                     }
-                });
-            });
+                }
+            }
 
         });
     </script>
