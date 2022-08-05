@@ -125,8 +125,28 @@ class OldCustomerController extends Controller
                     ->withInput();
             }
 
-            // Checking Data Before
-            dd($request->all());
+            // Konversi Data Yang Sudah Ada ke dalam Array
+            $UUIDCustomer = $CustomerData->first()->id;
+            $ServiceCustomer = Service::find($UUIDCustomer);
+            $OldServiceCustomerObj = json_decode($ServiceCustomer->service_package);
+            $OldServiceCustomerArr = [];
+            for ($i = 0; $i < count($OldServiceCustomerObj); $i++) {
+                $OldServiceCustomerArr[$i]['service_name'] = $OldServiceCustomerObj[$i]->service_name;
+                $OldServiceCustomerArr[$i]['service_price'] = $OldServiceCustomerObj[$i]->service_price;
+                $OldServiceCustomerArr[$i]['termofpaymentDeals'] = $OldServiceCustomerObj[$i]->termofpaymentDeals;
+            }
+
+            $newDataService = [
+                'service_name' => $request->get('serviceName'),
+                'service_price' => $request->get('servicePrice'),
+                'termofpaymentDeals' => $request->get('termofpaymentDeals')
+            ];
+            array_push($OldServiceCustomerArr, $newDataService);
+
+            $ServiceCustomer->service_package = json_encode($OldServiceCustomerArr);
+            $ServiceCustomer->save();
+
+            return redirect()->to('old-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
         } else {
             $validator4 = Validator::make(
                 $request->all(),
@@ -146,23 +166,69 @@ class OldCustomerController extends Controller
                     ->withInput();
             }
 
-            // Checking Data Before
-            dd($request->all());
+            $response = Http::get('https://is.nusa.net.id/o/08b5411f848a2581a41672a759c87380/customer.php', [
+                'cid' => $id_customer
+            ]);
 
-            // $response = Http::get('https://is.nusa.net.id/o/08b5411f848a2581a41672a759c87380/customer.php', [
-            //     'cid' => $id_customer
-            // ]);
+            if ($response->failed()) {
+                return back()->with('errorMessage', "Server didn't respond the request ID Number.");
+            }
 
-            // if ($response->failed()) {
-            //     return back()->with('errorMessage', "Server didn't respond the request ID Number.");
-            // }
+            $result = json_decode($response->body());
 
-            // $result = json_decode($response->body());
+            $UUIDNewCustomer = $this->generatenewUUID();
 
-            // $newUUID = $this->generatenewUUID();
+            // Customer Table
+            $newCustomer = new Customer();
+            $newCustomer->id = $UUIDNewCustomer;
+            $newCustomer->customer_id = $id_customer;
+            $newCustomer->name = $result->name;
+            $newCustomer->address = $result->address;
+            $newCustomer->geolocation = "";
+            $newCustomer->class = $class_customer;
+            $newCustomer->email = $result->email;
+            $newCustomer->identity_number = $result->identity_number;
+            $newCustomer->phone_number = $result->phone_number;
+            $newCustomer->company_name = $result->company_name != "" ? $result->company_name : null;
+            $newCustomer->company_address = $result->company_address != "" ? $result->company_address : null;
+            $newCustomer->company_npwp = $result->company_npwp != "" ? $result->company_npwp : null;
+            $newCustomer->company_phone_number = $result->company_phone_number != "" ? $result->company_phone_number : null;
+            $newCustomer->company_employees = $result->company_employees != "" ? $result->company_employees : null;
+            $newCustomer->save();
 
-            // $newCustomer = new Customer();
-            // $newCustomer->id = $newUUID;
+            // Billing Table
+            $newBilling = new Billing();
+            $newBilling->id = $UUIDNewCustomer;
+            $newBilling->billing_name = $result->billing_name;
+            $newBilling->billing_contact = $result->billing_contact;
+            $newBilling->billing_email = $result->billing_email;
+            $newBilling->save();
+
+            $newTechnical = new Technical();
+            $newTechnical->id = $UUIDNewCustomer;
+            $newTechnical->technical_name = $result->technical_name;
+            $newTechnical->technical_contact = $result->technical_contact;
+            $newTechnical->technical_email = $result->technical_email;
+            $newTechnical->save();
+
+            $newService = new Service();
+            $newService->id = $UUIDNewCustomer;
+            $newService->service_package = json_encode([[
+                'service_name' => $request->get('serviceName'),
+                'service_price' => $request->get('servicePrice'),
+                'termofpaymentDeals' => $request->get('termofpaymentDeals')
+            ]]);
+            $newService->id_photo_url = "";
+            $newService->selfie_id_photo_url = "";
+            $newService->save();
+
+            $newApproval = new Approval();
+            $newApproval->id = $UUIDNewCustomer;
+            $newApproval->isApproved = false;
+            $newApproval->isRejected = false;
+            $newApproval->save();
+
+            return redirect()->to('old-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
         }
     }
 
