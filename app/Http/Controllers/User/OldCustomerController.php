@@ -7,6 +7,7 @@ use App\Models\Approval;
 use App\Models\Customer;
 use App\Models\Billing;
 use App\Models\Service;
+use App\Models\ServiceList;
 use App\Models\Technical;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -28,28 +29,7 @@ class OldCustomerController extends Controller
                     'titlePage' => 'Customer Lama',
                     'customerClass' => $fetchingDatas->class,
                     'customerData' => $fetchingDatas,
-                    'serviceData' => json_encode([
-                        [
-                            'nama_layanan' => 'Dedicated Fiber Optic',
-                            'harga_layanan' => '1000'
-                        ],
-                        [
-                            'nama_layanan' => 'Dedicated Wireless',
-                            'harga_layanan' => '2000'
-                        ],
-                        [
-                            'nama_layanan' => 'Broadband Fiber Optic',
-                            'harga_layanan' => '3000'
-                        ],
-                        [
-                            'nama_layanan' => 'Broadband Wireless',
-                            'harga_layanan' => '4000'
-                        ],
-                        [
-                            'nama_layanan' => 'Broadband Home',
-                            'harga_layanan' => '5000'
-                        ]
-                    ])
+                    'serviceData' => ServiceList::all()
                 ];
 
                 return view('user.pages.oldcustomer.customer', $datas);
@@ -68,28 +48,7 @@ class OldCustomerController extends Controller
                     'titlePage' => 'Customer Lama',
                     'customerClass' => $result->company_name == null ? 'Personal' : 'Bussiness',
                     'customerData' => $result,
-                    'serviceData' => json_encode([
-                        [
-                            'nama_layanan' => 'Dedicated Fiber Optic',
-                            'harga_layanan' => '1000'
-                        ],
-                        [
-                            'nama_layanan' => 'Dedicated Wireless',
-                            'harga_layanan' => '2000'
-                        ],
-                        [
-                            'nama_layanan' => 'Broadband Fiber Optic',
-                            'harga_layanan' => '3000'
-                        ],
-                        [
-                            'nama_layanan' => 'Broadband Wireless',
-                            'harga_layanan' => '4000'
-                        ],
-                        [
-                            'nama_layanan' => 'Broadband Home',
-                            'harga_layanan' => '5000'
-                        ]
-                    ])
+                    'serviceData' => ServiceList::all()
                 ];
 
                 return view('user.pages.oldcustomer.customer', $datas);

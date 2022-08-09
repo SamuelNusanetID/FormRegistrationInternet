@@ -7,6 +7,7 @@ use App\Models\Approval;
 use App\Models\Billing;
 use App\Models\Customer;
 use App\Models\Service;
+use App\Models\ServiceList;
 use App\Models\Technical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,28 +20,7 @@ class NewCustomerController extends Controller
     {
         $datas = [
             'titlePage' => 'Form Registrasi Layanan Baru',
-            'serviceData' => json_encode([
-                [
-                    'nama_layanan' => 'Dedicated Fiber Optic',
-                    'harga_layanan' => '1000'
-                ],
-                [
-                    'nama_layanan' => 'Dedicated Wireless',
-                    'harga_layanan' => '2000'
-                ],
-                [
-                    'nama_layanan' => 'Broadband Fiber Optic',
-                    'harga_layanan' => '3000'
-                ],
-                [
-                    'nama_layanan' => 'Broadband Wireless',
-                    'harga_layanan' => '4000'
-                ],
-                [
-                    'nama_layanan' => 'Broadband Home',
-                    'harga_layanan' => '5000'
-                ]
-            ])
+            'serviceData' => ServiceList::all()
         ];
 
         return view('user.pages.newcustomer.personal', $datas);
@@ -218,28 +198,7 @@ class NewCustomerController extends Controller
     {
         $datas = [
             'titlePage' => 'Form Registrasi Layanan Baru',
-            'serviceData' => json_encode([
-                [
-                    'nama_layanan' => 'Dedicated Fiber Optic',
-                    'harga_layanan' => '1000'
-                ],
-                [
-                    'nama_layanan' => 'Dedicated Wireless',
-                    'harga_layanan' => '2000'
-                ],
-                [
-                    'nama_layanan' => 'Broadband Fiber Optic',
-                    'harga_layanan' => '3000'
-                ],
-                [
-                    'nama_layanan' => 'Broadband Wireless',
-                    'harga_layanan' => '4000'
-                ],
-                [
-                    'nama_layanan' => 'Broadband Home',
-                    'harga_layanan' => '5000'
-                ]
-            ])
+            'serviceData' => ServiceList::all()
         ];
 
         return view('user.pages.newcustomer.bussiness', $datas);

@@ -313,13 +313,13 @@
                                             name="service_product" id="service_product">
                                             <option disabled selected>Pilih Jenis Layanan...</option>
                                             @foreach ($servicesData as $service)
-                                                @if (old('service_product') == $service->nama_layanan)
-                                                    <option value="{{ $service->nama_layanan }}" selected>
-                                                        {{ $service->nama_layanan }} - Rp. {{ $service->harga_layanan }},-
+                                                @if (old('service_product') == $service->service_name)
+                                                    <option value="{{ $service->service_name }}" selected>
+                                                        {{ $service->service_name }} - Rp. {{ $service->service_price }},-
                                                     </option>
                                                 @else
-                                                    <option value="{{ $service->nama_layanan }}">
-                                                        {{ $service->nama_layanan }} => Rp. @convert((int) $service->harga_layanan) / Bulan
+                                                    <option value="{{ $service->service_name }}">
+                                                        {{ $service->service_name }} => Rp. @convert((int) $service->service_price) / Bulan
                                                     </option>
                                                 @endif
                                             @endforeach
@@ -507,10 +507,10 @@
 
                     var serviceData = {!! json_encode($servicesData) !!};
                     serviceData.forEach(element => {
-                        if (element.nama_layanan == $('#service_product').val()) {
-                            $('#serviceName').val(element.nama_layanan);
+                        if (element.service_name == $('#service_product').val()) {
+                            $('#serviceName').val(element.service_name);
                             $('#servicePrice').val(formatter.format(element
-                                .harga_layanan));
+                                .service_price));
                             $('#termofpaymentDeals').val("Bulanan");
                         }
                     });
@@ -520,10 +520,10 @@
 
                     var serviceData = {!! json_encode($servicesData) !!};
                     serviceData.forEach(element => {
-                        if (element.nama_layanan == $('#service_product').val()) {
-                            $('#serviceName').val(element.nama_layanan);
+                        if (element.service_name == $('#service_product').val()) {
+                            $('#serviceName').val(element.service_name);
                             $('#servicePrice').val(formatter.format(element
-                                .harga_layanan * 12));
+                                .service_price * 12));
                             $('#termofpaymentDeals').val("Tahunan");
                         }
                     });
@@ -543,10 +543,10 @@
 
                         var serviceData = {!! json_encode($servicesData) !!};
                         serviceData.forEach(element => {
-                            if (element.nama_layanan == $('#service_product').val()) {
-                                $('#serviceName').val(element.nama_layanan);
+                            if (element.service_name == $('#service_product').val()) {
+                                $('#serviceName').val(element.service_name);
                                 $('#servicePrice').val(formatter.format(element
-                                    .harga_layanan));
+                                    .service_price));
                                 $('#termofpaymentDeals').val("Bulanan");
                             }
                         });
@@ -556,10 +556,10 @@
 
                         var serviceData = {!! json_encode($servicesData) !!};
                         serviceData.forEach(element => {
-                            if (element.nama_layanan == $('#service_product').val()) {
-                                $('#serviceName').val(element.nama_layanan);
+                            if (element.service_name == $('#service_product').val()) {
+                                $('#serviceName').val(element.service_name);
                                 $('#servicePrice').val(formatter.format(element
-                                    .harga_layanan * 12));
+                                    .service_price * 12));
                                 $('#termofpaymentDeals').val("Tahunan");
                             }
                         });
