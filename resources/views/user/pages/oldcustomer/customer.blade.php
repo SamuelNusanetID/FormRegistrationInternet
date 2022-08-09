@@ -23,7 +23,7 @@
                     id="oldCustomerForm" enctype="multipart/form-data">
                     @csrf
                     <div class="g-recaptcha" data-sitekey="6LfutlwhAAAAACs1VgAQOYZlok2dejtrePnFt4z0"
-                        data-callback="onSubmit" data-size="invisible">
+                        data-callback="onSubmit" data-size="invisible" data-badge="bottomleft">
                     </div>
                     <div id="smartwizard">
                         <ul class="nav">

@@ -52,8 +52,8 @@ a {
 
 .btn-overlay {
     position: fixed;
-    right: 12px;
-    bottom: 40%;
+    right: 15px;
+    bottom: 15px;
     left: auto;
     z-index: 1030;
 }
