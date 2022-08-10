@@ -159,8 +159,8 @@ class OldCustomerController extends Controller
             $newBilling = new Billing();
             $newBilling->id = $UUIDNewCustomer;
             $newBilling->billing_name = $result->billing_name;
-            $newBilling->billing_contact = $result->billing_contact;
-            $newBilling->billing_email = json_encode([$result->billing_email, "", ""]);
+            $newBilling->billing_contact = $result->billing_contact == null || "" ? '-' : $result->billing_contact;
+            $newBilling->billing_email = json_encode([$result->billing_email, null, null]);
             $newBilling->save();
 
             $newTechnical = new Technical();
