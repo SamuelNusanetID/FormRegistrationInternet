@@ -134,8 +134,22 @@ class OldCustomerController extends Controller
             }
 
             $result = json_decode($response->body());
-
             $UUIDNewCustomer = $this->generatenewUUID();
+
+            $primaryEmail = "";
+            if ($result->email == "" || $result->email == null) {
+                if ($result->billing_email == "" || $result->billing_email == null) {
+                    if ($result->technical_email == "" || $result->technical_email == null) {
+                        $primaryEmail = "";
+                    } else {
+                        $primaryEmail = $result->technical_email;
+                    }
+                } else {
+                    $primaryEmail = $result->billing_email;
+                }
+            } else {
+                $primaryEmail = $result->email;
+            }
 
             // Customer Table
             $newCustomer = new Customer();
@@ -145,7 +159,7 @@ class OldCustomerController extends Controller
             $newCustomer->address = $result->address;
             $newCustomer->geolocation = "";
             $newCustomer->class = $class_customer;
-            $newCustomer->email = $result->email;
+            $newCustomer->email = $primaryEmail;
             $newCustomer->identity_number = $result->identity_number;
             $newCustomer->phone_number = $result->phone_number;
             $newCustomer->company_name = $result->company_name != "" ? $result->company_name : null;
@@ -160,14 +174,14 @@ class OldCustomerController extends Controller
             $newBilling->id = $UUIDNewCustomer;
             $newBilling->billing_name = $result->billing_name;
             $newBilling->billing_contact = $result->billing_contact == null || "" ? '-' : $result->billing_contact;
-            $newBilling->billing_email = json_encode([$result->billing_email, null, null]);
+            $newBilling->billing_email = json_encode([$primaryEmail, null, null]);
             $newBilling->save();
 
             $newTechnical = new Technical();
             $newTechnical->id = $UUIDNewCustomer;
             $newTechnical->technical_name = $result->technical_name;
             $newTechnical->technical_contact = $result->technical_contact;
-            $newTechnical->technical_email = $result->technical_email;
+            $newTechnical->technical_email = $primaryEmail;
             $newTechnical->save();
 
             $newService = new Service();
