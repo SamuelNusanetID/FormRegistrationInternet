@@ -30,7 +30,8 @@
 
 <body>
     <a class="btn btn-success bg-gradient fixed-bottom btn-overlay text-white fw-bold"
-        href="https://s.id/feedbackformregonline" target="_blank">
+        href="https://s.id/feedbackformregonline" target="_blank"
+        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
         <i class="fa-solid fa-comments me-1 fa-2x mb-2"></i>
         </br>
         Send Feedback
