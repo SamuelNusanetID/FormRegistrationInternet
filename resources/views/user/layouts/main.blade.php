@@ -29,13 +29,57 @@
 </head>
 
 <body>
-    <a class="btn btn-success bg-gradient fixed-bottom btn-overlay text-white fw-bold"
-        href="https://s.id/feedbackformregonline" target="_blank"
-        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+    <style>
+        .form-popup {
+            border-radius: 20px;
+            display: none;
+            position: fixed;
+            bottom: 2%;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+        }
+
+        .form-container {
+            border-radius: 20px;
+            max-width: 300px;
+            padding: 10px;
+            background-color: white;
+        }
+    </style>
+
+    <button class="btn btn-success bg-gradient fixed-bottom btn-overlay text-white fw-bold" type="button"
+        onclick="openForm()" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+        id="btnShowFeedback">
         <i class="fa-solid fa-comments me-1 fa-2x mb-2"></i>
         </br>
         Send Feedback
-    </a>
+    </button>
+    <div class="form-popup" id="myForm">
+        <form action="#" class="form-container" method="POST">
+            <p class="text-center fw-bold">Form Feedback</p>
+            <p style="text-align: justify;">
+                Silahkan diisi ya teman-teman. Bagi yang ingin memberikan feedback dan kritik juga saran, dipersilahkan
+                untuk mengisi form yang ada dibawah ini ya. Terima Kasih
+            </p>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Pesan</label>
+                <textarea type="text" class="form-control" id="message" name="message" rows="3"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col-sm-6 text-end">
+                    <button type="button" class="btn btn-danger" onclick="closeForm()">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="card begin-content">
         <div class="card-header p-0 m-0">
             @include('user.partials.navbar')
@@ -44,7 +88,17 @@
             @yield('content-wrapper')
         </div>
     </div>
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+            document.getElementById("btnShowFeedback").style.display = "none";
+        }
 
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+            document.getElementById("btnShowFeedback").style.display = "block";
+        }
+    </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ URL::to('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     @yield('JS')
