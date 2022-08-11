@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Feedback\FeedbackController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\NewCustomerController;
 use App\Http\Controllers\User\OldCustomerController;
@@ -25,3 +26,5 @@ Route::get('/new-member/bussiness/{id_customer}', [NewCustomerController::class,
 Route::post('/new-member/bussiness/', [NewCustomerController::class, 'storeBussiness']);
 Route::get('/old-member', [OldCustomerController::class, 'index']);
 Route::post('/old-member/{class_customer}/{id_customer}', [OldCustomerController::class, 'showDataCustomer']);
+
+// Route::post('/feedback', [FeedbackController::class, 'FeedbackPost']);

@@ -48,15 +48,16 @@
         }
     </style>
 
-    <button class="btn btn-success bg-gradient fixed-bottom btn-overlay text-white fw-bold" type="button"
-        onclick="openForm()" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-        id="btnShowFeedback">
+    <a class="btn btn-success bg-gradient fixed-bottom btn-overlay text-white fw-bold"
+        href="https://s.id/feedbackformregonline"
+        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" id="btnShowFeedback">
         <i class="fa-solid fa-comments me-1 fa-2x mb-2"></i>
         </br>
         Send Feedback
-    </button>
-    <div class="form-popup" id="myForm">
-        <form action="#" class="form-container" method="POST">
+    </a>
+    {{-- <div class="form-popup" id="myForm">
+        <form action="{{ URL::to('feedback') }}" class="form-container" method="POST" enctype="multipart/form-data">
+            @csrf
             <p class="text-center fw-bold">Form Feedback</p>
             <p style="text-align: justify;">
                 Silahkan diisi ya teman-teman. Bagi yang ingin memberikan feedback dan kritik juga saran, dipersilahkan
@@ -79,7 +80,7 @@
                 </div>
             </div>
         </form>
-    </div>
+    </div> --}}
     <div class="card begin-content">
         <div class="card-header p-0 m-0">
             @include('user.partials.navbar')
