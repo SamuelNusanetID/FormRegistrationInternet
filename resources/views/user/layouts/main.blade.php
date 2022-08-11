@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="{{ URL::to('bin/img/favicon.ico') }}" type="image/x-icon">
+
     <!-- Recaptcha V2 -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- Google Fonts -->
@@ -22,7 +25,7 @@
     <link rel="stylesheet" href="{{ URL::to('bin/css/style.css') }}">
     @yield('CSS')
 
-    <title>Nusanet - {{ $titlePage }}</title>
+    <title>{{ $titlePage }} - FRION (Form Registrasi Internet Online Nusanet)</title>
 </head>
 
 <body>
