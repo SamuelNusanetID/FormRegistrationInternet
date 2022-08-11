@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Customer extends Model
 {
@@ -10,6 +11,7 @@ class Customer extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     protected $fillable = [
+        'id',
         'customer_id',
         'name',
         'address',

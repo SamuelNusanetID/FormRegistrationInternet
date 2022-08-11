@@ -35,7 +35,7 @@ class NewCustomerController extends Controller
         $validator1 = Validator::make(
             $request->all(),
             [
-                'uuid' => 'required',
+                'uuid' => 'required|unique:customers,id',
                 'fullname_personal' => 'required',
                 'id_number_personal' => 'required',
                 'email_address_personal' => 'required|email',
@@ -44,6 +44,7 @@ class NewCustomerController extends Controller
                 'geolocation_personal' => 'required'
             ],
             [
+                'uuid.unique' => 'Session is expired',
                 'fullname_personal.required' => 'Field Nama Lengkap Wajib Diisi',
                 'id_number_personal.required' => 'Field Nomor Identitas Wajib Diisi',
                 'email_address_personal.required' => 'Field Alamat Email Wajib Diisi',
@@ -213,7 +214,7 @@ class NewCustomerController extends Controller
         $validator1 = Validator::make(
             $request->all(),
             [
-                'uuid' => 'required',
+                'uuid' => 'required|unique:customers,id',
                 'pic_name' => 'required',
                 'pic_identity_number' => 'required',
                 'pic_email_address' => 'required|email',
@@ -226,6 +227,7 @@ class NewCustomerController extends Controller
                 'company_phone_number' => 'required',
             ],
             [
+                'uuid.unique' => 'Session is expired',
                 'pic_name.required' => 'Field Nama Lengkap Wajib Diisi',
                 'pic_identity_number.required' => 'Field Nomor Identitas Wajib Diisi',
                 'pic_email_address.required' => 'Field Email Wajib Diisi',

@@ -25,6 +25,11 @@
                     <div class="g-recaptcha" data-sitekey="6LfutlwhAAAAACs1VgAQOYZlok2dejtrePnFt4z0"
                         data-callback="onSubmit" data-size="invisible" data-badge="bottomleft">
                     </div>
+                    @error('uuid')
+                        <div class="text-center mb-3 h3 text-danger fw-bold">
+                            {{ $message }}. Maaf, data kamu tidak tersimpan.
+                        </div>
+                    @enderror
                     <div id="smartwizard">
                         <ul class="nav">
                             <li class="nav-item">
