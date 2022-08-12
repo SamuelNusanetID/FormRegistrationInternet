@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTabelServiceList extends Migration
+class CreateSalesLinkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateTabelServiceList extends Migration
      */
     public function up()
     {
-        Schema::create('services_list', function (Blueprint $table) {
+        Schema::create('sales_link', function (Blueprint $table) {
             $table->id();
-            $table->string('service_name');
-            $table->string('service_price');
+            $table->uuid('uuid');
+            $table->string('nama_sales');
+            $table->string('nama_reseller');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateTabelServiceList extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Services_List');
+        Schema::dropIfExists('sales_link');
     }
 }

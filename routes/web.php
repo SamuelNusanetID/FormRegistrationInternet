@@ -27,4 +27,4 @@ Route::post('/new-member/bussiness/', [NewCustomerController::class, 'storeBussi
 Route::get('/old-member', [OldCustomerController::class, 'index']);
 Route::post('/old-member/{class_customer}/{id_customer}', [OldCustomerController::class, 'showDataCustomer']);
 
-// Route::post('/feedback', [FeedbackController::class, 'FeedbackPost']);
+Route::get('/generate', [NewCustomerController::class, 'generateNewLink']);

@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Approval;
 use App\Models\Billing;
 use App\Models\Customer;
+use App\Models\SalesLink;
 use App\Models\Service;
 use App\Models\ServiceList;
 use App\Models\Technical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
-use Namshi\JOSE\SimpleJWS;
+use Illuminate\Support\Str;
 
 class NewCustomerController extends Controller
 {
@@ -386,5 +386,26 @@ class NewCustomerController extends Controller
         $newApprovals->save();
 
         return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
+    }
+
+    public function generateNewLink(Request $request)
+    {
+        $salesName = $request->get('salesname') != null ? $request->get('salesname') : "";
+        $resellerName = $request->get('resellername') != null ? $request->get('resellername') : null;
+
+        if ($salesName == "" && $resellerName == null) {
+            return redirect()->to('/');
+        }
+
+        $newUUID = (string) Str::orderedUuid();
+
+        $newDataSalesLink = new SalesLink();
+        $dataBaseSave = $newDataSalesLink->create([
+            'uuid' => join(explode("-", $newUUID)),
+            'nama_sales' => $salesName,
+            'nama_reseller' => $resellerName,
+        ]);
+
+        return response()->json($dataBaseSave);
     }
 }
