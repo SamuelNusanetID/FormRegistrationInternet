@@ -74,10 +74,12 @@ class OldCustomerController extends Controller
             $validator4 = Validator::make(
                 $request->all(),
                 [
+                    'new_address' => 'required',
                     'service_product' => 'required',
                     'topRadioBtnBussiness' => 'required'
                 ],
                 [
+                    'new_address.required' => 'Field Alamat Pemasangan Baru Wajib Diisi',
                     'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
                     'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi'
                 ]
@@ -91,6 +93,9 @@ class OldCustomerController extends Controller
 
             // Konversi Data Yang Sudah Ada ke dalam Array
             $UUIDCustomer = $CustomerData->first()->id;
+
+            dd($UUIDCustomer);
+
             $ServiceCustomer = Service::find($UUIDCustomer);
             $OldServiceCustomerObj = json_decode($ServiceCustomer->service_package);
             $OldServiceCustomerArr = [];
@@ -110,15 +115,17 @@ class OldCustomerController extends Controller
             $ServiceCustomer->service_package = json_encode($OldServiceCustomerArr);
             $ServiceCustomer->save();
 
-            return redirect()->to('old-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
+            return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
         } else {
             $validator4 = Validator::make(
                 $request->all(),
                 [
+                    'new_address' => 'required',
                     'service_product' => 'required',
                     'topRadioBtnBussiness' => 'required'
                 ],
                 [
+                    'new_address.required' => 'Field Alamat Pemasangan Baru Wajib Diisi',
                     'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
                     'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi'
                 ]
@@ -161,7 +168,7 @@ class OldCustomerController extends Controller
             $newCustomer->id = $UUIDNewCustomer;
             $newCustomer->customer_id = $id_customer;
             $newCustomer->name = $result->name;
-            $newCustomer->address = $result->address;
+            $newCustomer->address = json_encode([$result->address, $request->get('new_address')]);
             $newCustomer->geolocation = "";
             $newCustomer->class = $class_customer;
             $newCustomer->email = $primaryEmail;
@@ -206,7 +213,7 @@ class OldCustomerController extends Controller
             $newApproval->isRejected = false;
             $newApproval->save();
 
-            return redirect()->to('old-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
+            return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
         }
     }
 

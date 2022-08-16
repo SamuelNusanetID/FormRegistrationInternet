@@ -371,6 +371,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <style>
+                                    #map {
+                                        height: 50em;
+                                    }
+                                </style>
+                                <div class="mb-3" id="map">
+                                </div>
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Alamat Lengkap Pemasangan Baru <span
                                             class="text-danger">*</span></label>
@@ -416,7 +423,14 @@
     <script src="{{ URL::to('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- Smart Wizard -->
     <script src="{{ URL::to('lib/jquery-smartwizard/dist/js/jquery.smartWizard.min.js') }}"></script>
-    <!-- Custom Script JS -->
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
+    <!-- Leaflet Plugin JS -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.1/dist/L.Control.Locate.min.js" charset="utf-8">
+    </script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script>
         $(document).ready(function() {
             $('#smartwizard').smartWizard({
@@ -478,6 +492,25 @@
                 currency: 'IDR',
                 minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
             });
+
+            const map = L.map('map');
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            var lc = L.control.locate().addTo(map);
+            lc.start();
+
+            function onLocationFound(e) {
+                var radius = e.accuracy;
+                L.marker(e.latlng).addTo(map);
+                L.circle(e.latlng, radius).addTo(map);
+            }
+
+            map.on('locationfound', onLocationFound);
+
+            var geocoder = L.Control.geocoder()
+                .on('markgeocode', function(e) {
+                    $('#new_address').val(e.geocode.name);
+                })
+                .addTo(map);
 
             $('#service_product').on('change', function() {
                 $('#serviceOptionBussiness').addClass('mb-3');
