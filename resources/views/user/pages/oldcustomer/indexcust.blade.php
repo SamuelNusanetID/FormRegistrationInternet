@@ -56,7 +56,7 @@
     </div>
 
     @php
-    $messageStatus = session()->has('message') ? session('message') : false;
+    $messageStatus = session()->has('errorMessage') ? session('errorMessage') : false;
     @endphp
 @endsection
 
@@ -67,10 +67,9 @@
         $(document).ready(() => {
             if (msgstat) {
                 Swal.fire({
-                    title: 'Berhasil!',
+                    title: 'Gagal!',
                     text: msgstat,
-                    icon: 'success',
-                    confirmButtonText: 'Baik, akan saya tunggu.'
+                    icon: 'error'
                 })
             }
         });

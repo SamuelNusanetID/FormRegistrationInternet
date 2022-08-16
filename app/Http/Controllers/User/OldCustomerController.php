@@ -38,20 +38,25 @@ class OldCustomerController extends Controller
                     'cid' => $_GET['id']
                 ]);
 
-                if ($response->failed()) {
-                    return back()->with('errorMessage', "Server didn't respond the request ID Number.");
+                if ($response->successful()) {
+                    $resultFetch = json_decode($response->body());
+                    $returnType = gettype($resultFetch);
+
+                    if ($returnType == "array") {
+                        return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
+                    } else {
+                        $datas = [
+                            'titlePage' => 'Customer Lama',
+                            'customerClass' => $resultFetch->company_name == null ? 'Personal' : 'Bussiness',
+                            'customerData' => $resultFetch,
+                            'serviceData' => ServiceList::all()
+                        ];
+
+                        return view('user.pages.oldcustomer.customer', $datas);
+                    }
+                } else {
+                    return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
                 }
-
-                $result = json_decode($response->body());
-
-                $datas = [
-                    'titlePage' => 'Customer Lama',
-                    'customerClass' => $result->company_name == null ? 'Personal' : 'Bussiness',
-                    'customerData' => $result,
-                    'serviceData' => ServiceList::all()
-                ];
-
-                return view('user.pages.oldcustomer.customer', $datas);
             }
         } else {
             $datas = [

@@ -41,7 +41,9 @@ class NewCustomerController extends Controller
                 'email_address_personal' => 'required|email',
                 'phone_number_personal' => 'required',
                 'address_personal' => 'required',
-                'geolocation_personal' => 'required'
+                'geolocation_personal' => 'required',
+                'service_identity_photo' => 'required|mimes:jpeg,jpg,png|max:2048',
+                'service_selfie_photo' => 'required|mimes:jpeg,jpg,png|max:2048'
             ],
             [
                 'uuid.unique' => 'Session is expired',
@@ -50,7 +52,13 @@ class NewCustomerController extends Controller
                 'email_address_personal.required' => 'Field Alamat Email Wajib Diisi',
                 'email_address_personal.email' => 'Email Tidak Valid',
                 'phone_number_personal.required' => 'Field Nomor HP/WA Wajib Diisi',
-                'address_personal.required' => 'Field Alamat Lengkap Wajib Diisi'
+                'address_personal.required' => 'Field Alamat Lengkap Wajib Diisi',
+                'service_identity_photo.required' => 'Field Foto Identitas Wajib Diisi',
+                'service_identity_photo.mimes' => 'Field Foto Identitas harus berformat jpeg,jpg,png',
+                'service_identity_photo.max' => 'Field Foto Identitas harus berukuran min. 2 MB',
+                'service_selfie_photo.required' => 'Field Selfie dengan Foto Identitas Wajib Diisi',
+                'service_selfie_photo.mimes' => 'Field Selfie dengan Foto Identitas harus berformat jpeg,jpg,png',
+                'service_selfie_photo.max' => 'Field Selfie dengan Foto Identitas harus berukuran min. 2 MB'
             ]
         );
 
@@ -109,19 +117,11 @@ class NewCustomerController extends Controller
             $request->all(),
             [
                 'service_product' => 'required',
-                'topRadioBtnPersonal' => 'required',
-                'service_identity_photo' => 'required|mimes:jpeg,jpg,png|max:2048',
-                'service_selfie_photo' => 'required|mimes:jpeg,jpg,png|max:2048'
+                'topRadioBtnPersonal' => 'required'
             ],
             [
                 'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
-                'topRadioBtnPersonal.required' => 'Field Jenis Pembayaran Wajib Diisi',
-                'service_identity_photo.required' => 'Field Foto Identitas Wajib Diisi',
-                'service_identity_photo.mimes' => 'Field Foto Identitas harus berformat jpeg,jpg,png',
-                'service_identity_photo.max' => 'Field Foto Identitas harus berukuran min. 2 MB',
-                'service_selfie_photo.required' => 'Field Selfie dengan Foto Identitas Wajib Diisi',
-                'service_selfie_photo.mimes' => 'Field Selfie dengan Foto Identitas harus berformat jpeg,jpg,png',
-                'service_selfie_photo.max' => 'Field Selfie dengan Foto Identitas harus berukuran min. 2 MB'
+                'topRadioBtnPersonal.required' => 'Field Jenis Pembayaran Wajib Diisi'
             ]
         );
 
@@ -225,6 +225,8 @@ class NewCustomerController extends Controller
                 'company_address' => 'required',
                 'company_npwp' => 'required',
                 'company_phone_number' => 'required',
+                'service_identity_photo' => 'required|mimes:jpeg,jpg,png|max:2048',
+                'service_selfie_photo' => 'required|mimes:jpeg,jpg,png|max:2048'
             ],
             [
                 'uuid.unique' => 'Session is expired',
@@ -238,6 +240,12 @@ class NewCustomerController extends Controller
                 'company_address.required' => 'Field Alamat Perusahaan Wajib Diisi',
                 'company_npwp.required' => 'Field Nomor NPWP Perusahaan Wajib Diisi',
                 'company_phone_number.required' => 'Field Nomor Telepon Perusahaan Wajib Diisi',
+                'service_identity_photo.required' => 'Field Foto Identitas Wajib Diisi',
+                'service_identity_photo.mimes' => 'Field Foto Identitas harus berformat jpeg,jpg,png',
+                'service_identity_photo.max' => 'Field Foto Identitas harus berukuran min. 2 MB',
+                'service_selfie_photo.required' => 'Field Selfie dengan Foto Identitas Wajib Diisi',
+                'service_selfie_photo.mimes' => 'Field Selfie dengan Foto Identitas harus berformat jpeg,jpg,png',
+                'service_selfie_photo.max' => 'Field Selfie dengan Foto Identitas harus berukuran min. 2 MB'
             ]
         );
 
@@ -296,19 +304,11 @@ class NewCustomerController extends Controller
             $request->all(),
             [
                 'service_product' => 'required',
-                'topRadioBtnBussiness' => 'required',
-                'service_identity_photo' => 'required|mimes:jpeg,jpg,png|max:2048',
-                'service_selfie_photo' => 'required|mimes:jpeg,jpg,png|max:2048'
+                'topRadioBtnBussiness' => 'required'
             ],
             [
                 'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
-                'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi',
-                'service_identity_photo.required' => 'Field Foto Identitas Wajib Diisi',
-                'service_identity_photo.mimes' => 'Field Foto Identitas harus berformat jpeg,jpg,png',
-                'service_identity_photo.max' => 'Field Foto Identitas harus berukuran min. 2 MB',
-                'service_selfie_photo.required' => 'Field Selfie dengan Foto Identitas Wajib Diisi',
-                'service_selfie_photo.mimes' => 'Field Selfie dengan Foto Identitas harus berformat jpeg,jpg,png',
-                'service_selfie_photo.max' => 'Field Selfie dengan Foto Identitas harus berukuran min. 2 MB'
+                'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi'
             ]
         );
 

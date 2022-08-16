@@ -22,9 +22,9 @@
                 <form action="{{ URL::to('new-member/personal') }}" method="POST" id="personalForm"
                     enctype="multipart/form-data">
                     @csrf
-                    <div class="g-recaptcha" data-sitekey="6LfutlwhAAAAACs1VgAQOYZlok2dejtrePnFt4z0"
+                    {{-- <div class="g-recaptcha" data-sitekey="6LfutlwhAAAAACs1VgAQOYZlok2dejtrePnFt4z0"
                         data-callback="onSubmit" data-size="invisible" data-badge="bottomleft">
-                    </div>
+                    </div> --}}
                     @error('uuid')
                         <div class="text-center mb-3 h3 text-danger fw-bold">
                             {{ $message }}. Maaf, data kamu tidak tersimpan.
@@ -573,12 +573,6 @@
                 }
             }
 
-        });
-    </script>
-
-    <script>
-        $(document).ready(() => {
-            grecaptcha.execute();
         });
     </script>
 @endsection
