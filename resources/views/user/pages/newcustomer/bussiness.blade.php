@@ -41,7 +41,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#billing-info">
                                     <span class="num"><i class="fa-solid fa-money-bill-wave"></i></span>
-                                    Data Billing
+                                    Data Pembayaran
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -138,9 +138,9 @@
                                                     class="text-danger">*</span></label>
                                             <textarea class="form-control @error('pic_address') is-invalid @enderror" id="pic_address" name="pic_address"
                                                 aria-describedby="pic_address_help" rows="4" placeholder="Masukkan Alamat Lengkap Anda...">{{ old('pic_address') }}</textarea>
-                                            <div id="pic_address_help" class="form-text mb-1">Alamat ini digunakan
-                                                sebagai
-                                                alamat pemasangan perangkat.</div>
+                                            <div id="pic_address_help" class="form-text mb-1">
+                                                Alamat ini digunakan sebagai alamat pemasangan internet.
+                                            </div>
                                             @error('pic_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -179,9 +179,8 @@
                                                 <span class="text-danger">*</span></label>
                                             <input type="text"
                                                 class="form-control @error('company_npwp') is-invalid @enderror"
-                                                id="company_npwp" name="company_npwp"
-                                                placeholder="Masukkan Nomor NPWP Perusahaan Anda..."
-                                                value="{{ old('company_npwp') }}">
+                                                name="company_npwp" placeholder="__.___.___._-___.___" data-slots="_"
+                                                size="13" value="{{ old('company_npwp') }}">
                                             @error('company_npwp')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -203,13 +202,23 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="company_employees" class="form-label">Jumlah Karyawan</label>
-                                            <input type="text"
-                                                class="form-control @error('company_employees') is-invalid @enderror"
-                                                id="company_employees" name="company_employees"
-                                                placeholder="Masukkan Jumlah Karyawan di Perusahaan Anda..."
-                                                value="{{ old('company_employees') }}">
-                                            @error('company_employees')
+                                            <label for="service_identity_photo" class="form-label">Upload Foto KTP</label>
+                                            <input
+                                                class="form-control @error('service_identity_photo') is-invalid @enderror"
+                                                type="file" id="service_identity_photo" name="service_identity_photo">
+                                            @error('service_identity_photo')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="service_selfie_photo" class="form-label">Upload Foto Selfie dengan
+                                                KTP</label>
+                                            <input
+                                                class="form-control @error('service_selfie_photo') is-invalid @enderror"
+                                                type="file" id="service_selfie_photo" name="service_selfie_photo">
+                                            @error('service_selfie_photo')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -459,27 +468,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="service_identity_photo" class="form-label">Upload Foto KTP</label>
-                                    <input class="form-control @error('service_identity_photo') is-invalid @enderror"
-                                        type="file" id="service_identity_photo" name="service_identity_photo">
-                                    @error('service_identity_photo')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="service_selfie_photo" class="form-label">Upload Foto Selfie dengan
-                                        KTP</label>
-                                    <input class="form-control @error('service_selfie_photo') is-invalid @enderror"
-                                        type="file" id="service_selfie_photo" name="service_selfie_photo">
-                                    @error('service_selfie_photo')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
                             </div>
                             <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info">
                                 <div class="container-fluid p-5 mb-3" id="terms-and-condition">
@@ -633,10 +621,40 @@
             }
         });
     </script>
-
+    <script src="{{ URL::to('lib/jQuerymask/regex-mask-plugin.js') }}"></script>
     <script>
-        $(document).ready(() => {
+        $('#bussinessForm').on('submit', () => {
             grecaptcha.execute();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            for (const el of document.querySelectorAll("[placeholder][data-slots]")) {
+                const pattern = el.getAttribute("placeholder"),
+                    slots = new Set(el.dataset.slots || "_"),
+                    prev = (j => Array.from(pattern, (c, i) => slots.has(c) ? j = i + 1 : j))(0),
+                    first = [...pattern].findIndex(c => slots.has(c)),
+                    accept = new RegExp(el.dataset.accept || "\\d", "g"),
+                    clean = input => {
+                        input = input.match(accept) || [];
+                        return Array.from(pattern, c =>
+                            input[0] === c || slots.has(c) ? input.shift() || c : c
+                        );
+                    },
+                    format = () => {
+                        const [i, j] = [el.selectionStart, el.selectionEnd].map(i => {
+                            i = clean(el.value.slice(0, i)).findIndex(c => slots.has(c));
+                            return i < 0 ? prev[prev.length - 1] : back ? prev[i - 1] || first : i;
+                        });
+                        el.value = clean(el.value).join``;
+                        el.setSelectionRange(i, j);
+                        back = false;
+                    };
+                let back = false;
+                el.addEventListener("keydown", (e) => back = e.key === "Backspace");
+                el.addEventListener("input", format);
+                el.addEventListener("focus", format);
+                el.addEventListener("blur", () => el.value === pattern && (el.value = ""));
+            }
         });
     </script>
 @endsection
