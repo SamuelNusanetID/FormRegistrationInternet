@@ -41,7 +41,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#billing-info">
                                     <span class="num"><i class="fa-solid fa-money-bill-wave"></i></span>
-                                    Data Billing
+                                    Data Pembayaran
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -125,6 +125,28 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <div class="mb-3">
+                                            <label for="service_identity_photo" class="form-label">Upload Foto KTP</label>
+                                            <input
+                                                class="form-control @error('service_identity_photo') is-invalid @enderror"
+                                                type="file" id="service_identity_photo" name="service_identity_photo">
+                                            @error('service_identity_photo')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="service_selfie_photo" class="form-label">Upload Foto Selfie dengan
+                                                KTP</label>
+                                            <input class="form-control @error('service_selfie_photo') is-invalid @enderror"
+                                                type="file" id="service_selfie_photo" name="service_selfie_photo">
+                                            @error('service_selfie_photo')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="col-0 col-md-6">
                                         <style>
@@ -140,9 +162,9 @@
                                             <textarea class="form-control @error('address_personal') is-invalid @enderror" id="address_personal"
                                                 name="address_personal" aria-describedby="address_personal_help" rows="3"
                                                 placeholder="Masukkan Alamat Lengkap Anda...">{{ old('address_personal') }}</textarea>
-                                            <div id="address_personal_help" class="form-text mb-1">Alamat ini digunakan
-                                                sebagai
-                                                alamat pemasangan perangkat.</div>
+                                            <div id="address_personal_help" class="form-text mb-1">
+                                                Alamat ini digunakan sebagai alamat pemasangan internet.
+                                            </div>
                                             @error('address_personal')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -396,27 +418,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="service_identity_photo" class="form-label">Upload Foto KTP</label>
-                                    <input class="form-control @error('service_identity_photo') is-invalid @enderror"
-                                        type="file" id="service_identity_photo" name="service_identity_photo">
-                                    @error('service_identity_photo')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="service_selfie_photo" class="form-label">Upload Foto Selfie dengan
-                                        KTP</label>
-                                    <input class="form-control @error('service_selfie_photo') is-invalid @enderror"
-                                        type="file" id="service_selfie_photo" name="service_selfie_photo">
-                                    @error('service_selfie_photo')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info">

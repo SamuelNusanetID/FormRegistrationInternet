@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ServiceList extends Model
 {
-    protected $table = 'Services_List';
+    protected $table = 'services_list';
     protected $primaryKey = 'id';
     protected $fillable = [
         'service_name',
