@@ -93,9 +93,7 @@ class OldCustomerController extends Controller
 
             // Konversi Data Yang Sudah Ada ke dalam Array
             $UUIDCustomer = $CustomerData->first()->id;
-
-            dd($UUIDCustomer);
-
+            dd($request->all());
             $ServiceCustomer = Service::find($UUIDCustomer);
             $OldServiceCustomerObj = json_decode($ServiceCustomer->service_package);
             $OldServiceCustomerArr = [];

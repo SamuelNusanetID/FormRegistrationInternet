@@ -185,7 +185,7 @@
                                                 name="isdataBillersamewithdataPersonal"
                                                 {{ old('isdataBillersamewithdataPersonal') == 'true' ? ' checked' : '' }}>
                                             <label class="form-check-label" for="isdataBillersamewithdataPersonal">
-                                                Data biller sama dengan data personal
+                                                Data pembayaran sama dengan data personal
                                             </label>
                                         </div>
                                         <div class="mb-3">

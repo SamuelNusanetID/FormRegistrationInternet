@@ -235,7 +235,7 @@
                                                 id="isdataBillersamewithdataPic" name="isdataBillersamewithdataPic">
                                             <label class="form-check-label" for="isdataBillersamewithdataPic"
                                                 {{ old('isdataBillersamewithdataPic') == 'true' ? ' checked' : '' }}>
-                                                Data biller sama dengan data penanggung jawab
+                                                Data pembayaran sama dengan data penanggung jawab
                                             </label>
                                         </div>
                                         <div class="mb-3">

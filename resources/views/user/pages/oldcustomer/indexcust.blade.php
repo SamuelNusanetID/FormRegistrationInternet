@@ -57,6 +57,7 @@
 
     @php
     $messageStatusSuccess = session()->has('successMessage') ? session('successMessage') : false;
+    $messageStatusError = session()->has('errorMessage') ? session('errorMessage') : false;
     @endphp
 @endsection
 
@@ -64,6 +65,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
         var msgstatSucc = "<?php echo "$messageStatusSuccess"; ?>";
+        var msgstatErr = "<?php echo "$messageStatusError"; ?>";
         $(document).ready(() => {
             if (msgstatSucc) {
                 Swal.fire({
@@ -71,10 +73,10 @@
                     text: msgstatSucc,
                     icon: 'success'
                 })
-            } else {
+            } else if (msgstatErr) {
                 Swal.fire({
                     title: 'Gagal!',
-                    text: msgstatSucc,
+                    text: msgstatErr,
                     icon: 'error'
                 })
             }
