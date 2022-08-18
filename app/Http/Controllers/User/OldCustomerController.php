@@ -45,6 +45,8 @@ class OldCustomerController extends Controller
                     if ($returnType == "array") {
                         return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
                     } else {
+                        $resultFetch->address = json_encode([$resultFetch->address]);
+
                         $datas = [
                             'titlePage' => 'Customer Lama',
                             'customerClass' => $resultFetch->company_name == null ? 'Personal' : 'Bussiness',
@@ -93,7 +95,24 @@ class OldCustomerController extends Controller
 
             // Konversi Data Yang Sudah Ada ke dalam Array
             $UUIDCustomer = $CustomerData->first()->id;
-            dd($request->all());
+            $customerDataFetch = Customer::find($UUIDCustomer);
+            $newSavedDataAddress = json_decode($customerDataFetch->address);
+            $isSame = false;
+            foreach (json_decode($customerDataFetch->address) as $key => $value) {
+                if ($value != $request->get('new_address')) {
+                    $isSame = false;
+                } else {
+                    $isSame = true;
+                }
+            }
+
+            if ($isSame == false) {
+                array_push($newSavedDataAddress, $request->get('new_address'));
+            }
+
+            $customerDataFetch->address = json_encode($newSavedDataAddress);
+            $customerDataFetch->save();
+
             $ServiceCustomer = Service::find($UUIDCustomer);
             $OldServiceCustomerObj = json_decode($ServiceCustomer->service_package);
             $OldServiceCustomerArr = [];
@@ -166,7 +185,7 @@ class OldCustomerController extends Controller
             $newCustomer->id = $UUIDNewCustomer;
             $newCustomer->customer_id = $id_customer;
             $newCustomer->name = $result->name;
-            $newCustomer->address = json_encode([$result->address, $request->get('new_address')]);
+            $newCustomer->address = $result->address == $request->get('new_address') ? json_encode([$result->address]) : json_encode([$result->address, $request->get('new_address')]);
             $newCustomer->geolocation = "";
             $newCustomer->class = $class_customer;
             $newCustomer->email = $primaryEmail;

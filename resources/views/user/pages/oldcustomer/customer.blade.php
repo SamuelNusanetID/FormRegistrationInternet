@@ -78,12 +78,13 @@
                                         <div class="mb-3">
                                             <label for="address" class="form-label">Alamat Lengkap <span
                                                     class="text-danger">*</span></label>
-                                            @foreach (json_decode($customerData->address) as $item)
-                                                <textarea class="form-control" id="address" name="address" aria-describedby="address" rows="4" readonly>{{ $item }}</textarea>
-                                                <div id="pic_address_help" class="form-text mb-3">Alamat ini digunakan
-                                                    sebagai
-                                                    alamat pemasangan internet.</div>
+                                            @foreach (json_decode($customerData->address) as $key => $value)
+                                                <textarea class="form-control {{ count(json_decode($customerData->address)) > 1 ? 'mb-3' : null }}"
+                                                    id="address-{{ $key }}" name="address[]" aria-describedby="address" rows="4" readonly>{{ $value }}</textarea>
                                             @endforeach
+                                            <div id="pic_address_help" class="form-text mb-3">Alamat ini digunakan
+                                                sebagai
+                                                alamat pemasangan internet.</div>
                                         </div>
                                     </div>
                                 </div>
@@ -589,20 +590,23 @@
                 }
             }
 
-            var oldalamatPasang = $('#address').val().split('');
-            var countChar = oldalamatPasang.length;
-            var maskingSum = Math.round(countChar / 2);
+            var countedData = {!! json_encode(count(json_decode($customerData->address))) !!};
+            for (let index = 0; index < countedData; index++) {
+                var oldalamatPasang = $(`#address-${index}`).val().split('');
+                var countChar = oldalamatPasang.length;
+                var maskingSum = Math.round(countChar / 2);
 
-            var newValueAlamatPasang = [];
-            for (let x = 0; x < maskingSum; x++) {
-                newValueAlamatPasang[x] = "*";
+                var newValueAlamatPasang = [];
+                for (let x = 0; x < maskingSum; x++) {
+                    newValueAlamatPasang[x] = "*";
+                }
+
+                for (let y = maskingSum; y < countChar; y++) {
+                    newValueAlamatPasang[y] = oldalamatPasang[y];
+                }
+
+                $(`#address-${index}`).val(newValueAlamatPasang.join(''));
             }
-
-            for (let y = maskingSum; y < countChar; y++) {
-                newValueAlamatPasang[y] = oldalamatPasang[y];
-            }
-
-            $('#address').val(newValueAlamatPasang.join(''));
         });
     </script>
 @endsection
