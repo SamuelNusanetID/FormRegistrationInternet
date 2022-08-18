@@ -33,39 +33,56 @@
                     <div id="smartwizard">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#person-in-charge">
+                                <a class="nav-link" href="#form-step-0">
                                     <div class="num"><i class="fa-solid fa-user"></i></div>
                                     Data Penanggung Jawab
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#billing-info">
+                                <a class="nav-link" href="#form-step-1">
                                     <span class="num"><i class="fa-solid fa-money-bill-wave"></i></span>
                                     Data Pembayaran
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#technical-info">
+                                <a class="nav-link" href="#form-step-2">
                                     <span class="num"><i class="fa-solid fa-list-check"></i></span>
                                     Data Teknis
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#service-info">
+                                <a class="nav-link" href="#form-step-3">
                                     <span class="num"><i class="fas fa-people-carry"></i></span>
                                     Data Layanan
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#terms-info">
+                                <a class="nav-link" href="#form-step-4">
                                     <span class="num"><i class="fas fa-scroll"></i></span>
                                     Syarat & Ketentuan
                                 </a>
                             </li>
                         </ul>
+                        <style>
+                            .form-control.error {
+                                border-color: #dc3545;
+                                padding-right: calc(1.5em + .75rem);
+                                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+                                background-repeat: no-repeat;
+                                background-position: right calc(.375em + .1875rem) center;
+                                background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+                            }
 
+                            .error {
+                                width: 100%;
+                                margin-top: .25rem;
+                                font-size: .875em;
+                                color: #dc3545;
+                            }
+                        </style>
                         <div class="tab-content">
-                            <div id="person-in-charge" class="tab-pane" role="tabpanel" aria-labelledby="person-in-charge">
+                            <div id="form-step-0" class="tab-pane" role="tabpanel" aria-labelledby="form-step-0"
+                                style="overflow-y:scroll; max-height:100%;">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
                                         <input type="hidden" name="uuid" value="{{ Request::segment(3) }}">
@@ -227,7 +244,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="billing-info" class="tab-pane" role="tabpanel" aria-labelledby="billing-info">
+                            <div id="form-step-1" class="tab-pane" role="tabpanel" aria-labelledby="form-step-1"
+                                style="overflow-y:scroll; max-height:100%;">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
                                         <div class="form-check mb-2">
@@ -315,7 +333,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="technical-info" class="tab-pane" role="tabpanel" aria-labelledby="technical-info">
+                            <div id="form-step-2" class="tab-pane" role="tabpanel" aria-labelledby="form-step-2"
+                                style="overflow-y:scroll; max-height:100%;">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
                                         <div class="form-check mb-2">
@@ -374,8 +393,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
-                                style="height: 100%; overflow:auto;">
+                            <div id="form-step-3" class="tab-pane" role="tabpanel" aria-labelledby="form-step-3"
+                                style="overflow-y:scroll; max-height:100%;">
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
                                     <div class="" id="serviceOptionBussiness">
                                         <label for="service_product" class="form-label">Pilihan Layanan
@@ -469,7 +488,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info">
+                            <div id="form-step-4" class="tab-pane" role="tabpanel" aria-labelledby="form-step-4"
+                                style="overflow-y:scroll; max-height:100%;">
                                 <div class="container-fluid p-5 mb-3" id="terms-and-condition">
                                     @include('user.pages.terms.index')
                                 </div>
@@ -504,6 +524,10 @@
     <!-- Bootstrap 5.1 -->
     <script src="{{ URL::to('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- Smart Wizard -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
     <script src="{{ URL::to('lib/jquery-smartwizard/dist/js/jquery.smartWizard.min.js') }}"></script>
     <!-- Custom Script JS -->
     <script src="{{ URL::to('bin/js/newCustomer/bussiness/smartwizard.js') }}"></script>

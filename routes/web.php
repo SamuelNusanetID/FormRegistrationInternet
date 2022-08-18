@@ -23,7 +23,7 @@ Route::get('/new-member', [HomeController::class, 'newcustomerclass']);
 Route::get('/new-member/personal/{id_customer}', [NewCustomerController::class, 'indexPersonal']);
 Route::post('/new-member/personal', [NewCustomerController::class, 'storePersonal']);
 Route::get('/new-member/bussiness/{id_customer}', [NewCustomerController::class, 'indexBussiness']);
-Route::post('/new-member/bussiness/', [NewCustomerController::class, 'storeBussiness']);
+Route::post('/new-member/bussiness', [NewCustomerController::class, 'storeBussiness']);
 Route::get('/old-member', [OldCustomerController::class, 'index']);
 Route::post('/old-member/{class_customer}/{id_customer}', [OldCustomerController::class, 'showDataCustomer']);
 
