@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Customer extends Model
 {
@@ -22,9 +21,7 @@ class Customer extends Model
         'company_name',
         'company_address',
         'company_npwp',
-        'company_phone_number',
-        'company_employees',
-        'reference_id'
+        'company_phone_number'
     ];
 
     public function billing()

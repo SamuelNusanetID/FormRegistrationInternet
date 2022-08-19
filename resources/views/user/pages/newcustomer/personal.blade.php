@@ -352,14 +352,18 @@
                                             name="service_product" id="service_product">
                                             <option disabled selected>Pilih Jenis Layanan...</option>
                                             @foreach ($servicesData as $service)
-                                                @if (old('service_product') == $service->service_name)
-                                                    <option value="{{ $service->service_name }}" selected>
-                                                        {{ $service->service_name }} - Rp. {{ $service->service_price }},-
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $service->service_name }}">
-                                                        {{ $service->service_name }} => Rp. @convert((int) $service->service_price) / Bulan
-                                                    </option>
+                                                @if ($service->category == 'Personal')
+                                                    @if (old('service_product') == $service->package_name)
+                                                        <option value="{{ $service->package_name }}" selected>
+                                                            {{ $service->package_name }} - Rp.
+                                                            {{ $service->package_price }},-
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $service->package_name }}">
+                                                            {{ $service->package_name }} => Rp. @convert((int) $service->package_price) /
+                                                            {{ $service->period }}
+                                                        </option>
+                                                    @endif
                                                 @endif
                                             @endforeach
                                         </select>
@@ -439,8 +443,9 @@
                                 </div>
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="termsCbo" name="termsCbo">
-                                    <label class="form-check-label" for="termsCbo">Saya menyetujui syarat dan
-                                        ketentuan yang berlaku</label>
+                                    <label class="form-check-label" for="termsCbo">
+                                        Saya menyetujui syarat dan ketentuan yang berlaku
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -530,10 +535,11 @@
 
                     var serviceData = {!! json_encode($servicesData) !!};
                     serviceData.forEach(element => {
-                        if (element.service_name == $('#service_product').val()) {
-                            $('#serviceName').val(element.service_name);
+                        if (element.package_name == $('#service_product').val() && element.period ==
+                            'Bulanan') {
+                            $('#serviceName').val(element.package_name);
                             $('#servicePrice').val(formatter.format(element
-                                .service_price));
+                                .package_price));
                             $('#termofpaymentDeals').val("Bulanan");
                         }
                     });
@@ -543,10 +549,11 @@
 
                     var serviceData = {!! json_encode($servicesData) !!};
                     serviceData.forEach(element => {
-                        if (element.service_name == $('#service_product').val()) {
-                            $('#serviceName').val(element.service_name);
+                        if (element.package_name == $('#service_product').val() && element.period ==
+                            'Tahunan') {
+                            $('#serviceName').val(element.package_name);
                             $('#servicePrice').val(formatter.format(element
-                                .service_price * 12));
+                                .package_price));
                             $('#termofpaymentDeals').val("Tahunan");
                         }
                     });
@@ -566,10 +573,11 @@
 
                         var serviceData = {!! json_encode($servicesData) !!};
                         serviceData.forEach(element => {
-                            if (element.service_name == $('#service_product').val()) {
-                                $('#serviceName').val(element.service_name);
+                            if (element.package_name == $('#service_product').val() && element.period ==
+                                'Bulanan') {
+                                $('#serviceName').val(element.package_name);
                                 $('#servicePrice').val(formatter.format(element
-                                    .service_price));
+                                    .package_price));
                                 $('#termofpaymentDeals').val("Bulanan");
                             }
                         });
@@ -579,10 +587,11 @@
 
                         var serviceData = {!! json_encode($servicesData) !!};
                         serviceData.forEach(element => {
-                            if (element.service_name == $('#service_product').val()) {
-                                $('#serviceName').val(element.service_name);
+                            if (element.package_name == $('#service_product').val() && element.period ==
+                                'Tahunan') {
+                                $('#serviceName').val(element.package_name);
                                 $('#servicePrice').val(formatter.format(element
-                                    .service_price * 12));
+                                    .package_price));
                                 $('#termofpaymentDeals').val("Tahunan");
                             }
                         });
