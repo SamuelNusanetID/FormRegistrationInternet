@@ -8,24 +8,62 @@
                 <p class="text-center">Pilih Tipe Pelanggan</p>
                 <div class="row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                        <a href="{{ URL::to(Request::segment(1) . '/personal/' . $UUID) }}" style="text-decoration: none;">
-                            <div class="card btn-pelanggan-baru">
-                                <div class="card-body text-center">
-                                    <img class="img-fluid mb-3" src="{{ URL::to('bin/img/personal.png') }}" width="70">
-                                    <p class="h5">Personal</p>
+                        @if (isset($salesID))
+                            <form action="{{ URL::to(Request::segment(1) . '/personal/' . $UUID) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="salesID" value="{{ $salesID }}">
+                                <div class="card btn-pelanggan-baru">
+                                    <button class="btn p-0 m-0 text-white"
+                                        style="text-decoration: none; background: transparent;" type="submit">
+                                        <div class="card-body text-center">
+                                            <img class="img-fluid mb-3" src="{{ URL::to('bin/img/personal.png') }}"
+                                                width="70">
+                                            <p class="h5">Personal</p>
+                                        </div>
+                                    </button>
                                 </div>
-                            </div>
-                        </a>
+                            </form>
+                        @else
+                            <a href="{{ URL::to(Request::segment(1) . '/personal/' . $UUID) }}"
+                                style="text-decoration: none;">
+                                <div class="card btn-pelanggan-baru">
+                                    <div class="card-body text-center">
+                                        <img class="img-fluid mb-3" src="{{ URL::to('bin/img/personal.png') }}"
+                                            width="70">
+                                        <p class="h5">Personal</p>
+                                    </div>
+                                </div>
+                            </a>
+                        @endif
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ URL::to(Request::segment(1) . '/bussiness/' . $UUID) }}" style="text-decoration: none;">
-                            <div class="card btn-pelanggan-lama">
-                                <div class="card-body text-center">
-                                    <img class="img-fluid mb-3" src="{{ URL::to('bin/img/bisnis.png') }}" width="70">
-                                    <p class="h5">Bisnis</p>
+                        @if (isset($salesID))
+                            <form action="{{ URL::to(Request::segment(1) . '/bussiness/' . $UUID) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="salesID" value="{{ $salesID }}">
+                                <div class="card btn-pelanggan-lama">
+                                    <button class="btn p-0 m-0 text-white"
+                                        style="text-decoration: none; background: transparent;" type="submit">
+                                        <div class="card-body text-center">
+                                            <img class="img-fluid mb-3" src="{{ URL::to('bin/img/bisnis.png') }}"
+                                                width="70">
+                                            <p class="h5">Bisnis</p>
+                                        </div>
+                                    </button>
                                 </div>
-                            </div>
-                        </a>
+                            </form>
+                        @else
+                            <a href="{{ URL::to(Request::segment(1) . '/bussiness/' . $UUID) }}"
+                                style="text-decoration: none;">
+                                <div class="card btn-pelanggan-lama">
+                                    <div class="card-body text-center">
+                                        <img class="img-fluid mb-3" src="{{ URL::to('bin/img/bisnis.png') }}"
+                                            width="70">
+                                        <p class="h5">Bisnis</p>
+                                    </div>
+                                </div>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>

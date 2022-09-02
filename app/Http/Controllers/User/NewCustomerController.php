@@ -72,12 +72,14 @@ class NewCustomerController extends Controller
             DB::table('technicals')->insert($savedDataTechnical);
 
             $fileIdentityPhoto = $requestAPI->file('service_identity_photo');
-            $tujuan_upload = public_path() . '/bin/img/Personal/Identity';
-            $fileIdentityPhoto->move($tujuan_upload, $fileIdentityPhoto->getClientOriginalName());
+            $tujuan_upload1 = public_path().'/bin/img/Personal/Identity';
+            $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
+            $urlSaved1 = url('/bin/img/Personal/Identity/'. $fileIdentityPhoto->getClientOriginalName());
 
             $fileSelfiePhoto = $requestAPI->file('service_selfie_photo');
-            $tujuan_upload = public_path() . '/bin/img/Personal/SelfieID';
-            $fileSelfiePhoto->move($tujuan_upload, $fileSelfiePhoto->getClientOriginalName());
+            $tujuan_upload2 = public_path().'/bin/img/Personal/SelfieID';
+            $fileSelfiePhoto->move($tujuan_upload2, $fileSelfiePhoto->getClientOriginalName());
+            $urlSaved2 = url('/bin/img/Personal/SelfieID/'. $fileSelfiePhoto->getClientOriginalName());
 
             $savedDataService = [
                 'id' => $uuid,
@@ -88,8 +90,8 @@ class NewCustomerController extends Controller
                         'termofpaymentDeals' => $requestAPI->get('termofpaymentDeals')
                     ],
                 ]),
-                'id_photo_url' => $tujuan_upload . '/' . $fileIdentityPhoto->getClientOriginalName(),
-                'selfie_id_photo_url' => $tujuan_upload . '/' . $fileSelfiePhoto->getClientOriginalName(),
+                'id_photo_url' => $urlSaved1,
+                'selfie_id_photo_url' => $urlSaved2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -167,12 +169,14 @@ class NewCustomerController extends Controller
             DB::table('technicals')->insert($savedDataTechnical);
 
             $fileIdentityPhoto = $requestAPI->file('service_identity_photo');
-            $tujuan_upload = public_path() . '/bin/img/Bussiness/Identity';
-            $fileIdentityPhoto->move($tujuan_upload, $fileIdentityPhoto->getClientOriginalName());
+            $tujuan_upload1 = public_path().'/bin/img/Personal/Identity';
+            $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
+            $urlSaved1 = url('/bin/img/Personal/Identity/'. $fileIdentityPhoto->getClientOriginalName());
 
             $fileSelfiePhoto = $requestAPI->file('service_selfie_photo');
-            $tujuan_upload = public_path() . '/bin/img/Bussiness/SelfieID';
-            $fileSelfiePhoto->move($tujuan_upload, $fileSelfiePhoto->getClientOriginalName());
+            $tujuan_upload2 = public_path().'/bin/img/Personal/SelfieID';
+            $fileSelfiePhoto->move($tujuan_upload2, $fileSelfiePhoto->getClientOriginalName());
+            $urlSaved2 = url('/bin/img/Personal/SelfieID/'. $fileSelfiePhoto->getClientOriginalName());
 
             $savedDataService = [
                 'id' => $uuid,
@@ -183,8 +187,8 @@ class NewCustomerController extends Controller
                         'termofpaymentDeals' => $requestAPI->get('termofpaymentDeals')
                     ],
                 ]),
-                'id_photo_url' => $tujuan_upload . '/' . $fileIdentityPhoto->getClientOriginalName(),
-                'selfie_id_photo_url' => $tujuan_upload . '/' . $fileSelfiePhoto->getClientOriginalName(),
+                'id_photo_url' => $urlSaved1,
+                'selfie_id_photo_url' => $urlSaved2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];

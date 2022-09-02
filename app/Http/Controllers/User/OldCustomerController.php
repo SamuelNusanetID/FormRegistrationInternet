@@ -34,12 +34,13 @@ class OldCustomerController extends Controller
 
                 return view('user.pages.oldcustomer.customer', $datas);
             } else {
-                $response = Http::get('https://is.nusa.net.id/o/08b5411f848a2581a41672a759c87380/customer.php', [
-                    'cid' => $_GET['id']
-                ]);
+                $response = Http::withHeaders([
+                    'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
+                ])->get('https://legacy.is5.nusa.net.id/customers/'.$_GET['id']);
 
                 if ($response->successful()) {
                     $resultFetch = json_decode($response->body());
+
                     $returnType = gettype($resultFetch);
 
                     if ($returnType == "array") {
@@ -47,9 +48,18 @@ class OldCustomerController extends Controller
                     } else {
                         $resultFetch->address = json_encode([$resultFetch->address]);
 
+                        $customerClass = "Personal";
+                        if (isset($resultFetch->company_name)) {
+                            if ($resultFetch->company_name != null || $resultFetch->company_name != "") {
+                                $customerClass = "Bussiness";
+                            } else {
+                                $customerClass = "Personal";
+                            }
+                        }
+
                         $datas = [
                             'titlePage' => 'Customer Lama',
-                            'customerClass' => $resultFetch->company_name == null ? 'Personal' : 'Bussiness',
+                            'customerClass' => $customerClass,
                             'customerData' => $resultFetch,
                             'serviceData' => ServiceList::all()
                         ];
