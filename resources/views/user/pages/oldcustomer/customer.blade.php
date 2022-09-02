@@ -76,15 +76,12 @@
                                                 value="{{ $customerData->name }}" readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="address" class="form-label">Alamat Lengkap <span
+                                            <label for="address" class="form-label">Alamat Lengkap KTP<span
                                                     class="text-danger">*</span></label>
                                             @foreach (json_decode($customerData->address) as $key => $value)
                                                 <textarea class="form-control {{ count(json_decode($customerData->address)) > 1 ? 'mb-3' : null }}"
                                                     id="address-{{ $key }}" name="address[]" aria-describedby="address" rows="4" readonly>{{ $value }}</textarea>
                                             @endforeach
-                                            <div id="pic_address_help" class="form-text mb-3">Alamat ini digunakan
-                                                sebagai
-                                                alamat pemasangan internet.</div>
                                         </div>
                                     </div>
                                 </div>
