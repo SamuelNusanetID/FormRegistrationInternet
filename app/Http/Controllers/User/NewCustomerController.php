@@ -25,6 +25,10 @@ class NewCustomerController extends Controller
             'serviceData' => ServiceList::all()
         ];
 
+        if (isset($_POST['salesID'])) {
+            $datas['salesID'] = $_POST['salesID'];
+        }
+
         return view('user.pages.newcustomer.personal', $datas);
     }
 
@@ -46,6 +50,7 @@ class NewCustomerController extends Controller
                 'email' => $requestAPI->get('email_address_personal'),
                 'phone_number' => $requestAPI->get('phone_number_personal'),
                 'identity_number' => $requestAPI->get('id_number_personal'),
+                'reference_id' => $requestAPI->get('salesID') != null ? $requestAPI->get('salesID') : null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -117,6 +122,10 @@ class NewCustomerController extends Controller
             'serviceData' => ServiceList::all()
         ];
 
+        if (isset($_POST['salesID'])) {
+            $datas['salesID'] = $_POST['salesID'];
+        }
+
         return view('user.pages.newcustomer.bussiness', $datas);
     }
 
@@ -143,6 +152,7 @@ class NewCustomerController extends Controller
                 'company_npwp' => $requestAPI->get('company_npwp'),
                 'company_phone_number' => $requestAPI->get('company_phone_number'),
                 'company_employees' => $requestAPI->get('company_employees') != null ? $requestAPI->get('company_employees') : null,
+                'reference_id' => $requestAPI->get('salesID') != null ? $requestAPI->get('salesID') : null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];

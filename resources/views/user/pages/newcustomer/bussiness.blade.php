@@ -17,7 +17,13 @@
     <div class="container p-0 p-sm-5 mb-3 mb-md-0">
         <div class="card mx-0 mx-sm-5">
             <div class="card-body">
-                <h2 class="text-center fw-bold mt-2 mb-4">Form Registrasi Layanan Baru</h2>
+                <h2 class="text-center fw-bold mt-2 mb-4">
+                    Form Registrasi Layanan Baru
+                    @if (isset($salesID))
+                        </br>
+                        <p class="h6 mt-3"><b>SID</b> : {{ $salesID }}</p>
+                    @endif
+                </h2>
                 <!-- SmartWizard html -->
                 <form action="{{ URL::to('new-member/bussiness') }}" method="POST" id="bussinessForm"
                     enctype="multipart/form-data">
@@ -85,6 +91,9 @@
                                 style="overflow-y:scroll; max-height:100%;">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
+                                        @if (isset($salesID))
+                                            <input type="hidden" name="salesID" value="{{ $salesID }}">
+                                        @endif
                                         <input type="hidden" name="uuid" value="{{ Request::segment(3) }}">
                                         <div class="mb-3">
                                             <label for="pic_name" class="form-label">Nama
