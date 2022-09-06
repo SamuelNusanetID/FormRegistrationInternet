@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class NewCustomerController extends Controller
 {
@@ -26,7 +27,17 @@ class NewCustomerController extends Controller
         ];
 
         if (isset($_POST['salesID'])) {
-            $datas['salesID'] = $_POST['salesID'];
+            $salesID = $_POST['salesID'];
+
+            $response = Http::withHeaders([
+                'X-Api-Key'=>'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+            ])->get('https://legacy.is5.nusa.net.id/employees/'.$salesID);
+
+            if ($response->successful()) {
+                $result = $response->json();
+                $datas['salesID'] = $result['id'];
+                $datas['salesName'] = $result['name'];
+            }
         }
 
         return view('user.pages.newcustomer.personal', $datas);
@@ -38,7 +49,7 @@ class NewCustomerController extends Controller
             $requestAPI = Request();
 
             $uuid = $requestAPI->get('uuid');
-            $idPelanggan = '02' . date('jnyHi');
+            $idPelanggan = 'NUSA' . date('YmdHis');
 
             $savedDataCustomer = [
                 'id' => $uuid,
@@ -51,6 +62,8 @@ class NewCustomerController extends Controller
                 'phone_number' => $requestAPI->get('phone_number_personal'),
                 'identity_number' => $requestAPI->get('id_number_personal'),
                 'reference_id' => $requestAPI->get('salesID') != null ? $requestAPI->get('salesID') : null,
+                'survey_id' => $requestAPI->get('survey_id'),
+                'extend_note' => $requestAPI->get('addonsnote'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -81,11 +94,6 @@ class NewCustomerController extends Controller
             $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
             $urlSaved1 = url('/bin/img/Personal/Identity/'. $fileIdentityPhoto->getClientOriginalName());
 
-            $fileSelfiePhoto = $requestAPI->file('service_selfie_photo');
-            $tujuan_upload2 = public_path().'/bin/img/Personal/SelfieID';
-            $fileSelfiePhoto->move($tujuan_upload2, $fileSelfiePhoto->getClientOriginalName());
-            $urlSaved2 = url('/bin/img/Personal/SelfieID/'. $fileSelfiePhoto->getClientOriginalName());
-
             $savedDataService = [
                 'id' => $uuid,
                 'service_package' => json_encode([
@@ -96,7 +104,6 @@ class NewCustomerController extends Controller
                     ],
                 ]),
                 'id_photo_url' => $urlSaved1,
-                'selfie_id_photo_url' => $urlSaved2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -123,7 +130,17 @@ class NewCustomerController extends Controller
         ];
 
         if (isset($_POST['salesID'])) {
-            $datas['salesID'] = $_POST['salesID'];
+            $salesID = $_POST['salesID'];
+
+            $response = Http::withHeaders([
+                'X-Api-Key'=>'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+            ])->get('https://legacy.is5.nusa.net.id/employees/'.$salesID);
+
+            if ($response->successful()) {
+                $result = $response->json();
+                $datas['salesID'] = $result['id'];
+                $datas['salesName'] = $result['name'];
+            }
         }
 
         return view('user.pages.newcustomer.bussiness', $datas);
@@ -135,7 +152,7 @@ class NewCustomerController extends Controller
             $requestAPI = Request();
 
             $uuid = $requestAPI->get('uuid');
-            $idPelanggan = '02' . date('jnyHi');
+            $idPelanggan = 'NUSA' . date('YmdHis');
 
             $savedDataCustomer = [
                 'id' => $uuid,
@@ -153,6 +170,8 @@ class NewCustomerController extends Controller
                 'company_phone_number' => $requestAPI->get('company_phone_number'),
                 'company_employees' => $requestAPI->get('company_employees') != null ? $requestAPI->get('company_employees') : null,
                 'reference_id' => $requestAPI->get('salesID') != null ? $requestAPI->get('salesID') : null,
+                'survey_id' => $requestAPI->get('survey_id'),
+                'extend_note' => $requestAPI->get('addonsnote'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -183,11 +202,6 @@ class NewCustomerController extends Controller
             $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
             $urlSaved1 = url('/bin/img/Personal/Identity/'. $fileIdentityPhoto->getClientOriginalName());
 
-            $fileSelfiePhoto = $requestAPI->file('service_selfie_photo');
-            $tujuan_upload2 = public_path().'/bin/img/Personal/SelfieID';
-            $fileSelfiePhoto->move($tujuan_upload2, $fileSelfiePhoto->getClientOriginalName());
-            $urlSaved2 = url('/bin/img/Personal/SelfieID/'. $fileSelfiePhoto->getClientOriginalName());
-
             $savedDataService = [
                 'id' => $uuid,
                 'service_package' => json_encode([
@@ -198,7 +212,6 @@ class NewCustomerController extends Controller
                     ],
                 ]),
                 'id_photo_url' => $urlSaved1,
-                'selfie_id_photo_url' => $urlSaved2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];

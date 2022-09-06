@@ -19,9 +19,9 @@
             <div class="card-body">
                 <h2 class="text-center fw-bold mt-2 mb-4">
                     Form Registrasi Layanan Baru
-                    @if (isset($salesID))
+                    @if (isset($salesName))
                         </br>
-                        <p class="h6 mt-3"><b>SID</b> : {{ $salesID }}</p>
+                        <p class="h6 mt-3"><b>AM</b> : {{ $salesName }}</p>
                     @endif
                 </h2>
                 <!-- SmartWizard html -->
@@ -238,18 +238,22 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="service_selfie_photo" class="form-label">Upload Foto Selfie dengan
-                                                KTP</label>
-                                            <input
-                                                class="form-control @error('service_selfie_photo') is-invalid @enderror"
-                                                type="file" id="service_selfie_photo" name="service_selfie_photo">
-                                            @error('service_selfie_photo')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="container row">
+                                    <div class="mb-3">
+                                        <label for="survey_id" class="form-label">
+                                            ID Survey
+                                        </label>
+                                        <input type="text" class="form-control" id="survey_id" name="survey_id"
+                                            placeholder="Masukkan ID Survey..." value="{{ old('survey_id') }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="addonsnote" class="form-label">
+                                            Catatan Tambahan
+                                        </label>
+                                        <textarea class="form-control" id="addonsnote" name="addonsnote" rows="10">{{ old('addonsnote') }}</textarea>
                                     </div>
                                 </div>
                             </div>

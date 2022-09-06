@@ -91,12 +91,7 @@ $(document).ready(function () {
             service_identity_photo: {
                 required: true,
                 accept: 'jpg,jpeg,png',
-                filesize: 2
-            },
-            service_selfie_photo: {
-                required: true,
-                accept: 'jpg,jpeg,png',
-                filesize: 2
+                filesize: 3
             },
             billing_name: {
                 required: true

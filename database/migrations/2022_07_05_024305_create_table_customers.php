@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('company_npwp')->nullable();
             $table->string('company_phone_number')->nullable();
             $table->string('company_employees')->nullable();
+            $table->string('survey_id')->nullable();
+            $table->string('extend_note')->nullable();
             $table->string('reference_id')->nullable();
             $table->timestamps();
         });
