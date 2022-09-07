@@ -163,7 +163,8 @@ $(document).ready(function () {
             },
             service_identity_photo: {
                 required: 'Kolom Upload Foto KTP Wajib Diisi',
-                accept: 'Foto KTP harus berformat jpeg, jpg, atau png'
+                accept: 'Foto KTP harus berformat jpeg, jpg, atau png',
+                filesize: 'Foto KTP harus berukuran max. 3 MB'
             },
             service_selfie_photo: {
                 required: 'Kolom Upload Foto Selfie dan KTP Wajib Diisi',
