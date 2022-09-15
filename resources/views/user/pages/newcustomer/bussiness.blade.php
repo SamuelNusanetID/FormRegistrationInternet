@@ -407,7 +407,7 @@
                                 </div>
                             </div>
                             <div id="form-step-3" class="tab-pane" role="tabpanel" aria-labelledby="form-step-3"
-                                style="overflow-y:scroll; max-height:100%;">
+                                style="overflow-y:scroll; min-height:550px !important;">
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
                                     <div class="" id="serviceOptionBussiness">
                                         <label for="service_product" class="form-label">Pilihan Layanan
@@ -506,7 +506,7 @@
                                 </div>
                             </div>
                             <div id="form-step-4" class="tab-pane" role="tabpanel" aria-labelledby="form-step-4"
-                                style="overflow-y:scroll; max-height:100%;">
+                                style="overflow-y:scroll; min-height:550px !important;">
                                 <div class="container-fluid p-5 mb-3" id="terms-and-condition">
                                     @include('user.pages.terms.index')
                                 </div>

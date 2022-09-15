@@ -234,7 +234,7 @@
                                 </div>
                             </div>
                             <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
-                                style="height: 100%; overflow:auto;">
+                                style="min-height:550px !important; overflow:auto;">
                                 @if (isset($customerData->service->service_package))
                                     <div class="mb-3">
                                         <label for="product_detail" class="mb-2">
@@ -391,7 +391,8 @@
                                         alamat pemasangan internet.</div>
                                 </div>
                             </div>
-                            <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info">
+                            <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info"
+                                style="min-height:550px !important;">
                                 <div class="container-fluid p-5 mb-3" id="terms-and-condition">
                                     @include('user.pages.terms.index')
                                 </div>
