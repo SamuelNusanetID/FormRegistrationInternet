@@ -340,6 +340,29 @@
                                             <p class="small text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
+
+                                    <div class="row g-3 align-items-center py-1 d-none" id="monthlyEditFieldBussiness">
+                                        <label for="editBulanServiceListBussiness">
+                                            Field Bulanan
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-auto">
+                                            <label for="editBulanServiceListBussiness" class="col-form-label">
+                                                Jumlah Bulan
+                                            </label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <input type="number" id="editBulanServiceListBussiness"
+                                                name="editBulanServiceListBussiness" class="form-control"
+                                                aria-describedby="passwordHelpInline" min="1" max="12">
+                                        </div>
+                                        <div class="col-auto">
+                                            <span id="passwordHelpInline" class="form-text">
+                                                Bulan
+                                            </span>
+                                        </div>
+                                    </div>
+
                                     <div class="border rounded px-3 py-2 bg-white text-dark d-none"
                                         id="detailPaymentBussiness">
                                         <div class="row">
@@ -529,17 +552,35 @@
 
             $('input[type=radio][name=topRadioBtnBussiness]').change(function() {
                 if (this.value == 'Bulanan') {
-                    $('#detailPaymentBussiness').removeClass('d-none');
+                    $('#monthlyEditFieldBussiness').removeClass('d-none');
+                    $('#monthlyEditFieldBussiness').addClass('mb-3');
                     $('#termOfPaymentBussiness').addClass('mb-3');
 
-                    var serviceData = {!! json_encode($servicesData) !!};
-                    serviceData.forEach(element => {
-                        if (element.package_name == $('#service_product').val() && element.period ==
-                            'Bulanan') {
-                            $('#serviceName').val(element.package_name);
-                            $('#servicePrice').val(formatter.format(element
-                                .package_price));
-                            $('#termofpaymentDeals').val("Bulanan");
+                    $('#editBulanServiceListBussiness').on('keyup', function() {
+                        var max = parseInt($(this).attr('max'));
+                        var min = parseInt($(this).attr('min'));
+                        if ($(this).val() > max) {
+                            $(this).val(max);
+                        } else if ($(this).val() < min) {
+                            $(this).val(min);
+                        }
+
+                        if (this.value != "" && this.value <= 12) {
+                            $('#detailPaymentBussiness').removeClass('d-none');
+
+                            var serviceData = {!! json_encode($servicesData) !!};
+                            serviceData.forEach(element => {
+                                if (element.package_name == $('#service_product').val() &&
+                                    element.period ==
+                                    'Bulanan') {
+                                    $('#serviceName').val(element.package_name);
+                                    $('#servicePrice').val(formatter.format((element
+                                        .package_price) * this.value));
+                                    $('#termofpaymentDeals').val("Bulanan");
+                                }
+                            });
+                        } else {
+                            $('#detailPaymentBussiness').addClass('d-none');
                         }
                     });
                 } else if (this.value == 'Tahunan') {
@@ -567,17 +608,35 @@
 
                 if ($('input[type=radio][name=topRadioBtnBussiness]').is(':checked')) {
                     if ($('input[type=radio][name=topRadioBtnBussiness]').val() == 'Bulanan') {
-                        $('#detailPaymentBussiness').removeClass('d-none');
+                        $('#monthlyEditFieldBussiness').removeClass('d-none');
+                        $('#monthlyEditFieldBussiness').addClass('mb-3');
                         $('#termOfPaymentBussiness').addClass('mb-3');
 
-                        var serviceData = {!! json_encode($servicesData) !!};
-                        serviceData.forEach(element => {
-                            if (element.package_name == $('#service_product').val() && element.period ==
-                                'Bulanan') {
-                                $('#serviceName').val(element.package_name);
-                                $('#servicePrice').val(formatter.format(element
-                                    .package_price));
-                                $('#termofpaymentDeals').val("Bulanan");
+                        $('#editBulanServiceListBussiness').on('keyup', function() {
+                            var max = parseInt($(this).attr('max'));
+                            var min = parseInt($(this).attr('min'));
+                            if ($(this).val() > max) {
+                                $(this).val(max);
+                            } else if ($(this).val() < min) {
+                                $(this).val(min);
+                            }
+
+                            if (this.value != "" && this.value <= 12) {
+                                $('#detailPaymentBussiness').removeClass('d-none');
+
+                                var serviceData = {!! json_encode($servicesData) !!};
+                                serviceData.forEach(element => {
+                                    if (element.package_name == $('#service_product').val() &&
+                                        element.period ==
+                                        'Bulanan') {
+                                        $('#serviceName').val(element.package_name);
+                                        $('#servicePrice').val(formatter.format((element
+                                            .package_price) * this.value));
+                                        $('#termofpaymentDeals').val("Bulanan");
+                                    }
+                                });
+                            } else {
+                                $('#detailPaymentBussiness').addClass('d-none');
                             }
                         });
                     } else if ($('input[type=radio][name=topRadioBtnBussiness]').val() == 'Tahunan') {
