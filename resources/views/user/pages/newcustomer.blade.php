@@ -78,7 +78,7 @@
     </div>
 
     @php
-    $messageStatus = session()->has('message') ? session('message') : false;
+        $messageStatus = session()->has('message') ? session('message') : false;
     @endphp
 @endsection
 

@@ -458,7 +458,8 @@
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="termsCbo" name="termsCbo">
                                     <label class="form-check-label" for="termsCbo">
-                                        Saya menyetujui syarat dan ketentuan yang berlaku
+                                        Dengan mencentang checklist kotak disamping, berarti anda sudah menyetujui semua
+                                        syarat dan ketentuan yang berlaku di Nusanet.
                                     </label>
                                 </div>
                             </div>
