@@ -87,7 +87,7 @@
                             }
                         </style>
                         <div class="tab-content">
-                            <div id="form-step-0" class="tab-pane px-0" role="tabpanel" aria-labelledby="form-step-0"
+                            {{-- <div id="form-step-0" class="tab-pane px-0" role="tabpanel" aria-labelledby="form-step-0"
                                 style="overflow-y:scroll; max-height:100%;">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
@@ -350,126 +350,52 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div id="form-step-3" class="tab-pane" role="tabpanel" aria-labelledby="form-step-3"
                                 style="overflow-y:scroll; min-height:550px !important;">
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
-                                    <div class="" id="serviceOptionPersonal">
-                                        <label for="service_product" class="form-label">Pilihan Layanan
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        @php
-                                            $servicesData = json_decode($serviceData);
-                                            setlocale(LC_MONETARY, 'id_ID');
-                                        @endphp
-                                        <select class="form-select @error('service_product') is-invalid @enderror"
-                                            name="service_product" id="service_product">
-                                            <option disabled selected>Pilih Jenis Layanan...</option>
-                                            @foreach ($servicesData as $service)
-                                                @if ($service->category == 'Personal')
-                                                    @if (old('service_product') == $service->package_name)
-                                                        <option value="{{ $service->package_name }}" selected>
-                                                            {{ $service->package_name }} - Rp.
-                                                            {{ $service->package_price }},-
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $service->package_name }}">
-                                                            {{ $service->package_name }} => Rp. @convert((int) $service->package_price) /
-                                                            {{ $service->period }}
-                                                        </option>
-                                                    @endif
-                                                @endif
+                                    <div class="mb-3">
+                                        <label for="package_name" class="form-label">Pilihan Nama Paket</label>
+                                        <select class="form-select" id="package_name" name="package_name">
+                                            <option selected disabled>Pilih Nama Paket...</option>
+                                            @foreach ($packageName as $layananpaket)
+                                                <option value="{{ $layananpaket }}">Paket {{ $layananpaket }}</option>
                                             @endforeach
                                         </select>
-                                        @error('service_product')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
                                     </div>
-                                    <div class="mb-3 d-none" id="termOfPaymentPersonal">
-                                        <p class="m-0 p-0 mb-1">
-                                            Jenis Pembayaran
-                                            <span class="text-danger">*</span>
-                                        </p>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                class="form-check-input @error('topRadioBtnPersonal') is-invalid @enderror"
-                                                type="radio" name="topRadioBtnPersonal" id="topRadioBtnMonthlyPersonal"
-                                                value="Bulanan"
-                                                {{ old('topRadioBtnPersonal') === 'Bulanan' ? 'checked' : null }} />
-                                            <label class="form-check-label"
-                                                for="topRadioBtnMonthlyPersonal">Bulanan</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                class="form-check-input @error('topRadioBtnPersonal') is-invalid @enderror"
-                                                type="radio" name="topRadioBtnPersonal" id="topRadioBtnAnuallyPersonal"
-                                                value="Tahunan"
-                                                {{ old('topRadioBtnPersonal') === 'Tahunan' ? 'checked' : null }} />
-                                            <label class="form-check-label"
-                                                for="topRadioBtnAnuallyPersonal">Tahunan</label>
-                                        </div>
-                                        @error('topRadioBtnPersonal')
-                                            <p class="small text-danger">{{ $message }}</p>
-                                        @enderror
+                                    <div class="mb-3" id="option_package_type">
+                                        <label for="package_type" class="form-label">Pilihan Tipe Paket</label>
+                                        <select class="form-select" id="package_type" name="package_type">
+                                            <option selected disabled>Pilih Tipe Paket...</option>
+                                        </select>
                                     </div>
-
-                                    <div class="row g-3 align-items-center py-1 d-none" id="monthlyEditFieldPersonal">
-                                        <label for="editBulanServiceListPersonal">
-                                            Field Bulanan
-                                            <span class="text-danger">*</span>
+                                    <div class="mb-3" id="option_package_categories">
+                                        <label for="package_categories" class="form-label">Pilihan Kategori Paket</label>
+                                        <select class="form-select" id="package_categories" name="package_categories">
+                                            <option selected disabled>Pilih Kategori Paket...</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3" id="option_package_top">
+                                        <label for="package_top" class="form-label">
+                                            Pilihan Jangka Waktu Pembayaran Paket
                                         </label>
-                                        <div class="col-auto">
-                                            <label for="editBulanServiceListPersonal" class="col-form-label">
-                                                Jumlah Bulan
-                                            </label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <input type="number" id="editBulanServiceListPersonal"
-                                                name="editBulanServiceListPersonal" class="form-control"
-                                                aria-describedby="passwordHelpInline" min="1" max="12">
-                                        </div>
-                                        <div class="col-auto">
-                                            <span id="passwordHelpInline" class="form-text">
-                                                Bulan
-                                            </span>
+                                        <div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineTopPaket"
+                                                    id="inlineTopPaket_1" value="Bulanan">
+                                                <label class="form-check-label" for="inlineTopPaket_1">Bulanan</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineTopPaket"
+                                                    id="inlineTopPaket_2" value="Tahunan">
+                                                <label class="form-check-label" for="inlineTopPaket_2">Tahunan</label>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="border rounded px-3 py-2 bg-white text-dark d-none"
-                                        id="detailPaymentPersonal">
-                                        <div class="row">
-                                            <p class="fw-bold mb-3">Rincian Pembayaran</p>
-                                            <div class="mb-0 row">
-                                                <label for="serviceName" class="col-8 col-md-3 col-form-label fw-bold">-
-                                                    Nama
-                                                    Layanan</label>
-                                                <div class="col-8 col-md-9">
-                                                    <input type="text" readonly class="form-control-plaintext"
-                                                        id="serviceName" name="serviceName">
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row">
-                                                <label for="servicePrice" class="col-8 col-sm-3 col-form-label fw-bold">-
-                                                    Harga
-                                                    Layanan</label>
-                                                <div class="col-8 col-sm-9">
-                                                    <input type="text" readonly class="form-control-plaintext"
-                                                        id="servicePrice" name="servicePrice">
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row">
-                                                <label for="termofpaymentDeals"
-                                                    class="col-8 col-sm-3 col-form-label fw-bold">-
-                                                    Jenis
-                                                    Pembayaran</label>
-                                                <div class="col-8 col-sm-9">
-                                                    <input type="text" readonly class="form-control-plaintext"
-                                                        id="termofpaymentDeals" name="termofpaymentDeals">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="mb-3" id="option_custom_bulanan">
+                                        <label for="custom_bulanan" class="form-label">Custom Field Bulan</label>
+                                        <input class="form-control" type="text" id="custom_bulanan"
+                                            name="custom_bulanan" placeholder="Masukkan Jumlah Bulan">
                                     </div>
                                 </div>
                             </div>
@@ -531,150 +457,96 @@
     <!-- GeoLocation ScriptJS -->
     <script>
         $(document).ready(() => {
-            var formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-            });
+            // var formatter = new Intl.NumberFormat('en-US', {
+            //     style: 'currency',
+            //     currency: 'IDR',
+            //     minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+            // });
 
-            const map = L.map('map');
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            var lc = L.control.locate().addTo(map);
-            lc.start();
+            // const map = L.map('map');
+            // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            // var lc = L.control.locate().addTo(map);
+            // lc.start();
 
-            function onLocationFound(e) {
-                var radius = e.accuracy;
-                L.marker(e.latlng).addTo(map);
-                L.circle(e.latlng, radius).addTo(map);
-                $('#geolocation_personal').val(JSON.stringify(e.latlng));
-            }
+            // function onLocationFound(e) {
+            //     var radius = e.accuracy;
+            //     L.marker(e.latlng).addTo(map);
+            //     L.circle(e.latlng, radius).addTo(map);
+            //     $('#geolocation_personal').val(JSON.stringify(e.latlng));
+            // }
 
-            map.on('locationfound', onLocationFound);
+            // map.on('locationfound', onLocationFound);
 
-            var geocoder = L.Control.geocoder()
-                .on('markgeocode', function(e) {
-                    $('#address_personal').val(e.geocode.name);
-                    $('#geolocation_personal').val(JSON.stringify(e.geocode.center));
-                })
-                .addTo(map);
+            // var geocoder = L.Control.geocoder()
+            //     .on('markgeocode', function(e) {
+            //         $('#address_personal').val(e.geocode.name);
+            //         $('#geolocation_personal').val(JSON.stringify(e.geocode.center));
+            //     })
+            //     .addTo(map);
 
-            $('#service_product').on('change', function() {
-                $('#serviceOptionPersonal').addClass('mb-3');
-                $('#termOfPaymentPersonal').removeClass('d-none');
-                $('input[type=radio][name=topRadioBtnPersonal]').prop('checked', false);
-                $('#detailPaymentPersonal').addClass('d-none');
-            });
+            const packageData = {!! json_encode($serviceData) !!};
 
-            $('input[type=radio][name=topRadioBtnPersonal]').change(function() {
-                if (this.value == 'Bulanan') {
-                    $('#monthlyEditFieldPersonal').removeClass('d-none');
-                    $('#monthlyEditFieldPersonal').addClass('mb-3');
-                    $('#termOfPaymentPersonal').addClass('mb-3');
+            $('#package_name').on('change', () => {
+                $('#option_package_categories').addClass('d-none');
+                $('#option_package_categories').addClass('d-none');
+                var packageName = $('#package_name').val();
+                $('#package_type').empty();
 
-                    $('#editBulanServiceListPersonal').on('keyup', function() {
-                        var max = parseInt($(this).attr('max'));
-                        var min = parseInt($(this).attr('min'));
-                        if ($(this).val() > max) {
-                            $(this).val(max);
-                        } else if ($(this).val() < min) {
-                            $(this).val(min);
-                        }
+                if (packageName != "" || packageName != null) {
+                    $('#option_package_type').removeClass('d-none');
 
-                        if (this.value != "" && this.value <= 12) {
-                            $('#detailPaymentPersonal').removeClass('d-none');
-
-                            var serviceData = {!! json_encode($servicesData) !!};
-                            serviceData.forEach(element => {
-                                if (element.package_name == $('#service_product').val() &&
-                                    element.period ==
-                                    'Bulanan') {
-                                    $('#serviceName').val(element.package_name);
-                                    $('#servicePrice').val(formatter.format((element
-                                        .package_price) * this.value));
-                                    $('#termofpaymentDeals').val("Bulanan");
-                                }
-                            });
-                        } else {
-                            $('#detailPaymentPersonal').addClass('d-none');
+                    var arrPackageType = [];
+                    packageData.forEach(package => {
+                        if (package.package_name == packageName) {
+                            arrPackageType[package.package_type] = 0;
                         }
                     });
-                } else if (this.value == 'Tahunan') {
-                    $('#monthlyEditFieldPersonal').addClass('d-none');
-                    $('#monthlyEditFieldPersonal').removeClass('mb-3');
 
-                    $('#detailPaymentPersonal').removeClass('d-none');
-                    $('#termOfPaymentPersonal').addClass('mb-3');
-
-                    var serviceData = {!! json_encode($servicesData) !!};
-                    serviceData.forEach(element => {
-                        if (element.package_name == $('#service_product').val() && element.period ==
-                            'Tahunan') {
-                            $('#serviceName').val(element.package_name);
-                            $('#servicePrice').val(formatter.format(element
-                                .package_price));
-                            $('#termofpaymentDeals').val("Tahunan");
-                        }
-                    });
-                }
-            });
-
-            if ($('#service_product').val() != null) {
-                $('#serviceOptionPersonal').addClass('mb-3');
-                $('#termOfPaymentPersonal').removeClass('d-none');
-                $('#termOfPaymentPersonal').removeClass('mb-3');
-                $('#detailPaymentPersonal').addClass('d-none');
-
-                if ($('input[type=radio][name=topRadioBtnPersonal]').is(':checked')) {
-                    if ($('input[type=radio][name=topRadioBtnPersonal]').val() == 'Bulanan') {
-                        $('#monthlyEditFieldPersonal').removeClass('d-none');
-                        $('#monthlyEditFieldPersonal').addClass('mb-3');
-                        $('#termOfPaymentPersonal').addClass('mb-3');
-
-                        $('#editBulanServiceListPersonal').on('keyup', function() {
-                            var max = parseInt($(this).attr('max'));
-                            var min = parseInt($(this).attr('min'));
-                            if ($(this).val() > max) {
-                                $(this).val(max);
-                            } else if ($(this).val() < min) {
-                                $(this).val(min);
-                            }
-
-                            if (this.value != "" && this.value <= 12) {
-                                $('#detailPaymentPersonal').removeClass('d-none');
-
-                                var serviceData = {!! json_encode($servicesData) !!};
-                                serviceData.forEach(element => {
-                                    if (element.package_name == $('#service_product').val() &&
-                                        element.period ==
-                                        'Bulanan') {
-                                        $('#serviceName').val(element.package_name);
-                                        $('#servicePrice').val(formatter.format((element
-                                            .package_price) * this.value));
-                                        $('#termofpaymentDeals').val("Bulanan");
-                                    }
-                                });
-                            } else {
-                                $('#detailPaymentPersonal').addClass('d-none');
-                            }
-                        });
-                    } else if ($('input[type=radio][name=topRadioBtnPersonal]').val() == 'Tahunan') {
-                        $('#detailPaymentPersonal').removeClass('d-none');
-                        $('#termOfPaymentPersonal').addClass('mb-3');
-
-                        var serviceData = {!! json_encode($servicesData) !!};
-                        serviceData.forEach(element => {
-                            if (element.package_name == $('#service_product').val() && element.period ==
-                                'Tahunan') {
-                                $('#serviceName').val(element.package_name);
-                                $('#servicePrice').val(formatter.format(element
-                                    .package_price));
-                                $('#termofpaymentDeals').val("Tahunan");
-                            }
-                        });
+                    $('#package_type').append('<option disabled selected>Pilih Tipe Paket...</option>');
+                    for (const [key, value] of Object.entries(arrPackageType)) {
+                        $('#package_type').append($('<option>', {
+                            value: key,
+                            text: key
+                        }));
                     }
+                } else {
+                    $('#option_package_type').addClass('d-none');
                 }
-            }
+            });
 
+            $('#package_type').on('change', () => {
+                var packageName = $('#package_name').val();
+                var packageType = $('#package_type').val();
+                $('#package_categories').empty();
+
+                if (packageType != "" || packageType != null) {
+                    $('#option_package_categories').removeClass('d-none');
+
+                    var arrPackageCategories = [];
+                    packageData.forEach(package => {
+                        if (package.package_name == packageName && package.package_type ==
+                            packageType) {
+                            arrPackageCategories[package.package_categories] = package
+                                .package_speed;
+                        }
+                    });
+
+                    $('#package_categories').append(
+                        '<option disabled selected>Pilih Kategori Paket...</option>');
+                    for (const [key, value] of Object.entries(arrPackageCategories)) {
+                        $('#package_categories').append($('<option>', {
+                            value: key,
+                            text: key + ' ( ' + value + ' Mbps)'
+                        }));
+                    }
+                } else {
+                    $('#option_package_categories').addClass('d-none');
+                }
+            });
+
+            $('#package_categories').on('change', () => {
+                console.log('test')
+            });
         });
     </script>
 @endsection

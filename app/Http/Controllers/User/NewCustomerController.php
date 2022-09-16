@@ -8,7 +8,7 @@ use App\Models\Billing;
 use App\Models\Customer;
 use App\Models\SalesLink;
 use App\Models\Service;
-use App\Models\ServiceList;
+use App\Models\ServicesList;
 use App\Models\Technical;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,9 +21,21 @@ class NewCustomerController extends Controller
 {
     public function indexPersonal()
     {
+        $fetchDataService = ServicesList::all();
+        $arrdataLayanan = [];
+        foreach ($fetchDataService as $key => $value) {
+            array_push($arrdataLayanan, $value->package_name);
+        }
+
+        $dataLayanan = [];
+        foreach (array_count_values($arrdataLayanan) as $key => $value) {
+            array_push($dataLayanan, $key);
+        }
+
         $datas = [
             'titlePage' => 'Form Registrasi Layanan Baru',
-            'serviceData' => ServiceList::all()
+            'packageName' => $dataLayanan,
+            'serviceData' => ServicesList::all()
         ];
 
         if (isset($_POST['salesID'])) {
