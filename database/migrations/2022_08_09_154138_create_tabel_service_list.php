@@ -16,10 +16,12 @@ class CreateTabelServiceList extends Migration
     {
         Schema::create('services_list', function (Blueprint $table) {
             $table->id();
-            $table->enum('category', ['Personal', 'Bussiness']);
             $table->string('package_name');
+            $table->enum('package_type', ['Fiber Optic', 'Wireless']);
+            $table->string('package_categories');
+            $table->string('package_speed');
+            $table->enum('package_top', ['Bulanan', 'Tahunan']);
             $table->string('package_price');
-            $table->enum('period', ['Bulanan', 'Tahunan']);
             $table->timestamps();
         });
 

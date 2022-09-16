@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
+    // use HasFactory;
     protected $table = 'customers';
-    protected $primaryKey = 'id';
+
     protected $keyType = 'string';
     protected $fillable = [
-        'id',
         'customer_id',
         'name',
         'address',
@@ -21,8 +22,11 @@ class Customer extends Model
         'company_name',
         'company_address',
         'company_npwp',
-        'company_phone_number'
+        'company_phone_number',
+        'company_employees',
+        'reference_id'
     ];
+
 
     public function billing()
     {
