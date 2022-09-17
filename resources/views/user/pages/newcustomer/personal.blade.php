@@ -87,7 +87,7 @@
                             }
                         </style>
                         <div class="tab-content">
-                            {{-- <div id="form-step-0" class="tab-pane px-0" role="tabpanel" aria-labelledby="form-step-0"
+                            <div id="form-step-0" class="tab-pane px-0" role="tabpanel" aria-labelledby="form-step-0"
                                 style="overflow-y:scroll; max-height:100%;">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
@@ -350,9 +350,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div id="form-step-3" class="tab-pane" role="tabpanel" aria-labelledby="form-step-3"
-                                style="overflow-y:scroll; min-height:550px !important;">
+                                style="overflow-y:scroll; min-height:800px !important;">
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
                                     <div class="mb-3">
                                         <label for="package_name" class="form-label">Pilihan Nama Paket</label>
@@ -363,19 +363,19 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="mb-3" id="option_package_type">
+                                    <div class="mb-3 d-none" id="option_package_type">
                                         <label for="package_type" class="form-label">Pilihan Tipe Paket</label>
                                         <select class="form-select" id="package_type" name="package_type">
                                             <option selected disabled>Pilih Tipe Paket...</option>
                                         </select>
                                     </div>
-                                    <div class="mb-3" id="option_package_categories">
+                                    <div class="mb-3 d-none" id="option_package_categories">
                                         <label for="package_categories" class="form-label">Pilihan Kategori Paket</label>
                                         <select class="form-select" id="package_categories" name="package_categories">
                                             <option selected disabled>Pilih Kategori Paket...</option>
                                         </select>
                                     </div>
-                                    <div class="mb-3" id="option_package_top">
+                                    <div class="mb-3 d-none" id="option_package_top">
                                         <label for="package_top" class="form-label">
                                             Pilihan Jangka Waktu Pembayaran Paket
                                         </label>
@@ -392,10 +392,52 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-3" id="option_custom_bulanan">
+                                    <div class="mb-3 d-none" id="option_custom_bulanan">
                                         <label for="custom_bulanan" class="form-label">Custom Field Bulan</label>
                                         <input class="form-control" type="text" id="custom_bulanan"
                                             name="custom_bulanan" placeholder="Masukkan Jumlah Bulan">
+                                    </div>
+                                    <div class="rounded border-white bg-white p-3 d-none" id="subTotalBayarWidget">
+                                        <p class="fw-bold mb-4">Detail Pembayaran</p>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-3 fw-bold">
+                                                Nama Paket
+                                            </div>
+                                            <div class="col-sm-9" id="package_name_show_details">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-3 fw-bold">
+                                                Jangka Waktu Pembayaran
+                                            </div>
+                                            <div class="col-sm-9" id="package_top_show_details">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3 fw-bold">
+                                                Kode Promo
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Masukkan Kode Promo..."
+                                                        aria-describedby="button-addon2">
+                                                    <button class="btn btn-success" type="button" id="button-addon2">
+                                                        <i class="fa-solid fa-ticket me-1"></i>
+                                                        Ambil Promo
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="p-2"
+                                                    style="border-radius:12px; border: 1px solid #dedede; background-color: #dedede;">
+                                                    <p class="fw-bold mb-2">Subtotal</p>
+                                                    <p class="h1 fw-bold text-end">Rp. 120.000,-</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -457,38 +499,40 @@
     <!-- GeoLocation ScriptJS -->
     <script>
         $(document).ready(() => {
-            // var formatter = new Intl.NumberFormat('en-US', {
-            //     style: 'currency',
-            //     currency: 'IDR',
-            //     minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-            // });
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+            });
 
-            // const map = L.map('map');
-            // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            // var lc = L.control.locate().addTo(map);
-            // lc.start();
+            const map = L.map('map');
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            var lc = L.control.locate().addTo(map);
+            lc.start();
 
-            // function onLocationFound(e) {
-            //     var radius = e.accuracy;
-            //     L.marker(e.latlng).addTo(map);
-            //     L.circle(e.latlng, radius).addTo(map);
-            //     $('#geolocation_personal').val(JSON.stringify(e.latlng));
-            // }
+            function onLocationFound(e) {
+                var radius = e.accuracy;
+                L.marker(e.latlng).addTo(map);
+                L.circle(e.latlng, radius).addTo(map);
+                $('#geolocation_personal').val(JSON.stringify(e.latlng));
+            }
 
-            // map.on('locationfound', onLocationFound);
+            map.on('locationfound', onLocationFound);
 
-            // var geocoder = L.Control.geocoder()
-            //     .on('markgeocode', function(e) {
-            //         $('#address_personal').val(e.geocode.name);
-            //         $('#geolocation_personal').val(JSON.stringify(e.geocode.center));
-            //     })
-            //     .addTo(map);
+            var geocoder = L.Control.geocoder()
+                .on('markgeocode', function(e) {
+                    $('#address_personal').val(e.geocode.name);
+                    $('#geolocation_personal').val(JSON.stringify(e.geocode.center));
+                })
+                .addTo(map);
 
             const packageData = {!! json_encode($serviceData) !!};
+            var dataShowDetail = [];
 
             $('#package_name').on('change', () => {
                 $('#option_package_categories').addClass('d-none');
                 $('#option_package_categories').addClass('d-none');
+                $('#option_package_top').addClass('d-none');
                 var packageName = $('#package_name').val();
                 $('#package_type').empty();
 
@@ -509,6 +553,8 @@
                             text: key
                         }));
                     }
+
+                    dataShowDetail['package_name'] = packageName;
                 } else {
                     $('#option_package_type').addClass('d-none');
                 }
@@ -539,13 +585,67 @@
                             text: key + ' ( ' + value + ' Mbps)'
                         }));
                     }
+
+                    dataShowDetail['package_type'] = packageType;
                 } else {
                     $('#option_package_categories').addClass('d-none');
                 }
             });
 
             $('#package_categories').on('change', () => {
-                console.log('test')
+                $('#option_package_top').removeClass('d-none');
+                dataShowDetail['package_categories'] = $('#package_categories').val();
+
+                $('input[type=radio][name=inlineTopPaket]').change(function() {
+                    if (this.value == 'Bulanan') {
+                        $('#option_custom_bulanan').removeClass('d-none');
+                        $('#subTotalBayarWidget').addClass('d-none');
+                        dataShowDetail['package_top'] = 'Bulanan';
+                    } else if (this.value == 'Tahunan') {
+                        $('#option_custom_bulanan').addClass('d-none');
+                        $('#subTotalBayarWidget').removeClass('d-none');
+                        dataShowDetail['package_top'] = 'Tahunan';
+
+                        packageData.forEach(element => {
+                            if (element.package_name == dataShowDetail['package_name'] &&
+                                element.package_type == dataShowDetail['package_type'] &&
+                                element.package_categories == dataShowDetail[
+                                    'package_categories'] && element.package_top ==
+                                dataShowDetail['package_top']) {
+                                $('#package_name_show_details').html(element.package_name +
+                                    " " +
+                                    element.package_categories + " (" + element
+                                    .package_type + ") " + element.package_speed +
+                                    " Mbps");
+                                $('#package_top_show_details').html(element.package_top);
+                            }
+                        });
+                    }
+                });
+            });
+
+            $('#custom_bulanan').on('input', function() {
+                if ($('#custom_bulanan').val() < 12) {
+                    $('#subTotalBayarWidget').removeClass('d-none');
+
+                    packageData.forEach(element => {
+                        if (element.package_name == dataShowDetail['package_name'] &&
+                            element.package_type == dataShowDetail['package_type'] &&
+                            element.package_categories == dataShowDetail[
+                                'package_categories'] && element.package_top ==
+                            dataShowDetail['package_top']) {
+                            $('#package_name_show_details').html(element.package_name +
+                                " " +
+                                element.package_categories + " (" + element
+                                .package_type + ") " + element.package_speed +
+                                " Mbps");
+                            $('#package_top_show_details').html($('#custom_bulanan').val() +
+                                " Bulan");
+                        }
+                    });
+                } else if ($('#custom_bulanan').val() >= 12) {
+                    $('#subTotalBayarWidget').addClass('d-none');
+                }
             });
         });
     </script>
