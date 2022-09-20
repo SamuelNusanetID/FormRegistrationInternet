@@ -446,6 +446,11 @@
                                                         <i class="fa-solid fa-ticket me-1"></i>
                                                         Ambil Promo
                                                     </button>
+                                                    <button class="btn btn-danger d-none" type="button"
+                                                        id="button-resetPromoField">
+                                                        <i class="fa-solid fa-ban me-1"></i>
+                                                        Reset Promo
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -547,6 +552,7 @@
             //     .addTo(map);
 
             const packageData = {!! json_encode($serviceData) !!};
+            const promoData = {!! json_encode($promoData) !!};
             var dataShowDetail = [];
             let hargaPaket = 0;
             const taxPPN = (11 / 100);
@@ -557,8 +563,10 @@
             $('#option_package_type_price').addClass('d-none');
             $('#option_custom_bulanan').addClass('d-none');
             $('#subTotalBayarWidget').addClass('d-none');
+            $('#custom_bulanan').attr('readonly', false);
 
             $('#package_name').on('change', () => {
+                $('#custom_bulanan').attr('readonly', false);
                 $('#package_type').empty();
                 $('#package_categories').empty();
                 $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
@@ -598,6 +606,7 @@
             });
 
             $('#package_type').on('change', () => {
+                $('#custom_bulanan').attr('readonly', false);
                 $('#package_categories').empty();
                 $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
                 $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
@@ -652,6 +661,7 @@
             });
 
             $('#package_categories').on('change', () => {
+                $('#custom_bulanan').attr('readonly', false);
                 $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
                 $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
                 $('#custom_bulanan').empty();
@@ -667,6 +677,8 @@
                 dataShowDetail['package_speed'] = $('#package_categories').val();
 
                 $('input[type=radio][name=inlineTopPaket]').change(function() {
+                    $('#kodePromoField').val('');
+                    $('#custom_bulanan').attr('readonly', false);
                     $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
                     $('#custom_bulanan').val('');
 
@@ -699,6 +711,7 @@
                                 function() {
                                     if ($(this).is(':checked') && $(this).val() == 'Retail' &&
                                         dataShowDetail['package_top'] == 'Bulanan') {
+                                        $('#custom_bulanan').attr('readonly', false);
                                         $('#option_custom_bulanan').removeClass('d-none');
                                         $('#custom_bulanan').val('');
                                         $('#subTotalBayarWidget').addClass('d-none');
@@ -718,6 +731,7 @@
                                     } else if ($(this).is(':checked') && $(this).val() ==
                                         'Pemerintah' &&
                                         dataShowDetail['package_top'] == 'Bulanan') {
+                                        $('#custom_bulanan').attr('readonly', false);
                                         $('#option_custom_bulanan').removeClass('d-none');
                                         $('#custom_bulanan').val('');
                                         $('#subTotalBayarWidget').addClass('d-none');
@@ -774,6 +788,7 @@
                             const hargaSetelahPPN = (parseInt(hargaPaket) + parseInt(hargaPaket *
                                 taxPPN));
                             $('#package_price_show_detail').html('Rp. ' + hargaSetelahPPN + ',-');
+                            dataShowDetail['fix_price'] = hargaSetelahPPN;
                         } else {
                             $('#option_package_type_price').removeClass('d-none');
 
@@ -781,6 +796,7 @@
                                 function() {
                                     if ($(this).is(':checked') && $(this).val() == 'Retail' &&
                                         dataShowDetail['package_top'] == 'Tahunan') {
+                                        $('#custom_bulanan').attr('readonly', false);
                                         $('#option_custom_bulanan').addClass('d-none');
                                         $('#custom_bulanan').val('');
                                         $('#subTotalBayarWidget').addClass('d-none');
@@ -800,6 +816,7 @@
                                     } else if ($(this).is(':checked') && $(this).val() ==
                                         'Pemerintah' &&
                                         dataShowDetail['package_top'] == 'Tahunan') {
+                                        $('#custom_bulanan').attr('readonly', false);
                                         $('#option_custom_bulanan').addClass('d-none');
                                         $('#custom_bulanan').val('');
                                         $('#subTotalBayarWidget').addClass('d-none');
@@ -835,6 +852,7 @@
                                         hargaPaket * taxPPN));
                                     $('#package_price_show_detail').html('Rp. ' +
                                         hargaSetelahPPN + ',-');
+                                    dataShowDetail['fix_price'] = hargaSetelahPPN;
                                 });
                         }
                     }
@@ -852,13 +870,66 @@
                             dataShowDetail['package_categories'] + ' (' + dataShowDetail[
                                 'package_type'] + ')'));
                     $('#package_top_show_details').html(hargaCustomBulanan + ' Bulan');
+                    dataShowDetail['counted'] = hargaCustomBulanan;
 
                     // Perhitungan Sub Total
                     const hargaSetelahPPN = (parseInt(hargaPaket) + parseInt(hargaPaket * taxPPN)) *
                         hargaCustomBulanan;
                     $('#package_price_show_detail').html('Rp. ' + hargaSetelahPPN + ',-');
+                    dataShowDetail['fix_price'] = hargaSetelahPPN;
                 } else if ($('#custom_bulanan').val() >= 12) {
                     $('#subTotalBayarWidget').addClass('d-none');
+                }
+            });
+
+            $('#button-resetPromoField').on('click', () => {
+                $('#custom_bulanan').attr('readonly', false);
+                $('#kodePromoField').val('');
+
+                $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
+                    (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
+                            'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
+                        dataShowDetail['package_categories'] + ' (' + dataShowDetail[
+                            'package_type'] + ')'));
+                $('#package_top_show_details').html(dataShowDetail['counted'] + ' Bulan');
+                $('#package_price_show_detail').html('Rp. ' + dataShowDetail['fix_price'] + ',-');
+
+                $('#button-resetPromoField').addClass('d-none');
+                $('#button-kodePromoField').removeClass('d-none');
+            });
+
+            $('#button-kodePromoField').on('click', () => {
+                var kodePromo = $('#kodePromoField').val();
+                var arrResultKodePromo = {};
+                var status = [];
+
+                promoData.forEach((element) => {
+                    if (element.promo_code === kodePromo) {
+                        $('#custom_bulanan').attr('readonly', true);
+                        arrResultKodePromo = element;
+                        status.push(true);
+                    } else if (element.promo_code !== kodePromo) {
+                        status.push(false);
+                    }
+                });
+
+                if (!status[0]) {
+                    alert('Kode promo tidak ditemukan. Silahkan coba lagi!');
+                }
+
+                $('#button-resetPromoField').removeClass('d-none');
+                $('#button-kodePromoField').addClass('d-none');
+                if (arrResultKodePromo['package_name'] == dataShowDetail['package_name'] &&
+                    arrResultKodePromo['package_top'] == dataShowDetail['package_top']) {
+                    if (arrResultKodePromo['package_top'] == 'Bulanan') {
+                        var periodBulan = dataShowDetail['counted'];
+                        console.log(periodBulan);
+                    } else if (arrResultKodePromo['package_top'] == 'Tahunan') {
+                        var periodTahunan = 12;
+                        console.log(periodTahunan);
+                    }
+                } else {
+                    alert('Data Paket Tidak Sesuai Dengan Kode Promo. Silahkan coba lagi!');
                 }
             });
         });

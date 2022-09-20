@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\SalesLink;
 use App\Models\Service;
 use App\Models\ServicesList;
+use App\Models\PromoList;
 use App\Models\Technical;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -35,7 +36,8 @@ class NewCustomerController extends Controller
         $datas = [
             'titlePage' => 'Form Registrasi Layanan Baru',
             'packageName' => $dataLayanan,
-            'serviceData' => ServicesList::all()
+            'serviceData' => ServicesList::all(),
+            'promoData' => PromoList::all()
         ];
 
         if (isset($_POST['salesID'])) {
