@@ -14,6 +14,9 @@ class ServicesList extends Model
         'package_categories',
         'package_speed',
         'package_top',
-        'package_price'
+        'package_price',
+        'retail_package_price',
+        'government_package_price',
+        'noted_service'
     ];
 }

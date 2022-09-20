@@ -434,7 +434,7 @@
                                                 <div class="p-2"
                                                     style="border-radius:12px; border: 1px solid #dedede; background-color: #dedede;">
                                                     <p class="fw-bold mb-2">Subtotal</p>
-                                                    <p class="h1 fw-bold text-end">Rp. 120.000,-</p>
+                                                    <p class="h1 fw-bold text-end" id="package_price_show_detail"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -618,6 +618,8 @@
                                     .package_type + ") " + element.package_speed +
                                     " Mbps");
                                 $('#package_top_show_details').html(element.package_top);
+                                $('#package_price_show_detail').html("Rp. " + element
+                                    .package_price + ",-");
                             }
                         });
                     }
@@ -641,6 +643,8 @@
                                 " Mbps");
                             $('#package_top_show_details').html($('#custom_bulanan').val() +
                                 " Bulan");
+                            $('#package_price_show_detail').html("Rp. " + element
+                                .package_price * $('#custom_bulanan').val() + ",-");
                         }
                     });
                 } else if ($('#custom_bulanan').val() >= 12) {
