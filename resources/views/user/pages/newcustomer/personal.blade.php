@@ -87,7 +87,7 @@
                             }
                         </style>
                         <div class="tab-content">
-                            <div id="form-step-0" class="tab-pane px-0" role="tabpanel" aria-labelledby="form-step-0"
+                            {{-- <div id="form-step-0" class="tab-pane px-0" role="tabpanel" aria-labelledby="form-step-0"
                                 style="overflow-y:scroll; max-height:100%;">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
@@ -350,10 +350,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div id="form-step-3" class="tab-pane" role="tabpanel" aria-labelledby="form-step-3"
-                                style="overflow-y: scroll; min-height: 800px !important;">
-                                <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
+                                style="min-height: 800px !important;">
+                                <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark"
+                                    style="overflow-y: scroll; max-height: 800px !important;">
                                     <div class="mb-3">
                                         <label for="package_name" class="form-label">Pilihan Nama Paket</label>
                                         <select class="form-select" id="package_name" name="package_name">
@@ -418,36 +419,38 @@
                                     <div class="rounded border-white bg-white p-3 d-none" id="subTotalBayarWidget">
                                         <p class="fw-bold mb-4">Detail Pembayaran</p>
                                         <div class="row mb-2">
-                                            <div class="col-6 fw-bold">
+                                            <div class="col-12 col-lg-6 fw-bold">
                                                 Nama Paket
                                             </div>
-                                            <div class="col-6" id="package_name_show_details">
+                                            <div class="col-12 col-lg-6" id="package_name_show_details">
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-6 fw-bold">
+                                            <div class="col-12 col-lg-6 fw-bold">
                                                 Jangka Waktu Pembayaran
                                             </div>
-                                            <div class="col-6" id="package_top_show_details">
+                                            <div class="col-12 col-lg-6" id="package_top_show_details">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <div class="col-6 fw-bold">
+                                            <div class="col-12 col-lg-6 fw-bold">
                                                 Kode Promo
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12 col-lg-6">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control"
                                                         placeholder="Masukkan Kode Promo..."
                                                         aria-describedby="button-kodePromoField" id="kodePromoField"
                                                         name="kodePromoField">
                                                     <button class="btn btn-success" type="button"
-                                                        id="button-kodePromoField">
+                                                        id="button-kodePromoField"
+                                                        style="border-top-right-radius: .375rem; border-bottom-right-radius: .375rem;">
                                                         <i class="fa-solid fa-ticket me-1"></i>
                                                         Ambil Promo
                                                     </button>
                                                     <button class="btn btn-danger d-none" type="button"
-                                                        id="button-resetPromoField">
+                                                        id="button-resetPromoField"
+                                                        style="border-top-right-radius: .375rem; border-bottom-right-radius: .375rem;">
                                                         <i class="fa-solid fa-ban me-1"></i>
                                                         Reset Promo
                                                     </button>
@@ -455,7 +458,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6">
+                                            <div class="col-12 col-lg-6">
                                                 <div class="p-2"
                                                     style="border-radius:12px; border: 1px solid #dedede; background-color: #dedede;">
                                                     <p class="fw-bold mb-2">Subtotal</p>
@@ -576,6 +579,8 @@
             $('#option_custom_bulanan').addClass('d-none');
             $('#subTotalBayarWidget').addClass('d-none');
             $('#custom_bulanan').attr('readonly', false);
+            $('#button-kodePromoField').removeClass('d-none');
+            $('#button-resetPromoField').addClass('d-none');
 
             $('#package_name').on('change', () => {
                 $('#custom_bulanan').attr('readonly', false);
@@ -590,6 +595,8 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
+                $('#button-kodePromoField').removeClass('d-none');
+                $('#button-resetPromoField').addClass('d-none');
 
                 var packageName = $('#package_name').val();
 
@@ -629,6 +636,8 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
+                $('#button-kodePromoField').removeClass('d-none');
+                $('#button-resetPromoField').addClass('d-none');
 
                 var packageName = $('#package_name').val();
                 var packageType = $('#package_type').val();
@@ -682,6 +691,8 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
+                $('#button-kodePromoField').removeClass('d-none');
+                $('#button-resetPromoField').addClass('d-none');
 
                 $('#option_package_top').removeClass('d-none');
                 dataShowDetail['package_categories'] = $('#package_categories').val();
@@ -695,6 +706,8 @@
                     $('#custom_bulanan').val('');
 
                     $('#subTotalBayarWidget').addClass('d-none');
+                    $('#button-kodePromoField').removeClass('d-none');
+                    $('#button-resetPromoField').addClass('d-none');
                     if (this.value == 'Bulanan') {
                         dataShowDetail['package_top'] = 'Bulanan';
 
@@ -721,6 +734,8 @@
 
                             $('input:radio[name="inlineTopPaketType"]').change(
                                 function() {
+                                    $('#button-kodePromoField').removeClass('d-none');
+                                    $('#button-resetPromoField').addClass('d-none');
                                     if ($(this).is(':checked') && $(this).val() == 'Retail' &&
                                         dataShowDetail['package_top'] == 'Bulanan') {
                                         $('#custom_bulanan').attr('readonly', false);
@@ -854,6 +869,8 @@
 
                             $('input:radio[name="inlineTopPaketType"]').change(
                                 function() {
+                                    $('#button-kodePromoField').removeClass('d-none');
+                                    $('#button-resetPromoField').addClass('d-none');
                                     if ($(this).is(':checked') && $(this).val() == 'Retail' &&
                                         dataShowDetail['package_top'] == 'Tahunan') {
                                         $('#custom_bulanan').attr('readonly', false);
