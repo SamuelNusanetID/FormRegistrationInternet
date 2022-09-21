@@ -59,6 +59,7 @@ class NewCustomerController extends Controller
 
     public function storePersonal(Request $request)
     {
+        dd($request->all());
         DB::transaction(function () {
             $requestAPI = Request();
 
