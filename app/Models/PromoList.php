@@ -13,7 +13,7 @@ class PromoList extends Model
         'package_name',
         'package_top',
         'discount_cut',
-        'montly_cut',
+        'monthly_cut',
         'activate_date',
         'expired_date'
     ];

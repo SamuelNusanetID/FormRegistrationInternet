@@ -551,6 +551,13 @@
             //     })
             //     .addTo(map);
 
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (String(currentdate.getMonth() + 1).padStart(2, '0')) +
+                "-" + currentdate
+                .getDate() + " " +
+                String(currentdate.getHours()).padStart(2, '0') + ":" +
+                String(currentdate.getMinutes()).padStart(2, '0') + ":" +
+                String(currentdate.getSeconds()).padStart(2, '0');
             const packageData = {!! json_encode($serviceData) !!};
             const promoData = {!! json_encode($promoData) !!};
             var dataShowDetail = [];
@@ -886,53 +893,136 @@
                 $('#custom_bulanan').attr('readonly', false);
                 $('#kodePromoField').val('');
 
-                $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
-                    (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
-                            'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
-                        dataShowDetail['package_categories'] + ' (' + dataShowDetail[
-                            'package_type'] + ')'));
-                $('#package_top_show_details').html(dataShowDetail['counted'] + ' Bulan');
-                $('#package_price_show_detail').html('Rp. ' + dataShowDetail['fix_price'] + ',-');
+                if (dataShowDetail['package_top'] == 'Bulanan') {
+                    $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
+                        (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
+                                'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
+                            dataShowDetail['package_categories'] + ' (' + dataShowDetail[
+                                'package_type'] + ')'));
+                    $('#package_top_show_details').html(dataShowDetail['counted'] + ' Bulan');
+                    $('#package_price_show_detail').html('Rp. ' + dataShowDetail['fix_price'] + ',-');
 
-                $('#button-resetPromoField').addClass('d-none');
-                $('#button-kodePromoField').removeClass('d-none');
+                    $('#button-resetPromoField').addClass('d-none');
+                    $('#button-kodePromoField').removeClass('d-none');
+                } else if (dataShowDetail['package_top'] == 'Tahunan') {
+                    $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
+                        (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
+                                'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
+                            dataShowDetail['package_categories'] + ' (' + dataShowDetail[
+                                'package_type'] + ')'));
+                    $('#package_top_show_details').html('Tahunan');
+                    $('#package_price_show_detail').html('Rp. ' + dataShowDetail['fix_price'] + ',-');
+
+                    $('#button-resetPromoField').addClass('d-none');
+                    $('#button-kodePromoField').removeClass('d-none');
+                }
             });
 
             $('#button-kodePromoField').on('click', () => {
                 var kodePromo = $('#kodePromoField').val();
-                var arrResultKodePromo = {};
-                var status = [];
+                if (!isEmpty(kodePromo)) {
+                    let arrKodePromoAktif = [];
+                    let arrKodePromoNonAktif = [];
+                    const DateNow = Date(datetime);
 
-                promoData.forEach((element) => {
-                    if (element.promo_code === kodePromo) {
-                        $('#custom_bulanan').attr('readonly', true);
-                        arrResultKodePromo = element;
-                        status.push(true);
-                    } else if (element.promo_code !== kodePromo) {
-                        status.push(false);
-                    }
-                });
+                    promoData.forEach((element) => {
+                        // Activation Date
+                        var activationDate = element.activate_date;
+                        // Expired Date
+                        var expirationDate = element.expired_date;
 
-                if (!status[0]) {
-                    alert('Kode promo tidak ditemukan. Silahkan coba lagi!');
-                }
+                        if (dates.inRange(dateTimeConverter(datetime), dateTimeConverter(
+                                activationDate), dateTimeConverter(expirationDate))) {
+                            arrKodePromoAktif.push(element);
+                        } else {
+                            arrKodePromoNonAktif.push(element);
+                        }
+                    });
 
-                $('#button-resetPromoField').removeClass('d-none');
-                $('#button-kodePromoField').addClass('d-none');
-                if (arrResultKodePromo['package_name'] == dataShowDetail['package_name'] &&
-                    arrResultKodePromo['package_top'] == dataShowDetail['package_top']) {
-                    if (arrResultKodePromo['package_top'] == 'Bulanan') {
-                        var periodBulan = dataShowDetail['counted'];
-                        console.log(periodBulan);
-                    } else if (arrResultKodePromo['package_top'] == 'Tahunan') {
-                        var periodTahunan = 12;
-                        console.log(periodTahunan);
+                    var searchPromo = isEmpty(arrKodePromoAktif.find(item => item.promo_code ===
+                        kodePromo));
+                    var indexPromo = arrKodePromoAktif.findIndex(item => item.promo_code ===
+                        kodePromo);
+
+                    if (!searchPromo) {
+                        var namaPaket = dataShowDetail['package_name'];
+                        var TOPPaket = dataShowDetail['package_top'];
+
+                        if (arrKodePromoAktif[indexPromo].package_name === namaPaket &&
+                            arrKodePromoAktif[indexPromo].package_top == TOPPaket) {
+                            var PotonganBulan = parseInt((!isEmpty(arrKodePromoAktif[indexPromo]
+                                    .monthly_cut)) ? arrKodePromoAktif[indexPromo]
+                                .monthly_cut : '0');
+                            var PotonganDiskon = parseInt((!isEmpty(arrKodePromoAktif[indexPromo]
+                                    .discount_cut)) ? arrKodePromoAktif[indexPromo]
+                                .discount_cut : '0');
+
+                            $('#button-kodePromoField').addClass('d-none');
+                            $('#button-resetPromoField').removeClass('d-none');
+
+                            if (arrKodePromoAktif[indexPromo].package_top == 'Bulanan') {
+                                $('#custom_bulanan').attr('readonly', true);
+                                $('#package_name_show_details').html("Paket " + dataShowDetail[
+                                        'package_name'] +
+                                    ' ' +
+                                    (isEmpty(dataShowDetail['package_categories']) ? '(' +
+                                        dataShowDetail[
+                                            'package_speed'] + ' Mbps) ' + dataShowDetail[
+                                            'package_type'] :
+                                        dataShowDetail['package_categories'] + ' (' + dataShowDetail[
+                                            'package_type'] + ')'));
+                                $('#package_top_show_details').html(dataShowDetail['counted'] +
+                                    ' Bulan + (Free ' + PotonganBulan + ' Bulan');
+
+                                if (PotonganDiskon == 0) {
+                                    $('#package_price_show_detail').html('Rp. ' +
+                                        parseInt(dataShowDetail[
+                                            'fix_price']) + ',-');
+                                } else {
+                                    $('#package_price_show_detail').html('Rp. ' + parseInt(dataShowDetail[
+                                            'fix_price']) - (parseInt(dataShowDetail[
+                                            'fix_price']) * (PotonganDiskon / 100)) +
+                                        ',-');
+                                }
+                            } else if (arrKodePromoAktif[indexPromo].package_top == 'Tahunan') {
+                                $('#package_name_show_details').html("Paket " +
+                                    dataShowDetail['package_name'] + ' ' +
+                                    (isEmpty(dataShowDetail['package_categories']) ?
+                                        '(' + dataShowDetail[
+                                            'package_speed'] + ' Mbps) ' +
+                                        dataShowDetail['package_type'] :
+                                        dataShowDetail['package_categories'] + ' (' +
+                                        dataShowDetail[
+                                            'package_type'] + ')'));
+                                $('#package_top_show_details').html('1 Tahun ' + '(Free ' + PotonganBulan +
+                                    ' Bulan)');
+                                if (PotonganDiskon == 0) {
+                                    $('#package_price_show_detail').html('Rp. ' +
+                                        parseInt(dataShowDetail[
+                                            'fix_price']) + ',-');
+                                } else {
+                                    $('#package_price_show_detail').html('Rp. ' + parseInt(dataShowDetail[
+                                            'fix_price']) - (parseInt(dataShowDetail[
+                                            'fix_price']) * (PotonganDiskon / 100)) +
+                                        ',-');
+                                }
+                            }
+                        } else {
+                            alert('Kode promo tidak sesuai. Silahkan coba lagi!');
+                        }
+                    } else {
+                        alert('Kode Promo tidak ditemukan. Silahkan coba lagi!');
                     }
                 } else {
-                    alert('Data Paket Tidak Sesuai Dengan Kode Promo. Silahkan coba lagi!');
+                    alert('Field Kode Promo Masih Kosong!');
                 }
             });
         });
+
+        function dateTimeConverter(datetime) {
+            var dateParts = new Date(Date.parse(datetime.replace(/-/g, '/'))).getTime();
+            return dateParts;
+        }
 
         function isEmpty(value) {
             if (value == null || value == undefined) {
@@ -943,6 +1033,58 @@
                 return true;
             }
             return false;
+        }
+
+        var dates = {
+            convert: function(d) {
+                // Converts the date in d to a date-object. The input can be:
+                //   a date object: returned without modification
+                //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
+                //   a number     : Interpreted as number of milliseconds
+                //                  since 1 Jan 1970 (a timestamp)
+                //   a string     : Any format supported by the javascript engine, like
+                //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
+                //  an object     : Interpreted as an object with year, month and date
+                //                  attributes.  **NOTE** month is 0-11.
+                return (
+                    d.constructor === Date ? d :
+                    d.constructor === Array ? new Date(d[0], d[1], d[2]) :
+                    d.constructor === Number ? new Date(d) :
+                    d.constructor === String ? new Date(d) :
+                    typeof d === "object" ? new Date(d.year, d.month, d.date) :
+                    NaN
+                );
+            },
+            compare: function(a, b) {
+                // Compare two dates (could be of any type supported by the convert
+                // function above) and returns:
+                //  -1 : if a < b
+                //   0 : if a = b
+                //   1 : if a > b
+                // NaN : if a or b is an illegal date
+                // NOTE: The code inside isFinite does an assignment (=).
+                return (
+                    isFinite(a = this.convert(a).valueOf()) &&
+                    isFinite(b = this.convert(b).valueOf()) ?
+                    (a > b) - (a < b) :
+                    NaN
+                );
+            },
+            inRange: function(d, start, end) {
+                // Checks if date in d is between dates in start and end.
+                // Returns a boolean or NaN:
+                //    true  : if d is between start and end (inclusive)
+                //    false : if d is before start or after end
+                //    NaN   : if one or more of the dates is illegal.
+                // NOTE: The code inside isFinite does an assignment (=).
+                return (
+                    isFinite(d = this.convert(d).valueOf()) &&
+                    isFinite(start = this.convert(start).valueOf()) &&
+                    isFinite(end = this.convert(end).valueOf()) ?
+                    start <= d && d <= end :
+                    NaN
+                );
+            }
         }
     </script>
 @endsection
