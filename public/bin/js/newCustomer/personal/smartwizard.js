@@ -105,12 +105,6 @@ $(document).ready(function () {
                 email: true,
                 emailordomain: true
             },
-            service_product: {
-                required: true,
-            },
-            topRadioBtnPersonal: {
-                required: true,
-            },
             package_name: {
                 required: true,
             },

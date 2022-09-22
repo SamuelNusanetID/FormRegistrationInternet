@@ -139,9 +139,22 @@ class NewCustomerController extends Controller
 
     public function indexBussiness()
     {
+        $fetchDataService = ServicesList::all();
+        $arrdataLayanan = [];
+        foreach ($fetchDataService as $key => $value) {
+            array_push($arrdataLayanan, $value->package_name);
+        }
+
+        $dataLayanan = [];
+        foreach (array_count_values($arrdataLayanan) as $key => $value) {
+            array_push($dataLayanan, $key);
+        }
+
         $datas = [
             'titlePage' => 'Form Registrasi Layanan Baru',
-            'serviceData' => ServiceList::all()
+            'packageName' => $dataLayanan,
+            'serviceData' => ServicesList::all(),
+            'promoData' => PromoList::all()
         ];
 
         if (isset($_POST['salesID'])) {
@@ -163,6 +176,7 @@ class NewCustomerController extends Controller
 
     public function storeBussiness(Request $request)
     {
+        dd($request->all());
         DB::transaction(function () {
             $requestAPI = Request();
 

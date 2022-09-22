@@ -119,10 +119,22 @@ $(document).ready(function () {
                 email: true,
                 emailordomain: true
             },
-            service_product: {
+            package_name: {
                 required: true,
             },
-            topRadioBtnBussiness: {
+            package_type: {
+                required: true,
+            },
+            package_categories: {
+                required: true,
+            },
+            inlineTopPaket: {
+                required: true,
+            },
+            inlineTopPaketType: {
+                required: true,
+            },
+            custom_bulanan: {
                 required: true,
             }
         },
@@ -193,11 +205,23 @@ $(document).ready(function () {
                 required: 'Kolom Alamat Email Teknikal Wajib Diisi',
                 email: 'Alamat Email Teknikal tidak valid',
             },
-            service_product: {
-                required: 'Kolom Pilihan Layanan Wajib Diisi',
+            package_name: {
+                required: 'Kolom Nama Paket Wajib Diisi',
             },
-            topRadioBtnBussiness: {
-                required: 'Kolom Jenis Pembayaran Wajib Diisi',
+            package_type: {
+                required: 'Kolom Tipe Paket Wajib Diisi',
+            },
+            package_categories: {
+                required: 'Kolom Kategori Paket Wajib Diisi'
+            },
+            inlineTopPaket: {
+                required: 'Kolom Jangka Waktu Pembayaran Wajib Diisi'
+            },
+            inlineTopPaketType: {
+                required: 'Kolom Tipe Harga Wajib Diisi'
+            },
+            custom_bulanan: {
+                required: 'Kolom Custom Bulan Wajib Diisi'
             }
         }
     });

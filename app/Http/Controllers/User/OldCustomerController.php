@@ -7,7 +7,8 @@ use App\Models\Approval;
 use App\Models\Customer;
 use App\Models\Billing;
 use App\Models\Service;
-use App\Models\ServiceList;
+use App\Models\ServicesList;
+use App\Models\PromoList;
 use App\Models\Technical;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -23,13 +24,26 @@ class OldCustomerController extends Controller
             $CustomerData = Customer::where('customer_id', $_GET['id']);
 
             if ($CustomerData->exists()) {
+                $fetchDataService = ServicesList::all();
+                $arrdataLayanan = [];
+                foreach ($fetchDataService as $key => $value) {
+                    array_push($arrdataLayanan, $value->package_name);
+                }
+
+                $dataLayanan = [];
+                foreach (array_count_values($arrdataLayanan) as $key => $value) {
+                    array_push($dataLayanan, $key);
+                }
+
                 $fetchingDatas = $CustomerData->first();
 
                 $datas = [
                     'titlePage' => 'Customer Lama',
                     'customerClass' => $fetchingDatas->class,
                     'customerData' => $fetchingDatas,
-                    'serviceData' => ServiceList::all()
+                    'packageName' => $dataLayanan,
+                    'serviceData' => ServicesList::all(),
+                    'promoData' => PromoList::all()
                 ];
 
                 return view('user.pages.oldcustomer.customer', $datas);
@@ -57,11 +71,24 @@ class OldCustomerController extends Controller
                             }
                         }
 
+                        $fetchDataService = ServicesList::all();
+                        $arrdataLayanan = [];
+                        foreach ($fetchDataService as $key => $value) {
+                            array_push($arrdataLayanan, $value->package_name);
+                        }
+
+                        $dataLayanan = [];
+                        foreach (array_count_values($arrdataLayanan) as $key => $value) {
+                            array_push($dataLayanan, $key);
+                        }
+
                         $datas = [
                             'titlePage' => 'Customer Lama',
                             'customerClass' => $customerClass,
                             'customerData' => $resultFetch,
-                            'serviceData' => ServiceList::all()
+                            'packageName' => $dataLayanan,
+                            'serviceData' => ServicesList::all(),
+                            'promoData' => PromoList::all()
                         ];
 
                         return view('user.pages.oldcustomer.customer', $datas);
@@ -80,6 +107,7 @@ class OldCustomerController extends Controller
 
     public function showDataCustomer(Request $request, $class_customer, $id_customer)
     {
+        dd($request->all());
         $CustomerData = Customer::where('customer_id', $id_customer);
 
         if ($CustomerData->exists()) {

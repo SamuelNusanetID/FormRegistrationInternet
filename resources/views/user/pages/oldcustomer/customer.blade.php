@@ -234,8 +234,8 @@
                                 </div>
                             </div>
                             <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
-                                style="min-height:550px !important; overflow:auto;">
-                                @if (isset($customerData->service->service_package))
+                                style="min-height:800px !important; overflow:auto;">
+                                {{-- @if (isset($customerData->service->service_package))
                                     <div class="mb-3">
                                         <label for="product_detail" class="mb-2">
                                             Detail Layanan
@@ -278,129 +278,10 @@
                                             @endforeach
                                         </ol>
                                     </div>
-                                @endif
-                                <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark">
-                                    <div class="" id="serviceOptionBussiness">
-                                        <label for="service_product" class="form-label">Pilihan Layanan Baru
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        @php
-                                            $servicesData = json_decode($serviceData);
-                                            setlocale(LC_MONETARY, 'id_ID');
-                                        @endphp
-                                        <select class="form-select @error('service_product') is-invalid @enderror"
-                                            name="service_product" id="service_product">
-                                            <option disabled selected>Pilih Jenis Layanan...</option>
-                                            @foreach ($servicesData as $service)
-                                                @if ($service->category == $customerClass)
-                                                    @if (old('service_product') == $service->package_name)
-                                                        <option value="{{ $service->package_name }}" selected>
-                                                            {{ $service->package_name }} - Rp.
-                                                            {{ $service->package_price }},-
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $service->package_name }}">
-                                                            {{ $service->package_name }} => Rp. @convert((int) $service->package_price) /
-                                                            {{ $service->period }}
-                                                        </option>
-                                                    @endif
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        @error('service_product')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3 d-none" id="termOfPaymentBussiness">
-                                        <p class="m-0 p-0 mb-1">
-                                            Jenis Pembayaran
-                                            <span class="text-danger">*</span>
-                                        </p>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                class="form-check-input @error('topRadioBtnBussiness') is-invalid @enderror"
-                                                type="radio" name="topRadioBtnBussiness"
-                                                id="topRadioBtnMonthlyBussiness" value="Bulanan"
-                                                {{ old('topRadioBtnBussiness') === 'Bulanan' ? 'checked' : null }}>
-                                            <label class="form-check-label"
-                                                for="topRadioBtnMonthlyBussiness">Bulanan</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                class="form-check-input @error('topRadioBtnBussiness') is-invalid @enderror"
-                                                type="radio" name="topRadioBtnBussiness"
-                                                id="topRadioBtnAnuallyBussiness" value="Tahunan"
-                                                {{ old('topRadioBtnBussiness') === 'Tahunan' ? 'checked' : null }}>
-                                            <label class="form-check-label"
-                                                for="topRadioBtnAnuallyBussiness">Tahunan</label>
-                                        </div>
-                                        @error('topRadioBtnBussiness')
-                                            <p class="small text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-
-                                    <div class="row g-3 align-items-center py-1 d-none" id="monthlyEditFieldBussiness">
-                                        <label for="editBulanServiceListBussiness">
-                                            Field Bulanan
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <div class="col-auto">
-                                            <label for="editBulanServiceListBussiness" class="col-form-label">
-                                                Jumlah Bulan
-                                            </label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <input type="number" id="editBulanServiceListBussiness"
-                                                name="editBulanServiceListBussiness" class="form-control"
-                                                aria-describedby="passwordHelpInline" min="1" max="12">
-                                        </div>
-                                        <div class="col-auto">
-                                            <span id="passwordHelpInline" class="form-text">
-                                                Bulan
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="border rounded px-3 py-2 bg-white text-dark d-none"
-                                        id="detailPaymentBussiness">
-                                        <div class="row">
-                                            <p class="fw-bold mb-3">Rincian Pembayaran</p>
-                                            <div class="mb-0 row">
-                                                <label for="serviceName" class="col-8 col-md-3 col-form-label fw-bold">-
-                                                    Nama
-                                                    Layanan</label>
-                                                <div class="col-8 col-md-9">
-                                                    <input type="text" readonly class="form-control-plaintext"
-                                                        id="serviceName" name="serviceName">
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row">
-                                                <label for="servicePrice" class="col-8 col-sm-3 col-form-label fw-bold">-
-                                                    Harga
-                                                    Layanan</label>
-                                                <div class="col-8 col-sm-9">
-                                                    <input type="text" readonly class="form-control-plaintext"
-                                                        id="servicePrice" name="servicePrice">
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row">
-                                                <label for="termofpaymentDeals"
-                                                    class="col-8 col-sm-3 col-form-label fw-bold">-
-                                                    Jenis
-                                                    Pembayaran</label>
-                                                <div class="col-8 col-sm-9">
-                                                    <input type="text" readonly class="form-control-plaintext"
-                                                        id="termofpaymentDeals" name="termofpaymentDeals">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endif --}}
                                 <style>
                                     #map {
-                                        height: 50em;
+                                        height: 30em;
                                     }
                                 </style>
                                 <div class="mb-3" id="map">
@@ -413,6 +294,122 @@
                                         sebagai
                                         alamat pemasangan internet.</div>
                                 </div>
+                                <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark"
+                                    style="overflow-y: scroll; max-height: 200px !important;">
+                                    <div class="mb-3">
+                                        <label for="package_name" class="form-label">Pilihan Nama Paket</label>
+                                        <select class="form-select" id="package_name" name="package_name">
+                                            <option selected disabled>Pilih Nama Paket...</option>
+                                            @foreach ($packageName as $layananpaket)
+                                                <option value="{{ $layananpaket }}">Paket {{ $layananpaket }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3" id="option_package_type">
+                                        <label for="package_type" class="form-label">Pilihan Tipe Paket</label>
+                                        <select class="form-select" id="package_type" name="package_type">
+                                            <option selected disabled>Pilih Tipe Paket...</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3" id="option_package_categories">
+                                        <label for="package_categories" class="form-label">Pilihan Kategori Paket</label>
+                                        <select class="form-select" id="package_categories" name="package_categories">
+                                            <option selected disabled>Pilih Kategori Paket...</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3" id="option_package_top">
+                                        <label for="package_top" class="form-label">
+                                            Pilihan Jangka Waktu Pembayaran Paket
+                                        </label>
+                                        <div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineTopPaket"
+                                                    id="inlineTopPaket_1" value="Bulanan">
+                                                <label class="form-check-label" for="inlineTopPaket_1">Bulanan</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineTopPaket"
+                                                    id="inlineTopPaket_2" value="Tahunan">
+                                                <label class="form-check-label" for="inlineTopPaket_2">Tahunan</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3" id="option_package_type_price">
+                                        <label for="package_top_type" class="form-label">
+                                            Pilihan Tipe Harga
+                                        </label>
+                                        <div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineTopPaketType"
+                                                    id="inlineTopPaketType_1" value="Retail">
+                                                <label class="form-check-label" for="inlineTopPaketType_1">Retail</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineTopPaketType"
+                                                    id="inlineTopPaketType_2" value="Pemerintah">
+                                                <label class="form-check-label"
+                                                    for="inlineTopPaketType_2">Pemerintah</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3" id="option_custom_bulanan">
+                                        <label for="custom_bulanan" class="form-label">Custom Field Bulan</label>
+                                        <input class="form-control" type="text" id="custom_bulanan"
+                                            name="custom_bulanan" placeholder="Masukkan Jumlah Bulan">
+                                    </div>
+                                    <div class="rounded border-white bg-white p-3 d-none" id="subTotalBayarWidget">
+                                        <p class="fw-bold mb-4">Detail Pembayaran</p>
+                                        <div class="row mb-2">
+                                            <div class="col-12 col-lg-6 fw-bold">
+                                                Nama Paket
+                                            </div>
+                                            <div class="col-12 col-lg-6" id="package_name_show_details">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-12 col-lg-6 fw-bold">
+                                                Jangka Waktu Pembayaran
+                                            </div>
+                                            <div class="col-12 col-lg-6" id="package_top_show_details">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-12 col-lg-6 fw-bold">
+                                                Kode Promo
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Masukkan Kode Promo..."
+                                                        aria-describedby="button-kodePromoField" id="kodePromoField"
+                                                        name="kodePromoField">
+                                                    <button class="btn btn-success" type="button"
+                                                        id="button-kodePromoField"
+                                                        style="border-top-right-radius: .375rem; border-bottom-right-radius: .375rem;">
+                                                        <i class="fa-solid fa-ticket me-1"></i>
+                                                        Ambil Promo
+                                                    </button>
+                                                    <button class="btn btn-danger d-none" type="button"
+                                                        id="button-resetPromoField"
+                                                        style="border-top-right-radius: .375rem; border-bottom-right-radius: .375rem;">
+                                                        <i class="fa-solid fa-ban me-1"></i>
+                                                        Reset Promo
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="p-2"
+                                                    style="border-radius:12px; border: 1px solid #dedede; background-color: #dedede;">
+                                                    <p class="fw-bold mb-2">Subtotal</p>
+                                                    <p class="h1 fw-bold text-end" id="package_price_show_detail"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="RequestHandler" id="RequestHandler">
                             </div>
                             <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info"
                                 style="min-height:550px !important;">
@@ -542,121 +539,6 @@
                 })
                 .addTo(map);
 
-            $('#service_product').on('change', function() {
-                $('#serviceOptionBussiness').addClass('mb-3');
-                $('#termOfPaymentBussiness').removeClass('d-none');
-                $('#termOfPaymentBussiness').removeClass('mb-3');
-                $('input[type=radio][name=topRadioBtnBussiness]').prop('checked', false);
-                $('#detailPaymentBussiness').addClass('d-none');
-            });
-
-            $('input[type=radio][name=topRadioBtnBussiness]').change(function() {
-                if (this.value == 'Bulanan') {
-                    $('#monthlyEditFieldBussiness').removeClass('d-none');
-                    $('#monthlyEditFieldBussiness').addClass('mb-3');
-                    $('#termOfPaymentBussiness').addClass('mb-3');
-
-                    $('#editBulanServiceListBussiness').on('keyup', function() {
-                        var max = parseInt($(this).attr('max'));
-                        var min = parseInt($(this).attr('min'));
-                        if ($(this).val() > max) {
-                            $(this).val(max);
-                        } else if ($(this).val() < min) {
-                            $(this).val(min);
-                        }
-
-                        if (this.value != "" && this.value <= 12) {
-                            $('#detailPaymentBussiness').removeClass('d-none');
-
-                            var serviceData = {!! json_encode($servicesData) !!};
-                            serviceData.forEach(element => {
-                                if (element.package_name == $('#service_product').val() &&
-                                    element.period ==
-                                    'Bulanan') {
-                                    $('#serviceName').val(element.package_name);
-                                    $('#servicePrice').val(formatter.format((element
-                                        .package_price) * this.value));
-                                    $('#termofpaymentDeals').val("Bulanan");
-                                }
-                            });
-                        } else {
-                            $('#detailPaymentBussiness').addClass('d-none');
-                        }
-                    });
-                } else if (this.value == 'Tahunan') {
-                    $('#detailPaymentBussiness').removeClass('d-none');
-                    $('#termOfPaymentBussiness').addClass('mb-3');
-
-                    var serviceData = {!! json_encode($servicesData) !!};
-                    serviceData.forEach(element => {
-                        if (element.package_name == $('#service_product').val() && element.period ==
-                            'Tahunan') {
-                            $('#serviceName').val(element.package_name);
-                            $('#servicePrice').val(formatter.format(element
-                                .package_price));
-                            $('#termofpaymentDeals').val("Tahunan");
-                        }
-                    });
-                }
-            });
-
-            if ($('#service_product').val() != null) {
-                $('#serviceOptionBussiness').addClass('mb-3');
-                $('#termOfPaymentBussiness').removeClass('d-none');
-                $('#termOfPaymentBussiness').removeClass('mb-3');
-                $('#detailPaymentBussiness').addClass('d-none');
-
-                if ($('input[type=radio][name=topRadioBtnBussiness]').is(':checked')) {
-                    if ($('input[type=radio][name=topRadioBtnBussiness]').val() == 'Bulanan') {
-                        $('#monthlyEditFieldBussiness').removeClass('d-none');
-                        $('#monthlyEditFieldBussiness').addClass('mb-3');
-                        $('#termOfPaymentBussiness').addClass('mb-3');
-
-                        $('#editBulanServiceListBussiness').on('keyup', function() {
-                            var max = parseInt($(this).attr('max'));
-                            var min = parseInt($(this).attr('min'));
-                            if ($(this).val() > max) {
-                                $(this).val(max);
-                            } else if ($(this).val() < min) {
-                                $(this).val(min);
-                            }
-
-                            if (this.value != "" && this.value <= 12) {
-                                $('#detailPaymentBussiness').removeClass('d-none');
-
-                                var serviceData = {!! json_encode($servicesData) !!};
-                                serviceData.forEach(element => {
-                                    if (element.package_name == $('#service_product').val() &&
-                                        element.period ==
-                                        'Bulanan') {
-                                        $('#serviceName').val(element.package_name);
-                                        $('#servicePrice').val(formatter.format((element
-                                            .package_price) * this.value));
-                                        $('#termofpaymentDeals').val("Bulanan");
-                                    }
-                                });
-                            } else {
-                                $('#detailPaymentBussiness').addClass('d-none');
-                            }
-                        });
-                    } else if ($('input[type=radio][name=topRadioBtnBussiness]').val() == 'Tahunan') {
-                        $('#detailPaymentBussiness').removeClass('d-none');
-                        $('#termOfPaymentBussiness').addClass('mb-3');
-
-                        var serviceData = {!! json_encode($servicesData) !!};
-                        serviceData.forEach(element => {
-                            if (element.package_name == $('#service_product').val() && element.period ==
-                                'Tahunan') {
-                                $('#serviceName').val(element.package_name);
-                                $('#servicePrice').val(formatter.format(element
-                                    .package_price));
-                                $('#termofpaymentDeals').val("Tahunan");
-                            }
-                        });
-                    }
-                }
-            }
-
             var countedData = {!! json_encode(count(json_decode($customerData->address))) !!};
             for (let index = 0; index < countedData; index++) {
                 var oldalamatPasang = $(`#address-${index}`).val().split('');
@@ -675,5 +557,857 @@
                 $(`#address-${index}`).val(newValueAlamatPasang.join(''));
             }
         });
+    </script>
+    <!-- Data Layanan ScriptJS -->
+    <script>
+        $(document).ready(() => {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (String(currentdate.getMonth() + 1).padStart(2, '0')) +
+                "-" + currentdate
+                .getDate() + " " +
+                String(currentdate.getHours()).padStart(2, '0') + ":" +
+                String(currentdate.getMinutes()).padStart(2, '0') + ":" +
+                String(currentdate.getSeconds()).padStart(2, '0');
+            const packageData = {!! json_encode($serviceData) !!};
+            const promoData = {!! json_encode($promoData) !!};
+            var dataShowDetail = [];
+            let hargaPaket = 0;
+            const taxPPN = (11 / 100);
+
+            $('#option_package_type').addClass('d-none');
+            $('#option_package_categories').addClass('d-none');
+            $('#option_package_top').addClass('d-none');
+            $('#option_package_type_price').addClass('d-none');
+            $('#option_custom_bulanan').addClass('d-none');
+            $('#subTotalBayarWidget').addClass('d-none');
+            $('#custom_bulanan').attr('readonly', false);
+            $('#button-kodePromoField').removeClass('d-none');
+            $('#button-resetPromoField').addClass('d-none');
+
+            $('#package_name').on('change', () => {
+                $('#custom_bulanan').attr('readonly', false);
+                $('#package_type').empty();
+                $('#package_categories').empty();
+                $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
+                $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
+                $('#custom_bulanan').empty();
+
+                $('#option_package_categories').addClass('d-none');
+                $('#option_package_top').addClass('d-none');
+                $('#option_package_type_price').addClass('d-none');
+                $('#option_custom_bulanan').addClass('d-none');
+                $('#subTotalBayarWidget').addClass('d-none');
+                $('#button-kodePromoField').removeClass('d-none');
+                $('#button-resetPromoField').addClass('d-none');
+
+                var packageName = $('#package_name').val();
+
+                if (packageName != "" || packageName != null) {
+                    $('#option_package_type').removeClass('d-none');
+
+                    var arrPackageType = [];
+                    packageData.forEach(package => {
+                        if (package.package_name == packageName) {
+                            arrPackageType[package.package_type] = 0;
+                        }
+                    });
+
+                    $('#package_type').append('<option disabled selected>Pilih Tipe Paket...</option>');
+                    for (const [key, value] of Object.entries(arrPackageType)) {
+                        $('#package_type').append($('<option>', {
+                            value: key,
+                            text: key
+                        }));
+                    }
+
+                    dataShowDetail['package_name'] = packageName;
+                } else {
+                    $('#option_package_type').addClass('d-none');
+                }
+            });
+
+            $('#package_type').on('change', () => {
+                $('#custom_bulanan').attr('readonly', false);
+                $('#package_categories').empty();
+                $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
+                $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
+                $('#custom_bulanan').empty();
+
+                $('#option_package_categories').addClass('d-none');
+                $('#option_package_top').addClass('d-none');
+                $('#option_package_type_price').addClass('d-none');
+                $('#option_custom_bulanan').addClass('d-none');
+                $('#subTotalBayarWidget').addClass('d-none');
+                $('#button-kodePromoField').removeClass('d-none');
+                $('#button-resetPromoField').addClass('d-none');
+
+                var packageName = $('#package_name').val();
+                var packageType = $('#package_type').val();
+                $('#package_categories').empty();
+
+                if (packageType != "" || packageType != null) {
+                    $('#option_package_categories').removeClass('d-none');
+
+                    var arrPackageCategories = [];
+                    var i = 0;
+                    packageData.forEach(package => {
+                        if (package.package_name == packageName && package.package_type ==
+                            packageType) {
+                            if (!isEmpty(package.package_categories)) {
+                                arrPackageCategories[package.package_categories] = package
+                                    .package_speed;
+                                dataShowDetail['package_categories'] = null;
+                            } else {
+                                arrPackageCategories[package
+                                        .package_speed] = package
+                                    .package_speed;
+                                dataShowDetail['package_categories'] = package.package_categories;
+                            }
+                        }
+                        i++;
+                    });
+
+                    $('#package_categories').append(
+                        '<option disabled selected>Pilih Kategori Paket...</option>');
+                    for (const [key, value] of Object.entries(arrPackageCategories)) {
+                        $('#package_categories').append($('<option>', {
+                            value: key != value ? key : value,
+                            text: (key != value ? key + ' ( ' + value + ' Mbps)' : value +
+                                ' Mbps')
+                        }));
+                    }
+
+                    dataShowDetail['package_type'] = packageType;
+                } else {
+                    $('#option_package_categories').addClass('d-none');
+                }
+            });
+
+            $('#package_categories').on('change', () => {
+                $('#custom_bulanan').attr('readonly', false);
+                $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
+                $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
+                $('#custom_bulanan').empty();
+
+                $('#option_package_top').addClass('d-none');
+                $('#option_package_type_price').addClass('d-none');
+                $('#option_custom_bulanan').addClass('d-none');
+                $('#subTotalBayarWidget').addClass('d-none');
+                $('#button-kodePromoField').removeClass('d-none');
+                $('#button-resetPromoField').addClass('d-none');
+
+                $('#option_package_top').removeClass('d-none');
+                dataShowDetail['package_categories'] = $('#package_categories').val();
+                dataShowDetail['package_speed'] = isNaN(parseInt($('#package_categories').val())) ?
+                    $('#package_categories').val() : '-';
+
+                $('input[type=radio][name=inlineTopPaket]').change(function() {
+                    $('#kodePromoField').val('');
+                    $('#custom_bulanan').attr('readonly', false);
+                    $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
+                    $('#custom_bulanan').val('');
+
+                    $('#subTotalBayarWidget').addClass('d-none');
+                    $('#button-kodePromoField').removeClass('d-none');
+                    $('#button-resetPromoField').addClass('d-none');
+                    if (this.value == 'Bulanan') {
+                        dataShowDetail['package_top'] = 'Bulanan';
+
+                        if (dataShowDetail['package_speed'] == dataShowDetail[
+                                'package_categories']) {
+                            // Data Paket Basic
+                            packageData.forEach((element) => {
+                                if (element.package_name == dataShowDetail[
+                                        'package_name'] && element.package_type ==
+                                    dataShowDetail['package_type'] && element
+                                    .package_categories == dataShowDetail[
+                                        'package_categories'] && element.package_top ==
+                                    dataShowDetail['package_top']) {
+                                    hargaPaket = element.package_price;
+                                }
+                            });
+
+                            $('#subTotalBayarWidget').addClass('d-none');
+                            $('#option_package_type_price').addClass('d-none');
+                            $('#option_custom_bulanan').removeClass('d-none');
+                        } else {
+                            $('#option_package_type_price').removeClass('d-none');
+                            $('#option_custom_bulanan').addClass('d-none');
+
+                            $('input:radio[name="inlineTopPaketType"]').change(
+                                function() {
+                                    $('#button-kodePromoField').removeClass('d-none');
+                                    $('#button-resetPromoField').addClass('d-none');
+                                    if ($(this).is(':checked') && $(this).val() == 'Retail' &&
+                                        dataShowDetail['package_top'] == 'Bulanan') {
+                                        $('#custom_bulanan').attr('readonly', false);
+                                        $('#option_custom_bulanan').removeClass('d-none');
+                                        $('#custom_bulanan').val('');
+                                        $('#subTotalBayarWidget').addClass('d-none');
+                                        packageData.forEach((element) => {
+                                            if (element.package_name == dataShowDetail[
+                                                    'package_name'] && element
+                                                .package_type == dataShowDetail[
+                                                    'package_type'] && element
+                                                .package_speed == dataShowDetail[
+                                                    'package_categories'] && element
+                                                .package_top == dataShowDetail[
+                                                    'package_top']) {
+                                                hargaPaket = element
+                                                    .retail_package_price;
+                                            }
+                                        });
+                                        dataShowDetail['package_option'] = 'Retail';
+                                    } else if ($(this).is(':checked') && $(this).val() ==
+                                        'Pemerintah' &&
+                                        dataShowDetail['package_top'] == 'Bulanan') {
+                                        $('#custom_bulanan').attr('readonly', false);
+                                        $('#option_custom_bulanan').removeClass('d-none');
+                                        $('#custom_bulanan').val('');
+                                        $('#subTotalBayarWidget').addClass('d-none');
+                                        packageData.forEach((element) => {
+                                            if (element.package_name == dataShowDetail[
+                                                    'package_name'] && element
+                                                .package_type == dataShowDetail[
+                                                    'package_type'] && element
+                                                .package_speed == dataShowDetail[
+                                                    'package_categories'] && element
+                                                .package_top == dataShowDetail[
+                                                    'package_top']) {
+                                                hargaPaket = element
+                                                    .government_package_price;
+                                            }
+                                        });
+                                        dataShowDetail['package_option'] = 'Pemerintah';
+                                    }
+                                });
+                        }
+                    } else if (this.value == 'Tahunan') {
+                        dataShowDetail['package_top'] = 'Tahunan';
+                        $('#option_custom_bulanan').addClass('d-none');
+
+                        if (dataShowDetail['package_speed'] == dataShowDetail[
+                                'package_categories']) {
+                            // Data Paket Basic
+                            packageData.forEach((element) => {
+                                if (element.package_name == dataShowDetail[
+                                        'package_name'] && element.package_type ==
+                                    dataShowDetail['package_type'] && element
+                                    .package_categories == dataShowDetail[
+                                        'package_categories'] && element.package_top ==
+                                    dataShowDetail['package_top']) {
+                                    hargaPaket = element.package_price;
+                                }
+                            });
+
+                            $('#option_package_type_price').addClass('d-none');
+                            $('#option_custom_bulanan').addClass('d-none');
+                            $('#subTotalBayarWidget').removeClass('d-none');
+                            $('#subTotalBayarWidget').removeClass('d-none');
+                            $('#package_name_show_details').html("Paket " + dataShowDetail[
+                                    'package_name'] + ' ' +
+                                (isEmpty(dataShowDetail['package_categories']) ? '(' +
+                                    dataShowDetail[
+                                        'package_speed'] + ' Mbps) ' + dataShowDetail[
+                                        'package_type'] :
+                                    dataShowDetail['package_categories'] + ' (' +
+                                    dataShowDetail[
+                                        'package_type'] + ')'));
+                            $('#package_top_show_details').html('Tahunan');
+
+                            // Perhitungan Sub Total
+                            const hargaSetelahPPN = (parseInt(hargaPaket) + parseInt(hargaPaket *
+                                taxPPN));
+                            $('#package_price_show_detail').html('Rp. ' + hargaSetelahPPN + ',-');
+                            dataShowDetail['fix_price'] = hargaSetelahPPN;
+                            dataShowDetail['counted'] = 12;
+
+                            // Send Data to Database
+                            var arrResultData = {};
+                            packageData.forEach((item) => {
+                                if (dataShowDetail['package_speed'] == dataShowDetail[
+                                        'package_categories']) {
+                                    if (item.package_name === dataShowDetail[
+                                            'package_name'] &&
+                                        item.package_type === dataShowDetail[
+                                            'package_type'] &&
+                                        item.package_categories === dataShowDetail[
+                                            'package_categories'] &&
+                                        item.package_top === dataShowDetail['package_top']
+                                    ) {
+                                        arrResultData = item;
+                                    }
+                                } else {
+                                    if (item.package_name === dataShowDetail[
+                                            'package_name'] &&
+                                        item.package_type === dataShowDetail[
+                                            'package_type'] &&
+                                        item.package_speed === dataShowDetail[
+                                            'package_categories'] &&
+                                        item.package_top === dataShowDetail['package_top']
+                                    ) {
+                                        arrResultData = item;
+                                    }
+                                }
+                            });
+
+                            var ResultJSON = {
+                                'package_name': dataShowDetail['package_name'],
+                                'package_type': dataShowDetail['package_type'],
+                                'package_categories': isNaN(parseInt(dataShowDetail[
+                                        'package_categories'])) ?
+                                    dataShowDetail['package_categories'] : '-',
+                                'package_speed': arrResultData['package_speed'],
+                                'package_top': dataShowDetail['package_top'],
+                                'package_price': dataShowDetail['fix_price'],
+                                'optional_package': isEmpty(dataShowDetail['package_option']) ?
+                                    null : dataShowDetail['package_option'],
+                                'counted': dataShowDetail['counted']
+                            };
+
+                            $('#RequestHandler').val(JSON.stringify(ResultJSON));
+                        } else {
+                            $('#option_package_type_price').removeClass('d-none');
+
+                            $('input:radio[name="inlineTopPaketType"]').change(
+                                function() {
+                                    $('#button-kodePromoField').removeClass('d-none');
+                                    $('#button-resetPromoField').addClass('d-none');
+                                    if ($(this).is(':checked') && $(this).val() == 'Retail' &&
+                                        dataShowDetail['package_top'] == 'Tahunan') {
+                                        $('#custom_bulanan').attr('readonly', false);
+                                        $('#option_custom_bulanan').addClass('d-none');
+                                        $('#custom_bulanan').val('');
+                                        $('#subTotalBayarWidget').addClass('d-none');
+                                        packageData.forEach((element) => {
+                                            if (element.package_name == dataShowDetail[
+                                                    'package_name'] && element
+                                                .package_type == dataShowDetail[
+                                                    'package_type'] && element
+                                                .package_speed == dataShowDetail[
+                                                    'package_categories'] && element
+                                                .package_top == dataShowDetail[
+                                                    'package_top']) {
+                                                hargaPaket = element
+                                                    .retail_package_price;
+                                                dataShowDetail['fix_price'] =
+                                                    hargaPaket;
+                                            }
+                                        });
+                                        dataShowDetail['package_option'] = 'Retail';
+                                    } else if ($(this).is(':checked') && $(this).val() ==
+                                        'Pemerintah' &&
+                                        dataShowDetail['package_top'] == 'Tahunan') {
+                                        $('#custom_bulanan').attr('readonly', false);
+                                        $('#option_custom_bulanan').addClass('d-none');
+                                        $('#custom_bulanan').val('');
+                                        $('#subTotalBayarWidget').addClass('d-none');
+                                        packageData.forEach((element) => {
+                                            if (element.package_name == dataShowDetail[
+                                                    'package_name'] && element
+                                                .package_type == dataShowDetail[
+                                                    'package_type'] && element
+                                                .package_speed == dataShowDetail[
+                                                    'package_categories'] && element
+                                                .package_top == dataShowDetail[
+                                                    'package_top']) {
+                                                hargaPaket = element
+                                                    .government_package_price;
+                                                dataShowDetail['fix_price'] =
+                                                    hargaPaket;
+                                            }
+                                        });
+                                        dataShowDetail['package_option'] = 'Pemerintah';
+                                    }
+
+                                    $('#subTotalBayarWidget').removeClass('d-none');
+                                    $('#package_name_show_details').html("Paket " +
+                                        dataShowDetail['package_name'] + ' ' +
+                                        (isEmpty(dataShowDetail['package_categories']) ?
+                                            '(' + dataShowDetail[
+                                                'package_speed'] + ' Mbps) ' +
+                                            dataShowDetail['package_type'] :
+                                            dataShowDetail['package_categories'] + ' (' +
+                                            dataShowDetail[
+                                                'package_type'] + ')'));
+                                    $('#package_top_show_details').html('Tahunan');
+
+                                    // Perhitungan Sub Total
+                                    const hargaSetelahPPN = (parseInt(hargaPaket) + parseInt(
+                                        hargaPaket * taxPPN));
+                                    $('#package_price_show_detail').html('Rp. ' +
+                                        hargaSetelahPPN + ',-');
+                                    dataShowDetail['fix_price'] = hargaSetelahPPN;
+                                    dataShowDetail['counted'] = 12;
+
+                                    // Send Data to Database
+                                    var arrResultData = {};
+                                    packageData.forEach((item) => {
+                                        if (dataShowDetail['package_speed'] ==
+                                            dataShowDetail[
+                                                'package_categories']) {
+                                            if (item.package_name === dataShowDetail[
+                                                    'package_name'] &&
+                                                item.package_type === dataShowDetail[
+                                                    'package_type'] &&
+                                                item.package_categories ===
+                                                dataShowDetail['package_categories'] &&
+                                                item.package_top === dataShowDetail[
+                                                    'package_top']) {
+                                                arrResultData = item;
+                                            }
+                                        } else {
+                                            if (item.package_name === dataShowDetail[
+                                                    'package_name'] &&
+                                                item.package_type === dataShowDetail[
+                                                    'package_type'] &&
+                                                item.package_speed === dataShowDetail[
+                                                    'package_categories'] &&
+                                                item.package_top === dataShowDetail[
+                                                    'package_top']) {
+                                                arrResultData = item;
+                                            }
+                                        }
+                                    });
+
+                                    var ResultJSON = {
+                                        'package_name': dataShowDetail['package_name'],
+                                        'package_type': dataShowDetail['package_type'],
+                                        'package_categories': isNaN(parseInt(dataShowDetail[
+                                                'package_categories'])) ?
+                                            dataShowDetail['package_categories'] : '-',
+                                        'package_speed': arrResultData['package_speed'],
+                                        'package_top': dataShowDetail['package_top'],
+                                        'package_price': dataShowDetail['fix_price'],
+                                        'optional_package': isEmpty(dataShowDetail[
+                                            'package_option']) ? null : dataShowDetail[
+                                            'package_option'],
+                                        'counted': dataShowDetail['counted']
+                                    };
+
+                                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
+                                });
+                        }
+                    }
+                });
+            });
+
+            $('#custom_bulanan').on('input', function() {
+                if ($('#custom_bulanan').val() < 12 && $('#custom_bulanan').val() != "") {
+                    const hargaCustomBulanan = $('#custom_bulanan').val();
+
+                    $('#subTotalBayarWidget').removeClass('d-none');
+                    $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
+                        (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
+                                'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
+                            dataShowDetail['package_categories'] + ' (' + dataShowDetail[
+                                'package_type'] + ')'));
+                    $('#package_top_show_details').html(hargaCustomBulanan + ' Bulan');
+                    dataShowDetail['counted'] = hargaCustomBulanan;
+
+                    // Perhitungan Sub Total
+                    const hargaSetelahPPN = (parseInt(hargaPaket) + parseInt(hargaPaket * taxPPN)) *
+                        hargaCustomBulanan;
+                    $('#package_price_show_detail').html('Rp. ' + hargaSetelahPPN + ',-');
+                    dataShowDetail['fix_price'] = hargaSetelahPPN;
+
+                    // Send Data to Database
+                    var arrResultData = {};
+                    packageData.forEach((item) => {
+                        if (dataShowDetail['package_speed'] == dataShowDetail[
+                                'package_categories']) {
+                            if (item.package_name === dataShowDetail['package_name'] &&
+                                item.package_type === dataShowDetail['package_type'] &&
+                                item.package_categories === dataShowDetail['package_categories'] &&
+                                item.package_top === dataShowDetail['package_top']) {
+                                arrResultData = item;
+                            }
+                        } else {
+                            if (item.package_name === dataShowDetail['package_name'] &&
+                                item.package_type === dataShowDetail['package_type'] &&
+                                item.package_speed === dataShowDetail['package_categories'] &&
+                                item.package_top === dataShowDetail['package_top']) {
+                                arrResultData = item;
+                            }
+                        }
+                    });
+
+                    var ResultJSON = {
+                        'package_name': dataShowDetail['package_name'],
+                        'package_type': dataShowDetail['package_type'],
+                        'package_categories': isNaN(parseInt(dataShowDetail['package_categories'])) ?
+                            dataShowDetail['package_categories'] : '-',
+                        'package_speed': arrResultData['package_speed'],
+                        'package_top': dataShowDetail['package_top'],
+                        'package_price': dataShowDetail['fix_price'],
+                        'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
+                            dataShowDetail['package_option'],
+                        'counted': dataShowDetail['counted']
+                    };
+
+                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
+                } else if ($('#custom_bulanan').val() >= 12) {
+                    $('#subTotalBayarWidget').addClass('d-none');
+                }
+            });
+
+            $('#button-resetPromoField').on('click', () => {
+                $('#custom_bulanan').attr('readonly', false);
+                $('#kodePromoField').val('');
+
+                if (dataShowDetail['package_top'] == 'Bulanan') {
+                    $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
+                        (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
+                                'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
+                            dataShowDetail['package_categories'] + ' (' + dataShowDetail[
+                                'package_type'] + ')'));
+                    $('#package_top_show_details').html(dataShowDetail['counted'] + ' Bulan');
+                    $('#package_price_show_detail').html('Rp. ' + dataShowDetail['fix_price'] + ',-');
+
+                    // Send Data to Database
+                    var arrResultData = {};
+                    packageData.forEach((item) => {
+                        if (dataShowDetail['package_speed'] == dataShowDetail[
+                                'package_categories']) {
+                            if (item.package_name === dataShowDetail['package_name'] &&
+                                item.package_type === dataShowDetail['package_type'] &&
+                                item.package_categories === dataShowDetail['package_categories'] &&
+                                item.package_top === dataShowDetail['package_top']) {
+                                arrResultData = item;
+                            }
+                        } else {
+                            if (item.package_name === dataShowDetail['package_name'] &&
+                                item.package_type === dataShowDetail['package_type'] &&
+                                item.package_speed === dataShowDetail['package_categories'] &&
+                                item.package_top === dataShowDetail['package_top']) {
+                                arrResultData = item;
+                            }
+                        }
+                    });
+
+                    var ResultJSON = {
+                        'package_name': dataShowDetail['package_name'],
+                        'package_type': dataShowDetail['package_type'],
+                        'package_categories': isNaN(parseInt(dataShowDetail['package_categories'])) ?
+                            dataShowDetail['package_categories'] : '-',
+                        'package_speed': arrResultData['package_speed'],
+                        'package_top': dataShowDetail['package_top'],
+                        'package_price': dataShowDetail['fix_price'],
+                        'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
+                            dataShowDetail['package_option'],
+                        'counted': dataShowDetail['counted']
+                    };
+
+                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
+
+                    $('#button-resetPromoField').addClass('d-none');
+                    $('#button-kodePromoField').removeClass('d-none');
+                } else if (dataShowDetail['package_top'] == 'Tahunan') {
+                    $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
+                        (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
+                                'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
+                            dataShowDetail['package_categories'] + ' (' + dataShowDetail[
+                                'package_type'] + ')'));
+                    $('#package_top_show_details').html('Tahunan');
+                    $('#package_price_show_detail').html('Rp. ' + dataShowDetail['fix_price'] + ',-');
+
+                    // Send Data to Database
+                    var arrResultData = {};
+                    packageData.forEach((item) => {
+                        if (dataShowDetail['package_speed'] == dataShowDetail[
+                                'package_categories']) {
+                            if (item.package_name === dataShowDetail['package_name'] &&
+                                item.package_type === dataShowDetail['package_type'] &&
+                                item.package_categories === dataShowDetail['package_categories'] &&
+                                item.package_top === dataShowDetail['package_top']) {
+                                arrResultData = item;
+                            }
+                        } else {
+                            if (item.package_name === dataShowDetail['package_name'] &&
+                                item.package_type === dataShowDetail['package_type'] &&
+                                item.package_speed === dataShowDetail['package_categories'] &&
+                                item.package_top === dataShowDetail['package_top']) {
+                                arrResultData = item;
+                            }
+                        }
+                    });
+
+                    var ResultJSON = {
+                        'package_name': dataShowDetail['package_name'],
+                        'package_type': dataShowDetail['package_type'],
+                        'package_categories': isNaN(parseInt(dataShowDetail['package_categories'])) ?
+                            dataShowDetail['package_categories'] : '-',
+                        'package_speed': arrResultData['package_speed'],
+                        'package_top': dataShowDetail['package_top'],
+                        'package_price': dataShowDetail['fix_price'],
+                        'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
+                            dataShowDetail['package_option'],
+                        'counted': dataShowDetail['counted']
+                    };
+
+                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
+
+                    $('#button-resetPromoField').addClass('d-none');
+                    $('#button-kodePromoField').removeClass('d-none');
+                }
+            });
+
+            $('#button-kodePromoField').on('click', () => {
+                var kodePromo = $('#kodePromoField').val();
+                if (!isEmpty(kodePromo)) {
+                    let arrKodePromoAktif = [];
+                    let arrKodePromoNonAktif = [];
+                    const DateNow = Date(datetime);
+
+                    promoData.forEach((element) => {
+                        // Activation Date
+                        var activationDate = element.activate_date;
+                        // Expired Date
+                        var expirationDate = element.expired_date;
+
+                        if (dates.inRange(dateTimeConverter(datetime), dateTimeConverter(
+                                activationDate), dateTimeConverter(expirationDate))) {
+                            arrKodePromoAktif.push(element);
+                        } else {
+                            arrKodePromoNonAktif.push(element);
+                        }
+                    });
+
+                    var searchPromo = isEmpty(arrKodePromoAktif.find(item => item.promo_code ===
+                        kodePromo));
+                    var indexPromo = arrKodePromoAktif.findIndex(item => item.promo_code ===
+                        kodePromo);
+
+                    if (!searchPromo) {
+                        var namaPaket = dataShowDetail['package_name'];
+                        var TOPPaket = dataShowDetail['package_top'];
+
+                        if (arrKodePromoAktif[indexPromo].package_name === namaPaket &&
+                            arrKodePromoAktif[indexPromo].package_top == TOPPaket) {
+                            var PotonganBulan = parseInt((!isEmpty(arrKodePromoAktif[indexPromo]
+                                    .monthly_cut)) ? arrKodePromoAktif[indexPromo]
+                                .monthly_cut : '0');
+                            var PotonganDiskon = parseInt((!isEmpty(arrKodePromoAktif[indexPromo]
+                                    .discount_cut)) ? arrKodePromoAktif[indexPromo]
+                                .discount_cut : '0');
+
+                            $('#button-kodePromoField').addClass('d-none');
+                            $('#button-resetPromoField').removeClass('d-none');
+
+                            if (arrKodePromoAktif[indexPromo].package_top == 'Bulanan') {
+                                $('#custom_bulanan').attr('readonly', true);
+                                $('#package_name_show_details').html("Paket " + dataShowDetail[
+                                        'package_name'] +
+                                    ' ' +
+                                    (isEmpty(dataShowDetail['package_categories']) ? '(' +
+                                        dataShowDetail[
+                                            'package_speed'] + ' Mbps) ' + dataShowDetail[
+                                            'package_type'] :
+                                        dataShowDetail['package_categories'] + ' (' + dataShowDetail[
+                                            'package_type'] + ')'));
+                                $('#package_top_show_details').html(dataShowDetail['counted'] +
+                                    ' Bulan + (Free ' + PotonganBulan + ' Bulan');
+
+                                if (PotonganDiskon == 0) {
+                                    $('#package_price_show_detail').html('Rp. ' +
+                                        parseInt(dataShowDetail[
+                                            'fix_price']) + ',-');
+                                } else {
+                                    $('#package_price_show_detail').html('Rp. ' + (PotonganDiskon == 0 ?
+                                            dataShowDetail[
+                                                'fix_price'] : parseInt(dataShowDetail[
+                                                'fix_price']) - (parseInt(dataShowDetail[
+                                                'fix_price']) * (PotonganDiskon / 100))) +
+                                        ',-');
+                                }
+
+                                // Send Data to Database
+                                var arrResultData = {};
+                                packageData.forEach((item) => {
+                                    if (dataShowDetail['package_speed'] == dataShowDetail[
+                                            'package_categories']) {
+                                        if (item.package_name === dataShowDetail['package_name'] &&
+                                            item.package_type === dataShowDetail['package_type'] &&
+                                            item.package_categories === dataShowDetail[
+                                                'package_categories'] &&
+                                            item.package_top === dataShowDetail['package_top']) {
+                                            arrResultData = item;
+                                        }
+                                    } else {
+                                        if (item.package_name === dataShowDetail['package_name'] &&
+                                            item.package_type === dataShowDetail['package_type'] &&
+                                            item.package_speed === dataShowDetail[
+                                                'package_categories'] &&
+                                            item.package_top === dataShowDetail['package_top']) {
+                                            arrResultData = item;
+                                        }
+                                    }
+                                });
+
+                                var ResultJSON = {
+                                    'package_name': dataShowDetail['package_name'],
+                                    'package_type': dataShowDetail['package_type'],
+                                    'package_categories': isNaN(parseInt(dataShowDetail[
+                                            'package_categories'])) ?
+                                        dataShowDetail['package_categories'] : '-',
+                                    'package_speed': arrResultData['package_speed'],
+                                    'package_top': dataShowDetail['package_top'],
+                                    'package_price': PotonganDiskon == 0 ? dataShowDetail[
+                                        'fix_price'] : parseInt(dataShowDetail[
+                                        'fix_price']) - (parseInt(dataShowDetail[
+                                        'fix_price']) * (PotonganDiskon / 100)),
+                                    'optional_package': isEmpty(dataShowDetail['package_option']) ?
+                                        null : dataShowDetail['package_option'],
+                                    'counted': dataShowDetail['counted'],
+                                    'potongan_bulan': PotonganBulan == 0 ? 0 : PotonganBulan
+                                };
+
+                                $('#RequestHandler').val(JSON.stringify(ResultJSON));
+                            } else if (arrKodePromoAktif[indexPromo].package_top == 'Tahunan') {
+                                $('#package_name_show_details').html("Paket " +
+                                    dataShowDetail['package_name'] + ' ' +
+                                    (isEmpty(dataShowDetail['package_categories']) ?
+                                        '(' + dataShowDetail[
+                                            'package_speed'] + ' Mbps) ' +
+                                        dataShowDetail['package_type'] :
+                                        dataShowDetail['package_categories'] + ' (' +
+                                        dataShowDetail[
+                                            'package_type'] + ')'));
+                                $('#package_top_show_details').html('1 Tahun ' + '(Free ' + PotonganBulan +
+                                    ' Bulan)');
+                                if (PotonganDiskon == 0) {
+                                    $('#package_price_show_detail').html('Rp. ' +
+                                        parseInt(dataShowDetail[
+                                            'fix_price']) + ',-');
+                                } else {
+                                    $('#package_price_show_detail').html('Rp. ' + (PotonganDiskon == 0 ?
+                                            dataShowDetail[
+                                                'fix_price'] : parseInt(dataShowDetail[
+                                                'fix_price']) - (parseInt(dataShowDetail[
+                                                'fix_price']) * (PotonganDiskon / 100))) +
+                                        ',-');
+                                }
+
+                                // Send Data to Database
+                                var arrResultData = {};
+                                packageData.forEach((item) => {
+                                    if (dataShowDetail['package_speed'] == dataShowDetail[
+                                            'package_categories']) {
+                                        if (item.package_name === dataShowDetail['package_name'] &&
+                                            item.package_type === dataShowDetail['package_type'] &&
+                                            item.package_categories === dataShowDetail[
+                                                'package_categories'] &&
+                                            item.package_top === dataShowDetail['package_top']) {
+                                            arrResultData = item;
+                                        }
+                                    } else {
+                                        if (item.package_name === dataShowDetail['package_name'] &&
+                                            item.package_type === dataShowDetail['package_type'] &&
+                                            item.package_speed === dataShowDetail[
+                                                'package_categories'] &&
+                                            item.package_top === dataShowDetail['package_top']) {
+                                            arrResultData = item;
+                                        }
+                                    }
+                                });
+
+                                var ResultJSON = {
+                                    'package_name': dataShowDetail['package_name'],
+                                    'package_type': dataShowDetail['package_type'],
+                                    'package_categories': isNaN(parseInt(dataShowDetail[
+                                            'package_categories'])) ?
+                                        dataShowDetail['package_categories'] : '-',
+                                    'package_speed': arrResultData['package_speed'],
+                                    'package_top': dataShowDetail['package_top'],
+                                    'package_price': PotonganDiskon == 0 ? dataShowDetail[
+                                        'fix_price'] : parseInt(dataShowDetail[
+                                        'fix_price']) - (parseInt(dataShowDetail[
+                                        'fix_price']) * (PotonganDiskon / 100)),
+                                    'optional_package': isEmpty(dataShowDetail['package_option']) ?
+                                        null : dataShowDetail['package_option'],
+                                    'counted': dataShowDetail['counted']
+                                };
+
+                                $('#RequestHandler').val(JSON.stringify(ResultJSON));
+                            }
+                        } else {
+                            alert('Kode promo tidak sesuai. Silahkan coba lagi!');
+                        }
+                    } else {
+                        alert('Kode Promo tidak ditemukan. Silahkan coba lagi!');
+                    }
+                } else {
+                    alert('Field Kode Promo Masih Kosong!');
+                }
+            });
+        });
+
+        function dateTimeConverter(datetime) {
+            var dateParts = new Date(Date.parse(datetime.replace(/-/g, '/'))).getTime();
+            return dateParts;
+        }
+
+        function isEmpty(value) {
+            if (value == null || value == undefined) {
+                return true;
+            } else if (value == 0) {
+                return true;
+            } else if (value == '-') {
+                return true;
+            }
+            return false;
+        }
+
+        var dates = {
+            convert: function(d) {
+                // Converts the date in d to a date-object. The input can be:
+                //   a date object: returned without modification
+                //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
+                //   a number     : Interpreted as number of milliseconds
+                //                  since 1 Jan 1970 (a timestamp)
+                //   a string     : Any format supported by the javascript engine, like
+                //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
+                //  an object     : Interpreted as an object with year, month and date
+                //                  attributes.  **NOTE** month is 0-11.
+                return (
+                    d.constructor === Date ? d :
+                    d.constructor === Array ? new Date(d[0], d[1], d[2]) :
+                    d.constructor === Number ? new Date(d) :
+                    d.constructor === String ? new Date(d) :
+                    typeof d === "object" ? new Date(d.year, d.month, d.date) :
+                    NaN
+                );
+            },
+            compare: function(a, b) {
+                // Compare two dates (could be of any type supported by the convert
+                // function above) and returns:
+                //  -1 : if a < b
+                //   0 : if a = b
+                //   1 : if a > b
+                // NaN : if a or b is an illegal date
+                // NOTE: The code inside isFinite does an assignment (=).
+                return (
+                    isFinite(a = this.convert(a).valueOf()) &&
+                    isFinite(b = this.convert(b).valueOf()) ?
+                    (a > b) - (a < b) :
+                    NaN
+                );
+            },
+            inRange: function(d, start, end) {
+                // Checks if date in d is between dates in start and end.
+                // Returns a boolean or NaN:
+                //    true  : if d is between start and end (inclusive)
+                //    false : if d is before start or after end
+                //    NaN   : if one or more of the dates is illegal.
+                // NOTE: The code inside isFinite does an assignment (=).
+                return (
+                    isFinite(d = this.convert(d).valueOf()) &&
+                    isFinite(start = this.convert(start).valueOf()) &&
+                    isFinite(end = this.convert(end).valueOf()) ?
+                    start <= d && d <= end :
+                    NaN
+                );
+            }
+        }
     </script>
 @endsection
