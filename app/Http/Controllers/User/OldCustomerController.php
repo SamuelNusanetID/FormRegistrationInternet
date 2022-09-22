@@ -107,7 +107,6 @@ class OldCustomerController extends Controller
 
     public function showDataCustomer(Request $request, $class_customer, $id_customer)
     {
-        dd($request->all());
         $CustomerData = Customer::where('customer_id', $id_customer);
 
         if ($CustomerData->exists()) {
@@ -160,10 +159,21 @@ class OldCustomerController extends Controller
                 $OldServiceCustomerArr[$i]['termofpaymentDeals'] = $OldServiceCustomerObj[$i]->termofpaymentDeals;
             }
 
+            $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
+            if ($fetchDataLayanan->optional_package === null) {
+                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_categories.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted.' Bulan';
+            }else {
+                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted.' Bulan';
+            }
+
             $newDataService = [
-                'service_name' => $request->get('serviceName'),
-                'service_price' => $request->get('servicePrice'),
-                'termofpaymentDeals' => $request->get('termofpaymentDeals')
+                'service_name' => $package_name,
+                'service_price' => $package_price,
+                'termofpaymentDeals' => $package_top
             ];
             array_push($OldServiceCustomerArr, $newDataService);
 
@@ -251,12 +261,23 @@ class OldCustomerController extends Controller
             $newTechnical->technical_email = $primaryEmail;
             $newTechnical->save();
 
+            $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
+            if ($fetchDataLayanan->optional_package === null) {
+                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_categories.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted.' Bulan';
+            }else {
+                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted.' Bulan';
+            }
+
             $newService = new Service();
             $newService->id = $UUIDNewCustomer;
             $newService->service_package = json_encode([[
-                'service_name' => $request->get('serviceName'),
-                'service_price' => $request->get('servicePrice'),
-                'termofpaymentDeals' => $request->get('termofpaymentDeals')
+                'service_name' => $package_name,
+                'service_price' => $package_price,
+                'termofpaymentDeals' => $package_top
             ]]);
             $newService->id_photo_url = "";
             $newService->selfie_id_photo_url = "";

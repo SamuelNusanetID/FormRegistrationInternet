@@ -59,7 +59,6 @@ class NewCustomerController extends Controller
 
     public function storePersonal(Request $request)
     {
-        dd($request->all());
         DB::transaction(function () {
             $requestAPI = Request();
 
@@ -109,13 +108,23 @@ class NewCustomerController extends Controller
             $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
             $urlSaved1 = url('/bin/img/Personal/Identity/'. $fileIdentityPhoto->getClientOriginalName());
 
+            $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
+            if ($fetchDataLayanan->optional_package === null) {
+                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_categories.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted.' Bulan';
+            }else {
+                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted.' Bulan';
+            }
             $savedDataService = [
                 'id' => $uuid,
                 'service_package' => json_encode([
                     [
-                        'service_name' => $requestAPI->get('serviceName'),
-                        'service_price' => $requestAPI->get('servicePrice'),
-                        'termofpaymentDeals' => $requestAPI->get('termofpaymentDeals')
+                        'service_name' => $package_name,
+                        'service_price' => $package_price,
+                        'termofpaymentDeals' => $package_top
                     ],
                 ]),
                 'id_photo_url' => $urlSaved1,
@@ -231,13 +240,23 @@ class NewCustomerController extends Controller
             $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
             $urlSaved1 = url('/bin/img/Personal/Identity/'. $fileIdentityPhoto->getClientOriginalName());
 
+            $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
+            if ($fetchDataLayanan->optional_package === null) {
+                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_categories.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted.' Bulan';
+            }else {
+                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted.' Bulan';
+            }
             $savedDataService = [
                 'id' => $uuid,
                 'service_package' => json_encode([
                     [
-                        'service_name' => $requestAPI->get('serviceName'),
-                        'service_price' => $requestAPI->get('servicePrice'),
-                        'termofpaymentDeals' => $requestAPI->get('termofpaymentDeals')
+                        'service_name' => $package_name,
+                        'service_price' => $package_price,
+                        'termofpaymentDeals' => $package_top
                     ],
                 ]),
                 'id_photo_url' => $urlSaved1,

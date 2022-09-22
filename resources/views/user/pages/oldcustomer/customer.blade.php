@@ -235,7 +235,7 @@
                             </div>
                             <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
                                 style="min-height:800px !important; overflow:auto;">
-                                {{-- @if (isset($customerData->service->service_package))
+                                @if (isset($customerData->service->service_package))
                                     <div class="mb-3">
                                         <label for="product_detail" class="mb-2">
                                             Detail Layanan
@@ -278,7 +278,7 @@
                                             @endforeach
                                         </ol>
                                     </div>
-                                @endif --}}
+                                @endif
                                 <style>
                                     #map {
                                         height: 30em;
