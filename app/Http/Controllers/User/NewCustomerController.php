@@ -185,7 +185,6 @@ class NewCustomerController extends Controller
 
     public function storeBussiness(Request $request)
     {
-        dd($request->all());
         DB::transaction(function () {
             $requestAPI = Request();
 
