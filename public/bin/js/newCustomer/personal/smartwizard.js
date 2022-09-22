@@ -40,135 +40,165 @@ $(document).ready(function () {
         getContent: null // Callback function for content loading
     });
 
-    // jQuery.validator.addMethod("emailordomain", function (value, element) {
-    //     return this.optional(element) || /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value) || /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/.test(value);
-    // }, "Silahkan isi alamat email dengan domain yang valid");
+    jQuery.validator.addMethod("emailordomain", function (value, element) {
+        return this.optional(element) || /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value) || /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/.test(value);
+    }, "Silahkan isi alamat email dengan domain yang valid");
 
-    // $.validator.addMethod('filesize', function (value, element, param) {
-    //     return this.optional(element) || (element.files[0].size <= param * 1000000)
-    // }, 'File foto harus berukuran max. {0} MB');
+    $.validator.addMethod('filesize', function (value, element, param) {
+        return this.optional(element) || (element.files[0].size <= param * 1000000)
+    }, 'File foto harus berukuran max. {0} MB');
 
-    // $('#personalForm').validate({
-    //     rules: {
-    //         fullname_personal: {
-    //             required: true
-    //         },
-    //         id_number_personal: {
-    //             required: true,
-    //             minlength: 16,
-    //             maxlength: 16
-    //         },
-    //         email_address_personal: {
-    //             required: true,
-    //             email: true,
-    //             emailordomain: true
-    //         },
-    //         phone_number_personal: {
-    //             required: true,
-    //             minlength: 7,
-    //             maxlength: 12
-    //         },
-    //         address_personal: {
-    //             required: true
-    //         },
-    //         geolocation_personal: {
-    //             required: true
-    //         },
-    //         service_identity_photo: {
-    //             required: true,
-    //             accept: 'jpg,jpeg,png',
-    //             filesize: 3
-    //         },
-    //         fullname_biller: {
-    //             required: true
-    //         },
-    //         phone_number_biller: {
-    //             required: true,
-    //             minlength: 7,
-    //             maxlength: 12
-    //         },
-    //         email_address_biller_primary: {
-    //             required: true,
-    //             email: true,
-    //             emailordomain: true
-    //         },
-    //         fullname_technical: {
-    //             required: true
-    //         },
-    //         phone_number_technical: {
-    //             required: true,
-    //             minlength: 7,
-    //             maxlength: 12
-    //         },
-    //         email_address_technical: {
-    //             required: true,
-    //             email: true,
-    //             emailordomain: true
-    //         },
-    //         service_product: {
-    //             required: true,
-    //         },
-    //         topRadioBtnPersonal: {
-    //             required: true,
-    //         }
-    //     },
-    //     messages: {
-    //         fullname_personal: {
-    //             required: 'Kolom Nama Lengkap Wajib Diisi'
-    //         },
-    //         id_number_personal: {
-    //             required: 'Kolom Nomor Identitas Wajib Diisi',
-    //             minlength: 'Nomor Identitas harus mengandung min. 16 karakter',
-    //             maxlength: 'Nomor Identitas melewati batas karakter'
-    //         },
-    //         email_address_personal: {
-    //             required: 'Kolom Alamat Email Wajib Diisi',
-    //             email: 'Alamat Email tidak valid'
-    //         },
-    //         phone_number_personal: {
-    //             required: 'Kolom Nomor Handphone Wajib Diisi',
-    //             minlength: 'Nomor Handphone harus mengandung min. 7 karakter',
-    //             maxlength: 'Nomor Handphone melewati batas karakter'
-    //         },
-    //         address_personal: {
-    //             required: 'Kolom Alamat Lengkap Wajib Diisi'
-    //         },
-    //         service_identity_photo: {
-    //             required: 'Kolom Upload Foto KTP Wajib Diisi',
-    //             accept: 'Foto KTP harus berformat jpeg, jpg, atau png',
-    //         },
-    //         fullname_biller: {
-    //             required: 'Kolom Nama Lengkap Pembayaran Wajib Diisi'
-    //         },
-    //         phone_number_biller: {
-    //             required: 'Kolom Nomor Handphone Pembayaran Wajib Diisi',
-    //             minlength: 'Nomor Handphone Pembayaran harus mengandung min. 7 karakter',
-    //             maxlength: 'Nomor Handphone Pembayaran melewati batas karakter'
-    //         },
-    //         email_address_biller_primary: {
-    //             required: 'Kolom Alamat Email Pembayaran Wajib Diisi',
-    //             email: 'Alamat Email Pembayaran tidak valid',
-    //         },
-    //         fullname_technical: {
-    //             required: 'Kolom Nama Lengkap Teknikal Wajib Diisi'
-    //         },
-    //         phone_number_technical: {
-    //             required: 'Kolom Nomor Handphone Teknikal Wajib Diisi',
-    //             minlength: 'Nomor Handphone Teknikal harus mengandung min. 7 karakter',
-    //             maxlength: 'Nomor Handphone Teknikal melewati batas karakter'
-    //         },
-    //         email_address_technical: {
-    //             required: 'Kolom Alamat Email Teknikal Wajib Diisi',
-    //             email: 'Alamat Email Teknikal tidak valid',
-    //         },
-    //         service_product: {
-    //             required: 'Kolom Pilihan Layanan Wajib Diisi',
-    //         },
-    //         topRadioBtnPersonal: {
-    //             required: 'Kolom Jenis Pembayaran Wajib Diisi',
-    //         }
-    //     }
-    // });
+    $('#personalForm').validate({
+        rules: {
+            fullname_personal: {
+                required: true
+            },
+            id_number_personal: {
+                required: true,
+                minlength: 16,
+                maxlength: 16
+            },
+            email_address_personal: {
+                required: true,
+                email: true,
+                emailordomain: true
+            },
+            phone_number_personal: {
+                required: true,
+                minlength: 7,
+                maxlength: 12
+            },
+            address_personal: {
+                required: true
+            },
+            geolocation_personal: {
+                required: true
+            },
+            service_identity_photo: {
+                required: true,
+                accept: 'jpg,jpeg,png',
+                filesize: 3
+            },
+            fullname_biller: {
+                required: true
+            },
+            phone_number_biller: {
+                required: true,
+                minlength: 7,
+                maxlength: 12
+            },
+            email_address_biller_primary: {
+                required: true,
+                email: true,
+                emailordomain: true
+            },
+            fullname_technical: {
+                required: true
+            },
+            phone_number_technical: {
+                required: true,
+                minlength: 7,
+                maxlength: 12
+            },
+            email_address_technical: {
+                required: true,
+                email: true,
+                emailordomain: true
+            },
+            service_product: {
+                required: true,
+            },
+            topRadioBtnPersonal: {
+                required: true,
+            },
+            package_name: {
+                required: true,
+            },
+            package_type: {
+                required: true,
+            },
+            package_categories: {
+                required: true,
+            },
+            inlineTopPaket: {
+                required: true,
+            },
+            inlineTopPaketType: {
+                required: true,
+            },
+            custom_bulanan: {
+                required: true,
+            }
+        },
+        messages: {
+            fullname_personal: {
+                required: 'Kolom Nama Lengkap Wajib Diisi'
+            },
+            id_number_personal: {
+                required: 'Kolom Nomor Identitas Wajib Diisi',
+                minlength: 'Nomor Identitas harus mengandung min. 16 karakter',
+                maxlength: 'Nomor Identitas melewati batas karakter'
+            },
+            email_address_personal: {
+                required: 'Kolom Alamat Email Wajib Diisi',
+                email: 'Alamat Email tidak valid'
+            },
+            phone_number_personal: {
+                required: 'Kolom Nomor Handphone Wajib Diisi',
+                minlength: 'Nomor Handphone harus mengandung min. 7 karakter',
+                maxlength: 'Nomor Handphone melewati batas karakter'
+            },
+            address_personal: {
+                required: 'Kolom Alamat Lengkap Wajib Diisi'
+            },
+            service_identity_photo: {
+                required: 'Kolom Upload Foto KTP Wajib Diisi',
+                accept: 'Foto KTP harus berformat jpeg, jpg, atau png',
+            },
+            fullname_biller: {
+                required: 'Kolom Nama Lengkap Pembayaran Wajib Diisi'
+            },
+            phone_number_biller: {
+                required: 'Kolom Nomor Handphone Pembayaran Wajib Diisi',
+                minlength: 'Nomor Handphone Pembayaran harus mengandung min. 7 karakter',
+                maxlength: 'Nomor Handphone Pembayaran melewati batas karakter'
+            },
+            email_address_biller_primary: {
+                required: 'Kolom Alamat Email Pembayaran Wajib Diisi',
+                email: 'Alamat Email Pembayaran tidak valid',
+            },
+            fullname_technical: {
+                required: 'Kolom Nama Lengkap Teknikal Wajib Diisi'
+            },
+            phone_number_technical: {
+                required: 'Kolom Nomor Handphone Teknikal Wajib Diisi',
+                minlength: 'Nomor Handphone Teknikal harus mengandung min. 7 karakter',
+                maxlength: 'Nomor Handphone Teknikal melewati batas karakter'
+            },
+            email_address_technical: {
+                required: 'Kolom Alamat Email Teknikal Wajib Diisi',
+                email: 'Alamat Email Teknikal tidak valid',
+            },
+            package_name: {
+                required: 'Kolom Nama Paket Wajib Diisi',
+            },
+            package_type: {
+                required: 'Kolom Tipe Paket Wajib Diisi',
+            },
+            package_categories: {
+                required: 'Kolom Kategori Paket Wajib Diisi'
+            },
+            inlineTopPaket: {
+                required: 'Kolom Jangka Waktu Pembayaran Wajib Diisi'
+            },
+            inlineTopPaketType: {
+                required: 'Kolom Tipe Harga Wajib Diisi'
+            },
+            custom_bulanan: {
+                required: 'Kolom Custom Bulan Wajib Diisi'
+            }
+        }
+    });
 
     $('#smartwizard').on("leaveStep", function (e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
         var elmForm = $("#form-step-" + currentStepIndex);

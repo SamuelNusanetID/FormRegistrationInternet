@@ -87,7 +87,7 @@
                             }
                         </style>
                         <div class="tab-content">
-                            {{-- <div id="form-step-0" class="tab-pane px-0" role="tabpanel" aria-labelledby="form-step-0"
+                            <div id="form-step-0" class="tab-pane px-0" role="tabpanel" aria-labelledby="form-step-0"
                                 style="overflow-y:scroll; max-height:100%;">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
@@ -350,7 +350,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div id="form-step-3" class="tab-pane" role="tabpanel" aria-labelledby="form-step-3"
                                 style="min-height: 800px !important;">
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark"
