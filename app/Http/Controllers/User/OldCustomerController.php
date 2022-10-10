@@ -50,7 +50,7 @@ class OldCustomerController extends Controller
             } else {
                 $response = Http::withHeaders([
                     'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
-                ])->get('https://legacy.is5.nusa.net.id/customers/'.$_GET['id']);
+                ])->get('https://legacy.is5.nusa.net.id/customers/' . $_GET['id']);
 
                 if ($response->successful()) {
                     $resultFetch = json_decode($response->body());
@@ -114,13 +114,9 @@ class OldCustomerController extends Controller
                 $request->all(),
                 [
                     'new_address' => 'required',
-                    'service_product' => 'required',
-                    'topRadioBtnBussiness' => 'required'
                 ],
                 [
                     'new_address.required' => 'Field Alamat Pemasangan Baru Wajib Diisi',
-                    'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
-                    'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi'
                 ]
             );
 
@@ -159,15 +155,15 @@ class OldCustomerController extends Controller
                 $OldServiceCustomerArr[$i]['termofpaymentDeals'] = $OldServiceCustomerObj[$i]->termofpaymentDeals;
             }
 
-            $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
+            $fetchDataLayanan = json_decode($request->get('RequestHandler'));
             if ($fetchDataLayanan->optional_package === null) {
-                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_categories.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted.' Bulan';
-            }else {
-                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
+            } else {
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted.' Bulan';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
             }
 
             $newDataService = [
@@ -186,13 +182,9 @@ class OldCustomerController extends Controller
                 $request->all(),
                 [
                     'new_address' => 'required',
-                    'service_product' => 'required',
-                    'topRadioBtnBussiness' => 'required'
                 ],
                 [
                     'new_address.required' => 'Field Alamat Pemasangan Baru Wajib Diisi',
-                    'service_product.required' => 'Field Pilihan Layanan Wajib Diisi',
-                    'topRadioBtnBussiness.required' => 'Field Jenis Pembayaran Wajib Diisi'
                 ]
             );
 
@@ -261,15 +253,15 @@ class OldCustomerController extends Controller
             $newTechnical->technical_email = $primaryEmail;
             $newTechnical->save();
 
-            $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
+            $fetchDataLayanan = json_decode($request->get('RequestHandler'));
             if ($fetchDataLayanan->optional_package === null) {
-                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_categories.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted.' Bulan';
-            }else {
-                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
+            } else {
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted.' Bulan';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
             }
 
             $newService = new Service();

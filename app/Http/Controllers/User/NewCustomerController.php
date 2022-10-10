@@ -44,8 +44,8 @@ class NewCustomerController extends Controller
             $salesID = $_POST['salesID'];
 
             $response = Http::withHeaders([
-                'X-Api-Key'=>'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
-            ])->get('https://legacy.is5.nusa.net.id/employees/'.$salesID);
+                'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+            ])->get('https://legacy.is5.nusa.net.id/employees/' . $salesID);
 
             if ($response->successful()) {
                 $result = $response->json();
@@ -76,8 +76,6 @@ class NewCustomerController extends Controller
                 'phone_number' => $requestAPI->get('phone_number_personal'),
                 'identity_number' => $requestAPI->get('id_number_personal'),
                 'reference_id' => $requestAPI->get('salesID') != null ? $requestAPI->get('salesID') : null,
-                'survey_id' => $requestAPI->get('survey_id'),
-                'extend_note' => $requestAPI->get('addonsnote'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -104,19 +102,19 @@ class NewCustomerController extends Controller
             DB::table('technicals')->insert($savedDataTechnical);
 
             $fileIdentityPhoto = $requestAPI->file('service_identity_photo');
-            $tujuan_upload1 = public_path().'/bin/img/Personal/Identity';
+            $tujuan_upload1 = public_path() . '/bin/img/Personal/Identity';
             $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
-            $urlSaved1 = url('/bin/img/Personal/Identity/'. $fileIdentityPhoto->getClientOriginalName());
+            $urlSaved1 = url('/bin/img/Personal/Identity/' . $fileIdentityPhoto->getClientOriginalName());
 
             $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
             if ($fetchDataLayanan->optional_package === null) {
-                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_categories.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted.' Bulan';
-            }else {
-                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
+            } else {
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted.' Bulan';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
             }
             $savedDataService = [
                 'id' => $uuid,
@@ -170,8 +168,8 @@ class NewCustomerController extends Controller
             $salesID = $_POST['salesID'];
 
             $response = Http::withHeaders([
-                'X-Api-Key'=>'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
-            ])->get('https://legacy.is5.nusa.net.id/employees/'.$salesID);
+                'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+            ])->get('https://legacy.is5.nusa.net.id/employees/' . $salesID);
 
             if ($response->successful()) {
                 $result = $response->json();
@@ -235,19 +233,19 @@ class NewCustomerController extends Controller
             DB::table('technicals')->insert($savedDataTechnical);
 
             $fileIdentityPhoto = $requestAPI->file('service_identity_photo');
-            $tujuan_upload1 = public_path().'/bin/img/Personal/Identity';
+            $tujuan_upload1 = public_path() . '/bin/img/Personal/Identity';
             $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
-            $urlSaved1 = url('/bin/img/Personal/Identity/'. $fileIdentityPhoto->getClientOriginalName());
+            $urlSaved1 = url('/bin/img/Personal/Identity/' . $fileIdentityPhoto->getClientOriginalName());
 
             $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
             if ($fetchDataLayanan->optional_package === null) {
-                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_categories.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted.' Bulan';
-            }else {
-                $package_name = $fetchDataLayanan->package_name.' '.$fetchDataLayanan->package_type.' ('.$fetchDataLayanan->package_speed.' Mbps)';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
+            } else {
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted.' Bulan';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
             }
             $savedDataService = [
                 'id' => $uuid,
