@@ -478,6 +478,7 @@
                                                     <p class="fw-bold mb-2">Subtotal</p>
                                                     <p class="h1 fw-bold text-end" id="package_price_show_detail"></p>
                                                 </div>
+                                                <p>Harga diatas belum termasuk PPN 11%</p>
                                             </div>
                                         </div>
                                     </div>
