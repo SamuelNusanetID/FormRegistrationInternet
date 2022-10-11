@@ -130,6 +130,7 @@ class OldCustomerController extends Controller
             $UUIDCustomer = $CustomerData->first()->id;
             $customerDataFetch = Customer::find($UUIDCustomer);
             $newSavedDataAddress = json_decode($customerDataFetch->address);
+            $newSavedGeolocation = json_decode($customerDataFetch->geolocation);
             $isSame = false;
             foreach (json_decode($customerDataFetch->address) as $key => $value) {
                 if ($value != $request->get('new_address')) {
@@ -141,9 +142,11 @@ class OldCustomerController extends Controller
 
             if ($isSame == false) {
                 array_push($newSavedDataAddress, $request->get('new_address'));
+                array_push($newSavedGeolocation, $request->get('geolocation_existing'));
             }
 
             $customerDataFetch->address = json_encode($newSavedDataAddress);
+            $customerDataFetch->geolocation = json_encode($newSavedGeolocation);
             $customerDataFetch->save();
 
             $ServiceCustomer = Service::find($UUIDCustomer);
@@ -226,7 +229,7 @@ class OldCustomerController extends Controller
             $newCustomer->customer_id = $id_customer;
             $newCustomer->name = $result->name;
             $newCustomer->address = $result->address == $request->get('new_address') ? json_encode([$result->address]) : json_encode([$result->address, $request->get('new_address')]);
-            $newCustomer->geolocation = "";
+            $newCustomer->geolocation = $request->get('geolocation_existing');
             $newCustomer->class = $class_customer;
             $newCustomer->email = $primaryEmail;
             $newCustomer->identity_number = $result->identity_number;

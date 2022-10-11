@@ -552,11 +552,6 @@
             var marker;
             var circle;
             var gpsRead = true;
-            const widgetPopup = () => {
-                return (
-                    '<div>Teet</div>'
-                );
-            }
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
             var lc = L.control.locate({
