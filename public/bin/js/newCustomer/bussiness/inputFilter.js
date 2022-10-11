@@ -2,19 +2,13 @@ $(document).ready(function () {
     setInputFilter(document.getElementById("pic_identity_number"), function (value) {
         return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
     }, "Nomor Identitas harus berupa angka");
-    setInputFilter(document.getElementById("company_npwp"), function (value) {
-        return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
-    }, "Nomor NPWP Perusahaan harus berupa angka");
-    setInputFilter(document.getElementById("company_employees"), function (value) {
-        return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
-    }, "Jumlah Karyawan harus berupa angka");
     setInputFilter(document.getElementById("pic_phone_number"), function (value) {
         return /^\d*\+?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
     }, "Nomor Handphone harus berupa angka");
     setInputFilter(document.getElementById("company_phone_number"), function (value) {
         return /^\d*\+?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
     }, "Nomor Telepon Perusahaan harus berupa angka");
-    setInputFilter(document.getElementById("phone_number_biller"), function (value) {
+    setInputFilter(document.getElementById("billing_phone"), function (value) {
         return /^\d*\+?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
     }, "Nomor Handphone harus berupa angka");
     setInputFilter(document.getElementById("phone_number_technical"), function (value) {

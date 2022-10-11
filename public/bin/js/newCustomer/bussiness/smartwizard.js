@@ -228,7 +228,6 @@ $(document).ready(function () {
 
     $('#smartwizard').on("leaveStep", function (e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
         var elmForm = $("#form-step-" + currentStepIndex);
-        console.log($('#bussinessForm').valid());
         if (stepDirection === 'forward' && elmForm) {
             if ($('#bussinessForm').valid()) {
                 return true

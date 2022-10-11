@@ -80,8 +80,6 @@
                             }
 
                             .error {
-                                width: 100%;
-                                margin-top: .25rem;
                                 font-size: .875em;
                                 color: #dc3545;
                             }
@@ -155,15 +153,15 @@
                                                 height: 300px;
                                             }
                                         </style>
+                                        <label for="address_personal" class="form-label">Pilih Lokasi Alamat<span
+                                                class="text-danger">*</span></label>
                                         <div class="mb-3" id="map">
                                         </div>
-                                        <input type="hidden" name="geolocation_bussiness" id="geolocation_bussiness"
-                                            value="">
                                         <div class="mb-3">
                                             <label for="pic_address" class="form-label">Alamat Lengkap <span
                                                     class="text-danger">*</span></label>
                                             <textarea class="form-control @error('pic_address') is-invalid @enderror" id="pic_address" name="pic_address"
-                                                aria-describedby="pic_address_help" rows="4" placeholder="Masukkan Alamat Lengkap Anda...">{{ old('pic_address') }}</textarea>
+                                                aria-describedby="pic_address_help" rows="4" placeholder="Masukkan Alamat Lengkap Anda..." readonly>{{ old('pic_address') }}</textarea>
                                             <div id="pic_address_help" class="form-text mb-1">
                                                 Alamat ini digunakan sebagai alamat pemasangan internet.
                                             </div>
@@ -173,6 +171,8 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <input type="hidden" name="geolocation_bussiness" id="geolocation_bussiness"
+                                            value="">
                                     </div>
                                     <div class="col-0 col-md-6">
                                         <div class="mb-3">
@@ -206,7 +206,7 @@
                                             <input type="text"
                                                 class="form-control @error('company_npwp') is-invalid @enderror"
                                                 name="company_npwp" placeholder="__.___.___._-___.___" data-slots="_"
-                                                size="13" value="{{ old('company_npwp') }}">
+                                                size="13" value="{{ old('company_npwp') }}" id="company_npwp">
                                             @error('company_npwp')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -238,22 +238,6 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="container row">
-                                    <div class="mb-3">
-                                        <label for="survey_id" class="form-label">
-                                            ID Survey
-                                        </label>
-                                        <input type="text" class="form-control" id="survey_id" name="survey_id"
-                                            placeholder="Masukkan ID Survey..." value="{{ old('survey_id') }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="addonsnote" class="form-label">
-                                            Catatan Tambahan
-                                        </label>
-                                        <textarea class="form-control" id="addonsnote" name="addonsnote" rows="10">{{ old('addonsnote') }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -487,31 +471,6 @@
                                             <div class="col-12 col-lg-6" id="package_top_show_details">
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <div class="col-12 col-lg-6 fw-bold">
-                                                Kode Promo
-                                            </div>
-                                            <div class="col-12 col-lg-6">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Masukkan Kode Promo..."
-                                                        aria-describedby="button-kodePromoField" id="kodePromoField"
-                                                        name="kodePromoField">
-                                                    <button class="btn btn-success" type="button"
-                                                        id="button-kodePromoField"
-                                                        style="border-top-right-radius: .375rem; border-bottom-right-radius: .375rem;">
-                                                        <i class="fa-solid fa-ticket me-1"></i>
-                                                        Ambil Promo
-                                                    </button>
-                                                    <button class="btn btn-danger d-none" type="button"
-                                                        id="button-resetPromoField"
-                                                        style="border-top-right-radius: .375rem; border-bottom-right-radius: .375rem;">
-                                                        <i class="fa-solid fa-ban me-1"></i>
-                                                        Reset Promo
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="row">
                                             <div class="col-12 col-lg-6">
                                                 <div class="p-2"
@@ -590,23 +549,149 @@
             });
 
             const map = L.map('map');
+            var marker;
+            var circle;
+            var gpsRead = true;
+            const widgetPopup = () => {
+                return (
+                    '<div>Teet</div>'
+                );
+            }
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            var lc = L.control.locate().addTo(map);
+            var lc = L.control.locate({
+                locateOptions: {
+                    enableHighAccuracy: true
+                }
+            }).addTo(map);
             lc.start();
 
-            function onLocationFound(e) {
-                var radius = e.accuracy;
-                L.marker(e.latlng).addTo(map);
-                L.circle(e.latlng, radius).addTo(map);
-                $('#geolocation_bussiness').val(JSON.stringify(e.latlng));
-            }
             map.on('locationfound', onLocationFound);
-            var geocoder = L.Control.geocoder()
+            map.on('click', onClick);
+
+            var idxOnLoc = 0;
+
+            function onLocationFound(e) {
+                idxOnLoc += 1;
+                if (marker || idxOnLoc > 1) {
+                    map.removeLayer(marker);
+                    map.removeLayer(circle);
+                } else if (marker && idxOnLoc > 1) {
+                    map.removeLayer(marker);
+                    map.removeLayer(circle);
+                    lc.stopFollowing();
+                }
+                var radius = e.accuracy;
+                marker = new L.marker(e.latlng, {
+                    draggable: true
+                }).on('dragend', onDragEnd);
+                circle = new L.circle(e.latlng, radius);
+                map.addLayer(marker);
+                map.addLayer(circle);
+
+                // Ajax to search address by lat and lang
+                var latitude = e.latlng.lat;
+                var langitude = e.latlng.lng;
+                $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${langitude}`,
+                    function(data) {
+                        marker.bindPopup(`${data.display_name}`).openPopup();
+                        $('#pic_address').val(data.display_name);
+                        $('#geolocation_bussiness').val(JSON.stringify(e.latlng));
+                    });
+
+            }
+
+            function onClick(e) {
+                if (marker) {
+                    map.removeLayer(marker);
+                    map.removeLayer(circle);
+                    if (lc._active) {
+                        lc.stopFollowing();
+                        lc.stop();
+                    }
+                }
+                var radius = 25;
+                marker = new L.Marker(e.latlng, {
+                    draggable: true
+                }).on('dragend', onDragEnd);
+                circle = new L.circle(e.latlng, radius);
+                map.addLayer(marker);
+                map.addLayer(circle);
+
+                // Ajax to search address by lat and lang
+                var latitude = e.latlng.lat;
+                var langitude = e.latlng.lng;
+                $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${langitude}`,
+                    function(data) {
+                        marker.bindPopup(`${data.display_name}`).openPopup();
+                        $('#pic_address').val(data.display_name);
+                        $('#geolocation_bussiness').val(JSON.stringify(e.latlng));
+                    });
+            }
+
+            var geocoder = L.Control.geocoder({
+                    defaultMarkGeocode: false
+                })
                 .on('markgeocode', function(e) {
-                    $('#pic_address').val(e.geocode.name);
-                    $('#geolocation_bussiness').val(JSON.stringify(e.geocode.center));
+                    if (marker) {
+                        map.removeLayer(marker);
+                        map.removeLayer(circle);
+                        if (lc._active) {
+                            lc.stopFollowing();
+                            lc.stop();
+                        }
+                    }
+
+                    var radius = 25;
+                    var latLang = e.geocode.center;
+
+                    marker = new L.marker(latLang, {
+                        draggable: true
+                    }).on('dragend', onDragEnd);
+                    circle = new L.circle(latLang, radius);
+                    map.addLayer(marker);
+                    map.addLayer(circle);
+                    // Ajax to search address by lat and lang
+                    var latitude = latLang.lat;
+                    var langitude = latLang.lng;
+                    $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${langitude}`,
+                        function(data) {
+                            marker.bindPopup(`${data.display_name}`).openPopup();
+                            $('#pic_address').val(data.display_name);
+                            $('#geolocation_bussiness').val(JSON.stringify(latLang));
+                        });
                 })
                 .addTo(map);
+
+            function onDragEnd(e) {
+                if (marker) {
+                    map.removeLayer(marker);
+                    map.removeLayer(circle);
+                    if (lc._active) {
+                        lc.stopFollowing();
+                        lc.stop();
+                    }
+                }
+
+                var latlng = e.target.getLatLng();
+                var radius = 25;
+                marker = new L.Marker(latlng, {
+                    draggable: true
+                }).on('dragend', onDragEnd);
+                circle = new L.circle(latlng, radius);
+                map.addLayer(marker);
+                map.addLayer(circle);
+
+                // Ajax to search address by lat and lang
+                var latitude = latlng.lat;
+                var langitude = latlng.lng;
+                $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${langitude}`,
+                    function(data) {
+                        marker.bindPopup(`${data.display_name}`).openPopup();
+                        $('#pic_address').val(data.display_name);
+                        $('#geolocation_bussiness').val(JSON.stringify(latlng));
+                    });
+            }
         });
     </script>
     <script src="{{ URL::to('lib/jQuerymask/regex-mask-plugin.js') }}"></script>
@@ -644,6 +729,10 @@
     <!-- Data Layanan ScriptJS -->
     <script>
         $(document).ready(() => {
+            var formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+            });
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (String(currentdate.getMonth() + 1).padStart(2, '0')) +
                 "-" + currentdate
@@ -655,7 +744,6 @@
             const promoData = {!! json_encode($promoData) !!};
             var dataShowDetail = [];
             let hargaPaket = 0;
-            const taxPPN = (11 / 100);
 
             $('#option_package_type').addClass('d-none');
             $('#option_package_categories').addClass('d-none');
@@ -664,8 +752,6 @@
             $('#option_custom_bulanan').addClass('d-none');
             $('#subTotalBayarWidget').addClass('d-none');
             $('#custom_bulanan').attr('readonly', false);
-            $('#button-kodePromoField').removeClass('d-none');
-            $('#button-resetPromoField').addClass('d-none');
 
             $('#package_name').on('change', () => {
                 $('#custom_bulanan').attr('readonly', false);
@@ -680,8 +766,6 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
-                $('#button-kodePromoField').removeClass('d-none');
-                $('#button-resetPromoField').addClass('d-none');
 
                 var packageName = $('#package_name').val();
 
@@ -721,8 +805,6 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
-                $('#button-kodePromoField').removeClass('d-none');
-                $('#button-resetPromoField').addClass('d-none');
 
                 var packageName = $('#package_name').val();
                 var packageType = $('#package_type').val();
@@ -776,8 +858,6 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
-                $('#button-kodePromoField').removeClass('d-none');
-                $('#button-resetPromoField').addClass('d-none');
 
                 $('#option_package_top').removeClass('d-none');
                 dataShowDetail['package_categories'] = $('#package_categories').val();
@@ -785,14 +865,11 @@
                     $('#package_categories').val() : '-';
 
                 $('input[type=radio][name=inlineTopPaket]').change(function() {
-                    $('#kodePromoField').val('');
                     $('#custom_bulanan').attr('readonly', false);
                     $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
                     $('#custom_bulanan').val('');
 
                     $('#subTotalBayarWidget').addClass('d-none');
-                    $('#button-kodePromoField').removeClass('d-none');
-                    $('#button-resetPromoField').addClass('d-none');
                     if (this.value == 'Bulanan') {
                         dataShowDetail['package_top'] = 'Bulanan';
 
@@ -804,8 +881,7 @@
                                         'package_name'] && element.package_type ==
                                     dataShowDetail['package_type'] && element
                                     .package_categories == dataShowDetail[
-                                        'package_categories'] && element.package_top ==
-                                    dataShowDetail['package_top']) {
+                                        'package_categories']) {
                                     hargaPaket = element.package_price;
                                 }
                             });
@@ -819,8 +895,6 @@
 
                             $('input:radio[name="inlineTopPaketType"]').change(
                                 function() {
-                                    $('#button-kodePromoField').removeClass('d-none');
-                                    $('#button-resetPromoField').addClass('d-none');
                                     if ($(this).is(':checked') && $(this).val() == 'Retail' &&
                                         dataShowDetail['package_top'] == 'Bulanan') {
                                         $('#custom_bulanan').attr('readonly', false);
@@ -833,9 +907,7 @@
                                                 .package_type == dataShowDetail[
                                                     'package_type'] && element
                                                 .package_speed == dataShowDetail[
-                                                    'package_categories'] && element
-                                                .package_top == dataShowDetail[
-                                                    'package_top']) {
+                                                    'package_categories']) {
                                                 hargaPaket = element
                                                     .retail_package_price;
                                             }
@@ -854,9 +926,7 @@
                                                 .package_type == dataShowDetail[
                                                     'package_type'] && element
                                                 .package_speed == dataShowDetail[
-                                                    'package_categories'] && element
-                                                .package_top == dataShowDetail[
-                                                    'package_top']) {
+                                                    'package_categories']) {
                                                 hargaPaket = element
                                                     .government_package_price;
                                             }
@@ -877,9 +947,8 @@
                                         'package_name'] && element.package_type ==
                                     dataShowDetail['package_type'] && element
                                     .package_categories == dataShowDetail[
-                                        'package_categories'] && element.package_top ==
-                                    dataShowDetail['package_top']) {
-                                    hargaPaket = element.package_price;
+                                        'package_categories']) {
+                                    hargaPaket = element.package_price * 12;
                                 }
                             });
 
@@ -899,9 +968,9 @@
                             $('#package_top_show_details').html('Tahunan');
 
                             // Perhitungan Sub Total
-                            const hargaSetelahPPN = (parseInt(hargaPaket) + parseInt(hargaPaket *
-                                taxPPN));
-                            $('#package_price_show_detail').html('Rp. ' + hargaSetelahPPN + ',-');
+                            const hargaSetelahPPN = parseInt(hargaPaket);
+                            $('#package_price_show_detail').html(formatter.format(
+                                hargaSetelahPPN));
                             dataShowDetail['fix_price'] = hargaSetelahPPN;
                             dataShowDetail['counted'] = 12;
 
@@ -915,8 +984,7 @@
                                         item.package_type === dataShowDetail[
                                             'package_type'] &&
                                         item.package_categories === dataShowDetail[
-                                            'package_categories'] &&
-                                        item.package_top === dataShowDetail['package_top']
+                                            'package_categories']
                                     ) {
                                         arrResultData = item;
                                     }
@@ -926,8 +994,7 @@
                                         item.package_type === dataShowDetail[
                                             'package_type'] &&
                                         item.package_speed === dataShowDetail[
-                                            'package_categories'] &&
-                                        item.package_top === dataShowDetail['package_top']
+                                            'package_categories']
                                     ) {
                                         arrResultData = item;
                                     }
@@ -954,8 +1021,6 @@
 
                             $('input:radio[name="inlineTopPaketType"]').change(
                                 function() {
-                                    $('#button-kodePromoField').removeClass('d-none');
-                                    $('#button-resetPromoField').addClass('d-none');
                                     if ($(this).is(':checked') && $(this).val() == 'Retail' &&
                                         dataShowDetail['package_top'] == 'Tahunan') {
                                         $('#custom_bulanan').attr('readonly', false);
@@ -968,11 +1033,9 @@
                                                 .package_type == dataShowDetail[
                                                     'package_type'] && element
                                                 .package_speed == dataShowDetail[
-                                                    'package_categories'] && element
-                                                .package_top == dataShowDetail[
-                                                    'package_top']) {
+                                                    'package_categories']) {
                                                 hargaPaket = element
-                                                    .retail_package_price;
+                                                    .retail_package_price * 12;
                                                 dataShowDetail['fix_price'] =
                                                     hargaPaket;
                                             }
@@ -991,11 +1054,9 @@
                                                 .package_type == dataShowDetail[
                                                     'package_type'] && element
                                                 .package_speed == dataShowDetail[
-                                                    'package_categories'] && element
-                                                .package_top == dataShowDetail[
-                                                    'package_top']) {
+                                                    'package_categories']) {
                                                 hargaPaket = element
-                                                    .government_package_price;
+                                                    .government_package_price * 12;
                                                 dataShowDetail['fix_price'] =
                                                     hargaPaket;
                                             }
@@ -1016,10 +1077,9 @@
                                     $('#package_top_show_details').html('Tahunan');
 
                                     // Perhitungan Sub Total
-                                    const hargaSetelahPPN = (parseInt(hargaPaket) + parseInt(
-                                        hargaPaket * taxPPN));
-                                    $('#package_price_show_detail').html('Rp. ' +
-                                        hargaSetelahPPN + ',-');
+                                    const hargaSetelahPPN = parseInt(hargaPaket);
+                                    $('#package_price_show_detail').html(formatter.format(
+                                        hargaSetelahPPN));
                                     dataShowDetail['fix_price'] = hargaSetelahPPN;
                                     dataShowDetail['counted'] = 12;
 
@@ -1034,9 +1094,7 @@
                                                 item.package_type === dataShowDetail[
                                                     'package_type'] &&
                                                 item.package_categories ===
-                                                dataShowDetail['package_categories'] &&
-                                                item.package_top === dataShowDetail[
-                                                    'package_top']) {
+                                                dataShowDetail['package_categories']) {
                                                 arrResultData = item;
                                             }
                                         } else {
@@ -1045,9 +1103,7 @@
                                                 item.package_type === dataShowDetail[
                                                     'package_type'] &&
                                                 item.package_speed === dataShowDetail[
-                                                    'package_categories'] &&
-                                                item.package_top === dataShowDetail[
-                                                    'package_top']) {
+                                                    'package_categories']) {
                                                 arrResultData = item;
                                             }
                                         }
@@ -1089,10 +1145,9 @@
                     dataShowDetail['counted'] = hargaCustomBulanan;
 
                     // Perhitungan Sub Total
-                    const hargaSetelahPPN = (parseInt(hargaPaket) + parseInt(hargaPaket * taxPPN)) *
-                        hargaCustomBulanan;
-                    $('#package_price_show_detail').html('Rp. ' + hargaSetelahPPN + ',-');
-                    dataShowDetail['fix_price'] = hargaSetelahPPN;
+                    const hargaSebelumPPN = parseInt(hargaPaket) * hargaCustomBulanan;
+                    $('#package_price_show_detail').html(formatter.format(hargaSebelumPPN));
+                    dataShowDetail['fix_price'] = hargaSebelumPPN;
 
                     // Send Data to Database
                     var arrResultData = {};
@@ -1101,15 +1156,13 @@
                                 'package_categories']) {
                             if (item.package_name === dataShowDetail['package_name'] &&
                                 item.package_type === dataShowDetail['package_type'] &&
-                                item.package_categories === dataShowDetail['package_categories'] &&
-                                item.package_top === dataShowDetail['package_top']) {
+                                item.package_categories === dataShowDetail['package_categories']) {
                                 arrResultData = item;
                             }
                         } else {
                             if (item.package_name === dataShowDetail['package_name'] &&
                                 item.package_type === dataShowDetail['package_type'] &&
-                                item.package_speed === dataShowDetail['package_categories'] &&
-                                item.package_top === dataShowDetail['package_top']) {
+                                item.package_speed === dataShowDetail['package_categories']) {
                                 arrResultData = item;
                             }
                         }
@@ -1124,303 +1177,14 @@
                         'package_top': dataShowDetail['package_top'],
                         'package_price': dataShowDetail['fix_price'],
                         'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
-                            dataShowDetail['package_option'],
+                            dataShowDetail[
+                                'package_option'],
                         'counted': dataShowDetail['counted']
                     };
 
                     $('#RequestHandler').val(JSON.stringify(ResultJSON));
                 } else if ($('#custom_bulanan').val() >= 12) {
                     $('#subTotalBayarWidget').addClass('d-none');
-                }
-            });
-
-            $('#button-resetPromoField').on('click', () => {
-                $('#custom_bulanan').attr('readonly', false);
-                $('#kodePromoField').val('');
-
-                if (dataShowDetail['package_top'] == 'Bulanan') {
-                    $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
-                        (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
-                                'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
-                            dataShowDetail['package_categories'] + ' (' + dataShowDetail[
-                                'package_type'] + ')'));
-                    $('#package_top_show_details').html(dataShowDetail['counted'] + ' Bulan');
-                    $('#package_price_show_detail').html('Rp. ' + dataShowDetail['fix_price'] + ',-');
-
-                    // Send Data to Database
-                    var arrResultData = {};
-                    packageData.forEach((item) => {
-                        if (dataShowDetail['package_speed'] == dataShowDetail[
-                                'package_categories']) {
-                            if (item.package_name === dataShowDetail['package_name'] &&
-                                item.package_type === dataShowDetail['package_type'] &&
-                                item.package_categories === dataShowDetail['package_categories'] &&
-                                item.package_top === dataShowDetail['package_top']) {
-                                arrResultData = item;
-                            }
-                        } else {
-                            if (item.package_name === dataShowDetail['package_name'] &&
-                                item.package_type === dataShowDetail['package_type'] &&
-                                item.package_speed === dataShowDetail['package_categories'] &&
-                                item.package_top === dataShowDetail['package_top']) {
-                                arrResultData = item;
-                            }
-                        }
-                    });
-
-                    var ResultJSON = {
-                        'package_name': dataShowDetail['package_name'],
-                        'package_type': dataShowDetail['package_type'],
-                        'package_categories': isNaN(parseInt(dataShowDetail['package_categories'])) ?
-                            dataShowDetail['package_categories'] : '-',
-                        'package_speed': arrResultData['package_speed'],
-                        'package_top': dataShowDetail['package_top'],
-                        'package_price': dataShowDetail['fix_price'],
-                        'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
-                            dataShowDetail['package_option'],
-                        'counted': dataShowDetail['counted']
-                    };
-
-                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
-
-                    $('#button-resetPromoField').addClass('d-none');
-                    $('#button-kodePromoField').removeClass('d-none');
-                } else if (dataShowDetail['package_top'] == 'Tahunan') {
-                    $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
-                        (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
-                                'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
-                            dataShowDetail['package_categories'] + ' (' + dataShowDetail[
-                                'package_type'] + ')'));
-                    $('#package_top_show_details').html('Tahunan');
-                    $('#package_price_show_detail').html('Rp. ' + dataShowDetail['fix_price'] + ',-');
-
-                    // Send Data to Database
-                    var arrResultData = {};
-                    packageData.forEach((item) => {
-                        if (dataShowDetail['package_speed'] == dataShowDetail[
-                                'package_categories']) {
-                            if (item.package_name === dataShowDetail['package_name'] &&
-                                item.package_type === dataShowDetail['package_type'] &&
-                                item.package_categories === dataShowDetail['package_categories'] &&
-                                item.package_top === dataShowDetail['package_top']) {
-                                arrResultData = item;
-                            }
-                        } else {
-                            if (item.package_name === dataShowDetail['package_name'] &&
-                                item.package_type === dataShowDetail['package_type'] &&
-                                item.package_speed === dataShowDetail['package_categories'] &&
-                                item.package_top === dataShowDetail['package_top']) {
-                                arrResultData = item;
-                            }
-                        }
-                    });
-
-                    var ResultJSON = {
-                        'package_name': dataShowDetail['package_name'],
-                        'package_type': dataShowDetail['package_type'],
-                        'package_categories': isNaN(parseInt(dataShowDetail['package_categories'])) ?
-                            dataShowDetail['package_categories'] : '-',
-                        'package_speed': arrResultData['package_speed'],
-                        'package_top': dataShowDetail['package_top'],
-                        'package_price': dataShowDetail['fix_price'],
-                        'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
-                            dataShowDetail['package_option'],
-                        'counted': dataShowDetail['counted']
-                    };
-
-                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
-
-                    $('#button-resetPromoField').addClass('d-none');
-                    $('#button-kodePromoField').removeClass('d-none');
-                }
-            });
-
-            $('#button-kodePromoField').on('click', () => {
-                var kodePromo = $('#kodePromoField').val();
-                if (!isEmpty(kodePromo)) {
-                    let arrKodePromoAktif = [];
-                    let arrKodePromoNonAktif = [];
-                    const DateNow = Date(datetime);
-
-                    promoData.forEach((element) => {
-                        // Activation Date
-                        var activationDate = element.activate_date;
-                        // Expired Date
-                        var expirationDate = element.expired_date;
-
-                        if (dates.inRange(dateTimeConverter(datetime), dateTimeConverter(
-                                activationDate), dateTimeConverter(expirationDate))) {
-                            arrKodePromoAktif.push(element);
-                        } else {
-                            arrKodePromoNonAktif.push(element);
-                        }
-                    });
-
-                    var searchPromo = isEmpty(arrKodePromoAktif.find(item => item.promo_code ===
-                        kodePromo));
-                    var indexPromo = arrKodePromoAktif.findIndex(item => item.promo_code ===
-                        kodePromo);
-
-                    if (!searchPromo) {
-                        var namaPaket = dataShowDetail['package_name'];
-                        var TOPPaket = dataShowDetail['package_top'];
-
-                        if (arrKodePromoAktif[indexPromo].package_name === namaPaket &&
-                            arrKodePromoAktif[indexPromo].package_top == TOPPaket) {
-                            var PotonganBulan = parseInt((!isEmpty(arrKodePromoAktif[indexPromo]
-                                    .monthly_cut)) ? arrKodePromoAktif[indexPromo]
-                                .monthly_cut : '0');
-                            var PotonganDiskon = parseInt((!isEmpty(arrKodePromoAktif[indexPromo]
-                                    .discount_cut)) ? arrKodePromoAktif[indexPromo]
-                                .discount_cut : '0');
-
-                            $('#button-kodePromoField').addClass('d-none');
-                            $('#button-resetPromoField').removeClass('d-none');
-
-                            if (arrKodePromoAktif[indexPromo].package_top == 'Bulanan') {
-                                $('#custom_bulanan').attr('readonly', true);
-                                $('#package_name_show_details').html("Paket " + dataShowDetail[
-                                        'package_name'] +
-                                    ' ' +
-                                    (isEmpty(dataShowDetail['package_categories']) ? '(' +
-                                        dataShowDetail[
-                                            'package_speed'] + ' Mbps) ' + dataShowDetail[
-                                            'package_type'] :
-                                        dataShowDetail['package_categories'] + ' (' + dataShowDetail[
-                                            'package_type'] + ')'));
-                                $('#package_top_show_details').html(dataShowDetail['counted'] +
-                                    ' Bulan + (Free ' + PotonganBulan + ' Bulan');
-
-                                if (PotonganDiskon == 0) {
-                                    $('#package_price_show_detail').html('Rp. ' +
-                                        parseInt(dataShowDetail[
-                                            'fix_price']) + ',-');
-                                } else {
-                                    $('#package_price_show_detail').html('Rp. ' + (PotonganDiskon == 0 ?
-                                            dataShowDetail[
-                                                'fix_price'] : parseInt(dataShowDetail[
-                                                'fix_price']) - (parseInt(dataShowDetail[
-                                                'fix_price']) * (PotonganDiskon / 100))) +
-                                        ',-');
-                                }
-
-                                // Send Data to Database
-                                var arrResultData = {};
-                                packageData.forEach((item) => {
-                                    if (dataShowDetail['package_speed'] == dataShowDetail[
-                                            'package_categories']) {
-                                        if (item.package_name === dataShowDetail['package_name'] &&
-                                            item.package_type === dataShowDetail['package_type'] &&
-                                            item.package_categories === dataShowDetail[
-                                                'package_categories'] &&
-                                            item.package_top === dataShowDetail['package_top']) {
-                                            arrResultData = item;
-                                        }
-                                    } else {
-                                        if (item.package_name === dataShowDetail['package_name'] &&
-                                            item.package_type === dataShowDetail['package_type'] &&
-                                            item.package_speed === dataShowDetail[
-                                                'package_categories'] &&
-                                            item.package_top === dataShowDetail['package_top']) {
-                                            arrResultData = item;
-                                        }
-                                    }
-                                });
-
-                                var ResultJSON = {
-                                    'package_name': dataShowDetail['package_name'],
-                                    'package_type': dataShowDetail['package_type'],
-                                    'package_categories': isNaN(parseInt(dataShowDetail[
-                                            'package_categories'])) ?
-                                        dataShowDetail['package_categories'] : '-',
-                                    'package_speed': arrResultData['package_speed'],
-                                    'package_top': dataShowDetail['package_top'],
-                                    'package_price': PotonganDiskon == 0 ? dataShowDetail[
-                                        'fix_price'] : parseInt(dataShowDetail[
-                                        'fix_price']) - (parseInt(dataShowDetail[
-                                        'fix_price']) * (PotonganDiskon / 100)),
-                                    'optional_package': isEmpty(dataShowDetail['package_option']) ?
-                                        null : dataShowDetail['package_option'],
-                                    'counted': dataShowDetail['counted'],
-                                    'potongan_bulan': PotonganBulan == 0 ? 0 : PotonganBulan
-                                };
-
-                                $('#RequestHandler').val(JSON.stringify(ResultJSON));
-                            } else if (arrKodePromoAktif[indexPromo].package_top == 'Tahunan') {
-                                $('#package_name_show_details').html("Paket " +
-                                    dataShowDetail['package_name'] + ' ' +
-                                    (isEmpty(dataShowDetail['package_categories']) ?
-                                        '(' + dataShowDetail[
-                                            'package_speed'] + ' Mbps) ' +
-                                        dataShowDetail['package_type'] :
-                                        dataShowDetail['package_categories'] + ' (' +
-                                        dataShowDetail[
-                                            'package_type'] + ')'));
-                                $('#package_top_show_details').html('1 Tahun ' + '(Free ' + PotonganBulan +
-                                    ' Bulan)');
-                                if (PotonganDiskon == 0) {
-                                    $('#package_price_show_detail').html('Rp. ' +
-                                        parseInt(dataShowDetail[
-                                            'fix_price']) + ',-');
-                                } else {
-                                    $('#package_price_show_detail').html('Rp. ' + (PotonganDiskon == 0 ?
-                                            dataShowDetail[
-                                                'fix_price'] : parseInt(dataShowDetail[
-                                                'fix_price']) - (parseInt(dataShowDetail[
-                                                'fix_price']) * (PotonganDiskon / 100))) +
-                                        ',-');
-                                }
-
-                                // Send Data to Database
-                                var arrResultData = {};
-                                packageData.forEach((item) => {
-                                    if (dataShowDetail['package_speed'] == dataShowDetail[
-                                            'package_categories']) {
-                                        if (item.package_name === dataShowDetail['package_name'] &&
-                                            item.package_type === dataShowDetail['package_type'] &&
-                                            item.package_categories === dataShowDetail[
-                                                'package_categories'] &&
-                                            item.package_top === dataShowDetail['package_top']) {
-                                            arrResultData = item;
-                                        }
-                                    } else {
-                                        if (item.package_name === dataShowDetail['package_name'] &&
-                                            item.package_type === dataShowDetail['package_type'] &&
-                                            item.package_speed === dataShowDetail[
-                                                'package_categories'] &&
-                                            item.package_top === dataShowDetail['package_top']) {
-                                            arrResultData = item;
-                                        }
-                                    }
-                                });
-
-                                var ResultJSON = {
-                                    'package_name': dataShowDetail['package_name'],
-                                    'package_type': dataShowDetail['package_type'],
-                                    'package_categories': isNaN(parseInt(dataShowDetail[
-                                            'package_categories'])) ?
-                                        dataShowDetail['package_categories'] : '-',
-                                    'package_speed': arrResultData['package_speed'],
-                                    'package_top': dataShowDetail['package_top'],
-                                    'package_price': PotonganDiskon == 0 ? dataShowDetail[
-                                        'fix_price'] : parseInt(dataShowDetail[
-                                        'fix_price']) - (parseInt(dataShowDetail[
-                                        'fix_price']) * (PotonganDiskon / 100)),
-                                    'optional_package': isEmpty(dataShowDetail['package_option']) ?
-                                        null : dataShowDetail['package_option'],
-                                    'counted': dataShowDetail['counted']
-                                };
-
-                                $('#RequestHandler').val(JSON.stringify(ResultJSON));
-                            }
-                        } else {
-                            alert('Kode promo tidak sesuai. Silahkan coba lagi!');
-                        }
-                    } else {
-                        alert('Kode Promo tidak ditemukan. Silahkan coba lagi!');
-                    }
-                } else {
-                    alert('Field Kode Promo Masih Kosong!');
                 }
             });
         });
@@ -1443,15 +1207,6 @@
 
         var dates = {
             convert: function(d) {
-                // Converts the date in d to a date-object. The input can be:
-                //   a date object: returned without modification
-                //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
-                //   a number     : Interpreted as number of milliseconds
-                //                  since 1 Jan 1970 (a timestamp)
-                //   a string     : Any format supported by the javascript engine, like
-                //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
-                //  an object     : Interpreted as an object with year, month and date
-                //                  attributes.  **NOTE** month is 0-11.
                 return (
                     d.constructor === Date ? d :
                     d.constructor === Array ? new Date(d[0], d[1], d[2]) :
@@ -1462,13 +1217,6 @@
                 );
             },
             compare: function(a, b) {
-                // Compare two dates (could be of any type supported by the convert
-                // function above) and returns:
-                //  -1 : if a < b
-                //   0 : if a = b
-                //   1 : if a > b
-                // NaN : if a or b is an illegal date
-                // NOTE: The code inside isFinite does an assignment (=).
                 return (
                     isFinite(a = this.convert(a).valueOf()) &&
                     isFinite(b = this.convert(b).valueOf()) ?
@@ -1477,12 +1225,6 @@
                 );
             },
             inRange: function(d, start, end) {
-                // Checks if date in d is between dates in start and end.
-                // Returns a boolean or NaN:
-                //    true  : if d is between start and end (inclusive)
-                //    false : if d is before start or after end
-                //    NaN   : if one or more of the dates is illegal.
-                // NOTE: The code inside isFinite does an assignment (=).
                 return (
                     isFinite(d = this.convert(d).valueOf()) &&
                     isFinite(start = this.convert(start).valueOf()) &&

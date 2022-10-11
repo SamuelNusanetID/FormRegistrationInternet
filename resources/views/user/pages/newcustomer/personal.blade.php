@@ -80,8 +80,6 @@
                             }
 
                             .error {
-                                width: 100%;
-                                margin-top: .25rem;
                                 font-size: .875em;
                                 color: #dc3545;
                             }
@@ -507,7 +505,11 @@
             }
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            var lc = L.control.locate().addTo(map);
+            var lc = L.control.locate({
+                locateOptions: {
+                    enableHighAccuracy: true
+                }
+            }).addTo(map);
             lc.start();
 
             map.on('locationfound', onLocationFound);
@@ -554,7 +556,7 @@
                         lc.stop();
                     }
                 }
-                var radius = 15;
+                var radius = 25;
                 marker = new L.Marker(e.latlng, {
                     draggable: true
                 }).on('dragend', onDragEnd);
@@ -586,7 +588,7 @@
                         }
                     }
 
-                    var radius = 15;
+                    var radius = 25;
                     var latLang = e.geocode.center;
 
                     marker = new L.marker(latLang, {
@@ -618,7 +620,7 @@
                 }
 
                 var latlng = e.target.getLatLng();
-                var radius = 15;
+                var radius = 25;
                 marker = new L.Marker(latlng, {
                     draggable: true
                 }).on('dragend', onDragEnd);
@@ -664,8 +666,6 @@
             $('#option_custom_bulanan').addClass('d-none');
             $('#subTotalBayarWidget').addClass('d-none');
             $('#custom_bulanan').attr('readonly', false);
-            $('#button-kodePromoField').removeClass('d-none');
-            $('#button-resetPromoField').addClass('d-none');
 
             $('#package_name').on('change', () => {
                 $('#custom_bulanan').attr('readonly', false);
@@ -680,8 +680,6 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
-                $('#button-kodePromoField').removeClass('d-none');
-                $('#button-resetPromoField').addClass('d-none');
 
                 var packageName = $('#package_name').val();
 
@@ -721,8 +719,6 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
-                $('#button-kodePromoField').removeClass('d-none');
-                $('#button-resetPromoField').addClass('d-none');
 
                 var packageName = $('#package_name').val();
                 var packageType = $('#package_type').val();
@@ -776,8 +772,6 @@
                 $('#option_package_type_price').addClass('d-none');
                 $('#option_custom_bulanan').addClass('d-none');
                 $('#subTotalBayarWidget').addClass('d-none');
-                $('#button-kodePromoField').removeClass('d-none');
-                $('#button-resetPromoField').addClass('d-none');
 
                 $('#option_package_top').removeClass('d-none');
                 dataShowDetail['package_categories'] = $('#package_categories').val();
@@ -785,14 +779,11 @@
                     $('#package_categories').val() : '-';
 
                 $('input[type=radio][name=inlineTopPaket]').change(function() {
-                    $('#kodePromoField').val('');
                     $('#custom_bulanan').attr('readonly', false);
                     $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
                     $('#custom_bulanan').val('');
 
                     $('#subTotalBayarWidget').addClass('d-none');
-                    $('#button-kodePromoField').removeClass('d-none');
-                    $('#button-resetPromoField').addClass('d-none');
                     if (this.value == 'Bulanan') {
                         dataShowDetail['package_top'] = 'Bulanan';
 
@@ -818,8 +809,6 @@
 
                             $('input:radio[name="inlineTopPaketType"]').change(
                                 function() {
-                                    $('#button-kodePromoField').removeClass('d-none');
-                                    $('#button-resetPromoField').addClass('d-none');
                                     if ($(this).is(':checked') && $(this).val() == 'Retail' &&
                                         dataShowDetail['package_top'] == 'Bulanan') {
                                         $('#custom_bulanan').attr('readonly', false);
@@ -944,8 +933,6 @@
 
                             $('input:radio[name="inlineTopPaketType"]').change(
                                 function() {
-                                    $('#button-kodePromoField').removeClass('d-none');
-                                    $('#button-resetPromoField').addClass('d-none');
                                     if ($(this).is(':checked') && $(this).val() == 'Retail') {
                                         $('#custom_bulanan').attr('readonly', false);
                                         $('#option_custom_bulanan').addClass('d-none');
@@ -1002,8 +989,8 @@
                                     // Perhitungan Sub Total
                                     const hargaSetelahPPN = parseInt(hargaPaket);
                                     $('#package_price_show_detail').html(formatter.format(
-                                        hargaPaket));
-                                    dataShowDetail['fix_price'] = hargaPaket;
+                                        hargaSetelahPPN));
+                                    dataShowDetail['fix_price'] = hargaSetelahPPN;
                                     dataShowDetail['counted'] = 12;
 
                                     // Send Data to Database
@@ -1068,7 +1055,7 @@
                     dataShowDetail['counted'] = hargaCustomBulanan;
 
                     // Perhitungan Sub Total
-                    const hargaSebelumPPN = parseInt(hargaPaket);
+                    const hargaSebelumPPN = parseInt(hargaPaket) * hargaCustomBulanan;
                     $('#package_price_show_detail').html(formatter.format(hargaSebelumPPN));
                     dataShowDetail['fix_price'] = hargaSebelumPPN;
 
