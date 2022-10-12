@@ -286,6 +286,9 @@
                                 </style>
                                 <div class="mb-3" id="map">
                                 </div>
+                                <div class="form-text mb-3">
+                                    Silahkan Cari, Drag atau Geser dan Pilih Lokasi Anda.
+                                </div>
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Alamat Lengkap Pemasangan Baru <span
                                             class="text-danger">*</span></label>
@@ -501,7 +504,11 @@
             var lc = L.control.locate({
                 locateOptions: {
                     enableHighAccuracy: true
-                }
+                },
+                strings: {
+                    title: "Klik untuk melihat lokasi anda saat ini!"
+                },
+                icon: "fa-solid fa-location-crosshairs"
             }).addTo(map);
             lc.start();
 
