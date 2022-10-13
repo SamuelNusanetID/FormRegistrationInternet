@@ -287,7 +287,7 @@
                                 <div class="mb-3" id="map">
                                 </div>
                                 <div class="form-text mb-3">
-                                    Silahkan Cari, Drag atau Geser dan Pilih Lokasi Anda.
+                                    Silahkan Cari, Geser dan Pilih Lokasi Anda.
                                 </div>
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Alamat Lengkap Pemasangan Baru <span

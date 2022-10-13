@@ -229,7 +229,7 @@ class OldCustomerController extends Controller
             $newCustomer->customer_id = $id_customer;
             $newCustomer->name = $result->name;
             $newCustomer->address = $result->address == $request->get('new_address') ? json_encode([$result->address]) : json_encode([$result->address, $request->get('new_address')]);
-            $newCustomer->geolocation = $request->get('geolocation_existing');
+            $newCustomer->geolocation = json_encode([$request->get('geolocation_existing')]);
             $newCustomer->class = $class_customer;
             $newCustomer->email = $primaryEmail;
             $newCustomer->identity_number = $result->identity_number;
@@ -275,7 +275,6 @@ class OldCustomerController extends Controller
                 'termofpaymentDeals' => $package_top
             ]]);
             $newService->id_photo_url = "";
-            $newService->selfie_id_photo_url = "";
             $newService->save();
 
             $newApproval = new Approval();

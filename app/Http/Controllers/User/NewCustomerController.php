@@ -233,9 +233,9 @@ class NewCustomerController extends Controller
             DB::table('technicals')->insert($savedDataTechnical);
 
             $fileIdentityPhoto = $requestAPI->file('service_identity_photo');
-            $tujuan_upload1 = public_path() . '/bin/img/Personal/Identity';
+            $tujuan_upload1 = public_path() . '/bin/img/Bussiness/Identity';
             $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
-            $urlSaved1 = url('/bin/img/Personal/Identity/' . $fileIdentityPhoto->getClientOriginalName());
+            $urlSaved1 = url('/bin/img/Bussiness/Identity/' . $fileIdentityPhoto->getClientOriginalName());
 
             $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
             if ($fetchDataLayanan->optional_package === null) {
