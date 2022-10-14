@@ -185,7 +185,7 @@ class OldCustomerController extends Controller
 
                 Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                    $message->to($CustEmailPIC);
+                    $message->to($CustEmailPIC)->subject('Registrasi Berhasil!');
                 });
             } catch (\Throwable $th) {
                 dd($th->getMessage());
@@ -300,7 +300,7 @@ class OldCustomerController extends Controller
 
                 Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                    $message->to($CustEmailPIC);
+                    $message->to($CustEmailPIC)->subject('Registrasi Berhasil!');
                 });
             } catch (\Throwable $th) {
                 dd($th->getMessage());
