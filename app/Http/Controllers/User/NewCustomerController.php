@@ -308,7 +308,7 @@ class NewCustomerController extends Controller
                 try {
                     $CustEmailPIC = $savedDataCustomer['email'];
 
-                    Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
+                    Mail::send('email.customer', [], function ($message) use ($CustEmailPIC) {
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                         $message->to($CustEmailPIC);
                     });
