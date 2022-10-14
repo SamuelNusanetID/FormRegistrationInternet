@@ -39,7 +39,11 @@
             <p>
                 Terima kasih anda telah berhasil registrasi. Data anda telah kami terima dan akan diproses dalam kurun
                 waktu 1 x 24 jam. Silahkan hubungi Account Manager
-                {{ isset($SalesNamePIC) ? '<b>' . $SalesNamePIC . '</b>' : 'anda' }}
+                @if (isset($SalesNamePIC))
+                    <b>{{ $SalesNamePIC }}</b>
+                @else
+                    anda
+                @endif
                 untuk info lebih lanjut.
             </p>
             <p>Regards,</p>
