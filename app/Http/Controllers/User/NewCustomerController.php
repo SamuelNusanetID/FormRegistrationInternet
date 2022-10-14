@@ -174,7 +174,7 @@ class NewCustomerController extends Controller
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                         $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                     });
-                    Mail::send('email.sales', [], function ($message) use ($dataEm) {
+                    Mail::send('email.sales', $dataEm, function ($message) use ($dataEm) {
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                         $message->to($dataEm['SalesEmailPIC'])->subject('Registrasi Berhasil!');
                     });
@@ -347,7 +347,7 @@ class NewCustomerController extends Controller
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                         $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                     });
-                    Mail::send('email.sales', [], function ($message) use ($dataEm) {
+                    Mail::send('email.sales', $dataEm, function ($message) use ($dataEm) {
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                         $message->to($dataEm['SalesEmailPIC'])->subject('Registrasi Berhasil!');
                     });
