@@ -28,19 +28,18 @@
         }
     </style>
 
-    <title>Laravel Email to Customer</title>
+    <title>Laravel Email to Sales</title>
 </head>
 
 <body>
     <div class="full-height">
         <div class="center">
             <p style="padding: 0; margin: 0;">Kepada Yth,</p>
-            <p style="padding: 0; margin: 0;">Pelanggan A.n <b>{{ $CustNamePIC }}</b></p>
+            <p style="padding: 0; margin: 0;">Account Manager A.n <b>{{ $SalesNamePIC }}</b></p>
             <p>
                 Terima kasih anda telah berhasil registrasi. Data anda telah kami terima dan akan diproses dalam kurun
-                waktu 1 x 24 jam. Silahkan hubungi Account Manager
-                {{ isset($SalesNamePIC) ? '<b>' . $SalesNamePIC . '</b>' : 'anda' }}
-                untuk info lebih lanjut.
+                waktu 1 x 24 jam. Silahkan hubungi Pelanggan atas nama <b>{{ $CustNamePIC }}</b> untuk info lebih
+                lanjut.
             </p>
             <p>Regards,</p>
             <p>Nusanet</p>
