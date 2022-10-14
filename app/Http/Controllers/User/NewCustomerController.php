@@ -327,7 +327,7 @@ class NewCustomerController extends Controller
                     $SalesEmailPIC = $resultJSON->email;
                     $CustEmailPIC = $savedDataCustomer['email'];
 
-                    Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC, $SalesEmailPIC) {
+                    Mail::send('email.customer', [], function ($message) use ($CustEmailPIC, $SalesEmailPIC) {
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                         $message->to($CustEmailPIC)->cc($SalesEmailPIC)->subject('Registrasi Berhasil!');
                     });
