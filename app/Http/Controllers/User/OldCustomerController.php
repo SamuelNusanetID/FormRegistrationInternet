@@ -181,11 +181,14 @@ class OldCustomerController extends Controller
             $ServiceCustomer->save();
 
             try {
-                $CustEmailPIC = $CustomerData->email;
+                $dataEm = [
+                    'CustNamePIC' => $customerDataFetch->name,
+                    'CustEmailPIC' => $CustomerData->email
+                ];
 
-                Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
+                Mail::send('email.customer', $dataEm, function ($message) use ($dataEm) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                    $message->to($CustEmailPIC)->subject('Registrasi Berhasil!');
+                    $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                 });
             } catch (\Throwable $th) {
                 dd($th->getMessage());
@@ -295,12 +298,16 @@ class OldCustomerController extends Controller
             $newApproval->isRejected = false;
             $newApproval->save();
 
-            try {
-                $CustEmailPIC = $primaryEmail;
 
-                Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
+            try {
+                $dataEm = [
+                    'CustNamePIC' => $result->name,
+                    'CustEmailPIC' => $primaryEmail
+                ];
+
+                Mail::send('email.customer', $dataEm, function ($message) use ($dataEm) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                    $message->to($CustEmailPIC)->subject('Registrasi Berhasil!');
+                    $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                 });
             } catch (\Throwable $th) {
                 dd($th->getMessage());

@@ -316,11 +316,14 @@ class NewCustomerController extends Controller
 
             if ($requestAPI->get('salesID') == null) {
                 try {
-                    $CustEmailPIC = $savedDataCustomer['email'];
+                    $dataEm = [
+                        'CustNamePIC' => $savedDataCustomer['name'],
+                        'CustEmailPIC' => $savedDataCustomer['email']
+                    ];
 
-                    Mail::send('email.customer', [], function ($message) use ($CustEmailPIC) {
+                    Mail::send('email.customer', $dataEm, function ($message) use ($dataEm) {
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                        $message->to($CustEmailPIC)->subject('Registrasi Berhasil!');
+                        $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                     });
                 } catch (\Throwable $th) {
                     dd($th->getMessage());
@@ -333,17 +336,20 @@ class NewCustomerController extends Controller
                     ])->get('https://legacy.is5.nusa.net.id/employees/' . $SalesID);
                     $resultJSON = json_decode($response->body());
 
+                    $dataEm = [
+                        'SalesNamePIC' => $resultJSON->name,
+                        'SalesEmailPIC' => $resultJSON->email,
+                        'CustNamePIC' => $savedDataCustomer['name'],
+                        'CustEmailPIC' => $savedDataCustomer['email']
+                    ];
 
-                    $SalesEmailPIC = $resultJSON->email;
-                    $CustEmailPIC = $savedDataCustomer['email'];
-
-                    Mail::send('email.customer', [], function ($message) use ($CustEmailPIC) {
+                    Mail::send('email.customer', $dataEm, function ($message) use ($dataEm) {
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                        $message->to($CustEmailPIC)->subject('Registrasi Berhasil!');
+                        $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                     });
-                    Mail::send('email.sales', [], function ($message) use ($CustEmailPIC) {
+                    Mail::send('email.sales', [], function ($message) use ($dataEm) {
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                        $message->to($CustEmailPIC)->subject('Registrasi Berhasil!');
+                        $message->to($dataEm['SalesEmailPIC'])->subject('Registrasi Berhasil!');
                     });
                 } catch (\Throwable $th) {
                     dd($th->getMessage());
