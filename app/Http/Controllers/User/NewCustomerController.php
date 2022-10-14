@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class NewCustomerController extends Controller
 {
@@ -139,6 +140,38 @@ class NewCustomerController extends Controller
                 'updated_at' => Carbon::now()
             ];
             DB::table('approvals')->insert($savedDataApproval);
+
+            if ($requestAPI->get('salesID') == null) {
+                try {
+                    $CustEmailPIC = $savedDataCustomer['email'];
+
+                    Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
+                        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                        $message->to($CustEmailPIC);
+                    });
+                } catch (\Throwable $th) {
+                    dd($th->getMessage());
+                }
+            } else {
+                try {
+                    $SalesID = $requestAPI->get('salesID');
+                    $response = Http::withHeaders([
+                        'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                    ])->get('https://legacy.is5.nusa.net.id/employees/' . $SalesID);
+                    $resultJSON = json_decode($response->body());
+
+
+                    $SalesEmailPIC = $resultJSON->email;
+                    $CustEmailPIC = $savedDataCustomer['email'];
+
+                    Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC, $SalesEmailPIC) {
+                        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                        $message->to($CustEmailPIC)->cc($SalesEmailPIC);
+                    });
+                } catch (\Throwable $th) {
+                    dd($th->getMessage());
+                }
+            }
         });
 
         return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
@@ -270,6 +303,38 @@ class NewCustomerController extends Controller
                 'updated_at' => Carbon::now()
             ];
             DB::table('approvals')->insert($savedDataApproval);
+
+            if ($requestAPI->get('salesID') == null) {
+                try {
+                    $CustEmailPIC = $savedDataCustomer['email'];
+
+                    Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
+                        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                        $message->to($CustEmailPIC);
+                    });
+                } catch (\Throwable $th) {
+                    dd($th->getMessage());
+                }
+            } else {
+                try {
+                    $SalesID = $requestAPI->get('salesID');
+                    $response = Http::withHeaders([
+                        'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                    ])->get('https://legacy.is5.nusa.net.id/employees/' . $SalesID);
+                    $resultJSON = json_decode($response->body());
+
+
+                    $SalesEmailPIC = $resultJSON->email;
+                    $CustEmailPIC = $savedDataCustomer['email'];
+
+                    Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC, $SalesEmailPIC) {
+                        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                        $message->to($CustEmailPIC)->cc($SalesEmailPIC);
+                    });
+                } catch (\Throwable $th) {
+                    dd($th->getMessage());
+                }
+            }
         });
 
         return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');

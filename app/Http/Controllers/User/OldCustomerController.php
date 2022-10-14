@@ -13,6 +13,7 @@ use App\Models\Technical;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -179,6 +180,17 @@ class OldCustomerController extends Controller
             $ServiceCustomer->service_package = json_encode($OldServiceCustomerArr);
             $ServiceCustomer->save();
 
+            try {
+                $CustEmailPIC = $CustomerData->email;
+
+                Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->to($CustEmailPIC);
+                });
+            } catch (\Throwable $th) {
+                dd($th->getMessage());
+            }
+
             return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
         } else {
             $validator4 = Validator::make(
@@ -282,6 +294,17 @@ class OldCustomerController extends Controller
             $newApproval->isApproved = false;
             $newApproval->isRejected = false;
             $newApproval->save();
+
+            try {
+                $CustEmailPIC = $primaryEmail;
+
+                Mail::raw('Text to e-mail', function ($message) use ($CustEmailPIC) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->to($CustEmailPIC);
+                });
+            } catch (\Throwable $th) {
+                dd($th->getMessage());
+            }
 
             return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
         }
