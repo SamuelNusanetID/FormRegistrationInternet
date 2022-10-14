@@ -183,7 +183,7 @@ class OldCustomerController extends Controller
             try {
                 $dataEm = [
                     'CustNamePIC' => $customerDataFetch->name,
-                    'CustEmailPIC' => $CustomerData->email
+                    'CustEmailPIC' => $customerDataFetch->email
                 ];
 
                 Mail::send('email.customer', $dataEm, function ($message) use ($dataEm) {
