@@ -33,7 +33,11 @@ Route::post('/old-member/{class_customer}/{id_customer}', [OldCustomerController
 //     return view('email.customer');
 // });
 // Route::get('/print-sales-dev', function () {
-//     return view('email.sales');
+//     $datas = [
+//         'SalesNamePIC' => 'Samuel',
+//         'CustNamePIC' => 'Samuel'
+//     ];
+//     return view('email.sales', $datas);
 // });
 
 Route::get('/generate', [NewCustomerController::class, 'generateNewLink']);
