@@ -29,15 +29,4 @@ Route::post('/new-member/bussiness', [NewCustomerController::class, 'storeBussin
 Route::get('/old-member', [OldCustomerController::class, 'index']);
 Route::post('/old-member/{class_customer}/{id_customer}', [OldCustomerController::class, 'showDataCustomer']);
 
-Route::get('/print-customer-dev', function () {
-    return view('email.customer');
-});
-Route::get('/print-sales-dev', function () {
-    $datas = [
-        'SalesNamePIC' => 'Samuel',
-        'CustNamePIC' => 'Samuel'
-    ];
-    return view('email.sales', $datas);
-});
-
 Route::get('/generate', [NewCustomerController::class, 'generateNewLink']);
