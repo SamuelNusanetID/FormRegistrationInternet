@@ -91,7 +91,7 @@
                             <tr>
                                 <td style="text-align: center; padding-bottom:25px">
                                     <a href="#"><img style="height: 40px"
-                                            src="{{ URL::to('bin/img/Background-removebg-preview.png') }}"
+                                            src="<?= public_path() . '/bin/img/Background-removebg-preview.png' ?>"
                                             alt="logo"></a>
                                 </td>
                             </tr>
@@ -101,8 +101,8 @@
                         <tbody>
                             <tr>
                                 <td style="text-align:center;padding: 50px 30px;">
-                                    <img style="width:88px; margin-bottom:24px;"
-                                        src="{{ URL::to('bin/img/kyc-progress.png') }}" alt="In Process">
+                                    <img style="width:88px; margin-bottom:24px;" src="/bin/img/kyc-progress.png"
+                                        alt="In Process">
                                     <h2 style="font-size: 18px; color: #6576ff; font-weight: 400; margin-bottom: 8px;">
                                         Registrasi pelanggan <b>{{ $CustNamePIC }}</b> telah berhasil
                                     </h2>

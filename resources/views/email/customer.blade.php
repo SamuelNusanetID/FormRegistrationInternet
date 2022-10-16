@@ -91,7 +91,7 @@
                             <tr>
                                 <td style="text-align: center; padding-bottom:25px">
                                     <a href="#"><img style="height: 40px"
-                                            src="{{ URL::to('bin/img/Background-removebg-preview.png') }}"
+                                            src="<?= env('APP_URL') . '/bin/img/Background-removebg-preview.png' ?>"
                                             alt="logo"></a>
                                 </td>
                             </tr>
@@ -102,7 +102,7 @@
                             <tr>
                                 <td style="text-align:center;padding: 50px 30px;">
                                     <img style="width:88px; margin-bottom:24px;"
-                                        src="{{ URL::to('bin/img/kyc-progress.png') }}" alt="In Process">
+                                        src="<?= env('APP_URL') . '/bin/img/kyc-progress.png' ?>" alt="In Process">
                                     <h2 style="font-size: 18px; color: #6576ff; font-weight: 400; margin-bottom: 8px;">
                                         Registrasi anda telah berhasil
                                     </h2>
