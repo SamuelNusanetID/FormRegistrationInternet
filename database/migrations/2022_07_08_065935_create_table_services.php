@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->longText('service_package');
             $table->string('id_photo_url')->nullable();
-            $table->string('selfie_id_photo_url')->nullable();
+            // $table->string('selfie_id_photo_url')->nullable();
             $table->timestamps();
         });
     }

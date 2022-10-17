@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('package_top', ['Bulanan', 'Tahunan']);
             $table->string('discount_cut');
             $table->string('monthly_cut');
+            $table->string('monthly_cut_status');
             $table->dateTime('activate_date');
             $table->dateTime('expired_date');
             $table->timestamps();

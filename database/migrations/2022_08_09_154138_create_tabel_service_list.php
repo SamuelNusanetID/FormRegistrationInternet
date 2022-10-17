@@ -20,90 +20,12 @@ class CreateTabelServiceList extends Migration
             $table->enum('package_type', ['Fiber Optic', 'Wireless']);
             $table->string('package_categories');
             $table->string('package_speed');
-            $table->enum('package_top', ['Bulanan', 'Tahunan']);
             $table->string('package_price')->nullable();
             $table->string('retail_package_price')->nullable();
             $table->string('government_package_price')->nullable();
             $table->string('noted_service')->nullable();
             $table->timestamps();
         });
-
-        // $insertServiceList = [
-        //     [
-        //         'category' => 'Personal',
-        //         'package_name' => 'Silver',
-        //         'package_price' => '0',
-        //         'period' => 'Bulanan'
-        //     ],
-        //     [
-        //         'category' => 'Personal',
-        //         'package_name' => 'Silver',
-        //         'package_price' => '0',
-        //         'period' => 'Tahunan'
-        //     ],
-        //     [
-        //         'category' => 'Personal',
-        //         'package_name' => 'Gold',
-        //         'package_price' => '0',
-        //         'period' => 'Bulanan'
-        //     ],
-        //     [
-        //         'category' => 'Personal',
-        //         'package_name' => 'Gold',
-        //         'package_price' => '0',
-        //         'period' => 'Tahunan'
-        //     ],
-        //     [
-        //         'category' => 'Personal',
-        //         'package_name' => 'Diamond',
-        //         'package_price' => '0',
-        //         'period' => 'Bulanan'
-        //     ],
-        //     [
-        //         'category' => 'Personal',
-        //         'package_name' => 'Diamond',
-        //         'package_price' => '0',
-        //         'period' => 'Tahunan'
-        //     ],
-        //     [
-        //         'category' => 'Bussiness',
-        //         'package_name' => 'Primary',
-        //         'package_price' => '0',
-        //         'period' => 'Bulanan'
-        //     ],
-        //     [
-        //         'category' => 'Bussiness',
-        //         'package_name' => 'Primary',
-        //         'package_price' => '0',
-        //         'period' => 'Tahunan'
-        //     ],
-        //     [
-        //         'category' => 'Bussiness',
-        //         'package_name' => 'Advance',
-        //         'package_price' => '0',
-        //         'period' => 'Bulanan'
-        //     ],
-        //     [
-        //         'category' => 'Bussiness',
-        //         'package_name' => 'Advance',
-        //         'package_price' => '0',
-        //         'period' => 'Tahunan'
-        //     ],
-        //     [
-        //         'category' => 'Bussiness',
-        //         'package_name' => 'Pro',
-        //         'package_price' => '0',
-        //         'period' => 'Bulanan'
-        //     ],
-        //     [
-        //         'category' => 'Bussiness',
-        //         'package_name' => 'Pro',
-        //         'package_price' => '0',
-        //         'period' => 'Tahunan'
-        //     ]
-        // ];
-
-        // DB::table('services_list')->insert($insertServiceList);
     }
 
     /**

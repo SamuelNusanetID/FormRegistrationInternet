@@ -30,3 +30,13 @@ Route::get('/old-member', [OldCustomerController::class, 'index']);
 Route::post('/old-member/{class_customer}/{id_customer}', [OldCustomerController::class, 'showDataCustomer']);
 
 Route::get('/generate', [NewCustomerController::class, 'generateNewLink']);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
