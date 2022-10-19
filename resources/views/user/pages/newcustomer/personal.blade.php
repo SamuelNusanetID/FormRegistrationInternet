@@ -143,7 +143,9 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="service_identity_photo" class="form-label">Upload Foto KTP</label>
+                                            <label for="service_identity_photo" class="form-label">Upload Foto KTP
+                                                <span class="text-danger">*</span>
+                                            </label>
                                             <input
                                                 class="form-control @error('service_identity_photo') is-invalid @enderror"
                                                 type="file" id="service_identity_photo" name="service_identity_photo">
