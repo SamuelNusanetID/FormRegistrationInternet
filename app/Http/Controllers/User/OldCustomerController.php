@@ -10,6 +10,7 @@ use App\Models\Service;
 use App\Models\ServicesList;
 use App\Models\PromoList;
 use App\Models\Technical;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -194,6 +195,15 @@ class OldCustomerController extends Controller
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                     $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                 });
+
+                foreach (User::all() as $key => $value) {
+                    if ($value->utype === 'AuthMaster') {
+                        Mail::send('email.sales', $dataEm, function ($message) use ($dataEm, $value) {
+                            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                            $message->to($value->email)->subject('Registrasi Berhasil!');
+                        });
+                    }
+                }
             } catch (\Throwable $th) {
                 dd($th->getMessage());
             }
@@ -313,6 +323,15 @@ class OldCustomerController extends Controller
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                     $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                 });
+
+                foreach (User::all() as $key => $value) {
+                    if ($value->utype === 'AuthMaster') {
+                        Mail::send('email.sales', $dataEm, function ($message) use ($dataEm, $value) {
+                            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                            $message->to($value->email)->subject('Registrasi Berhasil!');
+                        });
+                    }
+                }
             } catch (\Throwable $th) {
                 dd($th->getMessage());
             }
