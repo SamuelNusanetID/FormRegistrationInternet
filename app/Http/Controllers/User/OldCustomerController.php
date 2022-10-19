@@ -49,52 +49,56 @@ class OldCustomerController extends Controller
 
                 return view('user.pages.oldcustomer.customer', $datas);
             } else {
-                $response = Http::withHeaders([
-                    'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
-                ])->get('https://legacy.is5.nusa.net.id/customers/' . $_GET['id']);
+                try {
+                    $response = Http::withHeaders([
+                        'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
+                    ])->get('https://legacy.is5.nusa.net.id/customers/' . $_GET['id']);
 
-                if ($response->successful()) {
-                    $resultFetch = json_decode($response->body());
+                    if ($response->successful()) {
+                        $resultFetch = json_decode($response->body());
 
-                    $returnType = gettype($resultFetch);
+                        $returnType = gettype($resultFetch);
 
-                    if ($returnType == "array") {
-                        return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
-                    } else {
-                        $resultFetch->address = json_encode([$resultFetch->address]);
+                        if ($returnType == "array") {
+                            return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
+                        } else {
+                            $resultFetch->address = json_encode([$resultFetch->address]);
 
-                        $customerClass = "Personal";
-                        if (isset($resultFetch->company_name)) {
-                            if ($resultFetch->company_name != null || $resultFetch->company_name != "") {
-                                $customerClass = "Bussiness";
-                            } else {
-                                $customerClass = "Personal";
+                            $customerClass = "Personal";
+                            if (isset($resultFetch->company_name)) {
+                                if ($resultFetch->company_name != null || $resultFetch->company_name != "") {
+                                    $customerClass = "Bussiness";
+                                } else {
+                                    $customerClass = "Personal";
+                                }
                             }
+
+                            $fetchDataService = ServicesList::all();
+                            $arrdataLayanan = [];
+                            foreach ($fetchDataService as $key => $value) {
+                                array_push($arrdataLayanan, $value->package_name);
+                            }
+
+                            $dataLayanan = [];
+                            foreach (array_count_values($arrdataLayanan) as $key => $value) {
+                                array_push($dataLayanan, $key);
+                            }
+
+                            $datas = [
+                                'titlePage' => 'Customer Lama',
+                                'customerClass' => $customerClass,
+                                'customerData' => $resultFetch,
+                                'packageName' => $dataLayanan,
+                                'serviceData' => ServicesList::all(),
+                                'promoData' => PromoList::all()
+                            ];
+
+                            return view('user.pages.oldcustomer.customer', $datas);
                         }
-
-                        $fetchDataService = ServicesList::all();
-                        $arrdataLayanan = [];
-                        foreach ($fetchDataService as $key => $value) {
-                            array_push($arrdataLayanan, $value->package_name);
-                        }
-
-                        $dataLayanan = [];
-                        foreach (array_count_values($arrdataLayanan) as $key => $value) {
-                            array_push($dataLayanan, $key);
-                        }
-
-                        $datas = [
-                            'titlePage' => 'Customer Lama',
-                            'customerClass' => $customerClass,
-                            'customerData' => $resultFetch,
-                            'packageName' => $dataLayanan,
-                            'serviceData' => ServicesList::all(),
-                            'promoData' => PromoList::all()
-                        ];
-
-                        return view('user.pages.oldcustomer.customer', $datas);
+                    } else {
+                        return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
                     }
-                } else {
+                } catch (\Throwable $th) {
                     return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
                 }
             }
