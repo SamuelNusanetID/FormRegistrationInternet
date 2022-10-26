@@ -49,21 +49,14 @@ $(document).ready(function () {
     }, 'File foto harus berukuran max. {0} MB');
 
     $('#personalForm').validate({
-        // errorClass: "error-class",
-        // validClass: "valid-class",
-        // errorElement: 'div',
-        errorPlacement: function (error, element) {
+        errorPlacement: (error, element) => {
+            console.log(element.parent('.input-group').length);
             if (element.parent('.input-group').length) {
                 error.insertAfter(element.parent());
             } else {
                 error.insertAfter(element);
             }
         },
-        // onError: function () {
-        //     $('.input-group.error-class').find('.help-block.form-error').each(function () {
-        //         $(this).closest('.form-group').addClass('error-class').append($(this));
-        //     });
-        // },
         rules: {
             fullname_personal: {
                 required: true
