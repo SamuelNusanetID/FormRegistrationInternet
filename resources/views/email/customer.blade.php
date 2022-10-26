@@ -103,13 +103,17 @@
                                 <td style="text-align:center;padding: 50px 30px;">
                                     <img style="width:88px; margin-bottom:24px;"
                                         src="<?= env('APP_URL') . '/bin/img/kyc-progress.png' ?>" alt="In Process">
-                                    <h2 style="font-size: 18px; color: #6576ff; font-weight: 400; margin-bottom: 8px;">
-                                        Registrasi anda telah berhasil
+                                    <h2 style="font-size: 18px; color: #6576ff; margin-bottom: 8px;">
+                                        Hi, {{ $CustNamePIC }}
                                     </h2>
-                                    <p>
-                                        Kami sedang mereview formulir yang telah anda kirimkan. Silahkan menunggu 1 x
-                                        24 Jam atau hubungi Account Manager anda untuk info lebih lanjut.
-                                        Terima Kasih
+                                    <p style="font-size: 15px; color: #6576ff; margin-bottom: 8px;">
+                                        Selamat, Registrasi kamu telah berhasil.
+                                    </p>
+                                    <p style="text-align: justify;">
+                                        Pihak kami sedang melakukan pengecekan data kamu. Silahkan menunggu paling lama
+                                        1 x 24 jam untuk proses review. Jika kamu ingin mengetahui informasi lebih
+                                        lanjut tentang detail proses review, silahkan menghubungi account manager anda.
+                                        Terima Kasih.
                                     </p>
                                 </td>
                             </tr>

@@ -103,10 +103,14 @@
                                 <td style="text-align:center;padding: 50px 30px;">
                                     <img style="width:88px; margin-bottom:24px;"
                                         src="<?= env('APP_URL') . '/bin/img/kyc-progress.png' ?>" alt="In Process">
-                                    <h2 style="font-size: 18px; color: #6576ff; font-weight: 400; margin-bottom: 8px;">
+                                    <h2 style="font-size: 18px; color: #6576ff; font-weight: bold; margin-bottom: 8px;">
+                                        Hi, <b>{{ $SalesNamePIC }}</b>
+                                    </h2>
+                                    <h2 style="font-size: 15px; color: #6576ff; margin-bottom: 8px;">
                                         Registrasi pelanggan <b>{{ $CustNamePIC }}</b> telah berhasil
                                     </h2>
-                                    <p>
+                                    <p style="text-align: justify;">
+                                        Pelanggan <b>{{ $CustNamePIC }}</b> telah berhasil melakukan registrasi.
                                         Silahkan menghubungi pelanggan <b>{{ $CustNamePIC }}</b>, jika anda
                                         mengalami kendala dalam proses review. Terima kasih
                                     </p>
