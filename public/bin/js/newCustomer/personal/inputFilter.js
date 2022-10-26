@@ -1,4 +1,32 @@
 $(document).ready(function () {
+    $('#phone_number_personal').unbind('keyup change input paste').bind('keyup change input paste', function (e) {
+        var $this = $(this);
+        var val = $this.val();
+        var valLength = val.length;
+        var maxCount = $this.attr('maxlength');
+        if (valLength > maxCount) {
+            $this.val($this.val().substring(0, maxCount));
+        }
+    });
+    $('#phone_number_biller').unbind('keyup change input paste').bind('keyup change input paste', function (e) {
+        var $this = $(this);
+        var val = $this.val();
+        var valLength = val.length;
+        var maxCount = $this.attr('maxlength');
+        if (valLength > maxCount) {
+            $this.val($this.val().substring(0, maxCount));
+        }
+    });
+    $('#phone_number_technical').unbind('keyup change input paste').bind('keyup change input paste', function (e) {
+        var $this = $(this);
+        var val = $this.val();
+        var valLength = val.length;
+        var maxCount = $this.attr('maxlength');
+        if (valLength > maxCount) {
+            $this.val($this.val().substring(0, maxCount));
+        }
+    });
+
     setInputFilter(document.getElementById("id_number_personal"), function (value) {
         return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
     }, "Nomor Identitas harus berupa angka");

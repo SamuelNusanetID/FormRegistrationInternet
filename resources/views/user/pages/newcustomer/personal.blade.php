@@ -139,7 +139,7 @@
                                                     class="form-control @error('phone_number_personal') is-invalid @enderror"
                                                     id="phone_number_personal" name="phone_number_personal"
                                                     placeholder="Masukkan Nomor Handphone/Whatsapp Anda..."
-                                                    value="{{ old('phone_number_personal') }}">
+                                                    value="{{ old('phone_number_personal') }}" maxlength="11">
                                             </div>
                                             @error('phone_number_personal')
                                                 <div class="invalid-feedback">
@@ -233,7 +233,7 @@
                                                     class="form-control @error('phone_number_biller') is-invalid @enderror"
                                                     id="phone_number_biller" name="phone_number_biller"
                                                     placeholder="Masukkan Nomor Handphone Anda..."
-                                                    value="{{ old('phone_number_biller') }}">
+                                                    value="{{ old('phone_number_biller') }}" maxlength="11">
                                             </div>
                                             @error('phone_number_biller')
                                                 <div class="invalid-feedback">
@@ -328,7 +328,7 @@
                                                     class="form-control @error('phone_number_technical') is-invalid @enderror"
                                                     id="phone_number_technical" name="phone_number_technical"
                                                     placeholder="Masukkan Nomor Handphone Anda..."
-                                                    value="{{ old('phone_number_technical') }}">
+                                                    value="{{ old('phone_number_technical') }}" maxlength="11">
                                             </div>
                                             @error('phone_number_technical')
                                                 <div class="invalid-feedback">
