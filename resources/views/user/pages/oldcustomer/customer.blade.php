@@ -292,8 +292,7 @@
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Alamat Lengkap Pemasangan Baru <span
                                             class="text-danger">*</span></label>
-                                    <textarea class="form-control" id="new_address" name="new_address" aria-describedby="address" rows="4"
-                                        readonly></textarea>
+                                    <textarea class="form-control" id="new_address" name="new_address" aria-describedby="address" rows="4"></textarea>
                                     <div id="address" class="form-text mb-1">Alamat ini digunakan
                                         sebagai
                                         alamat pemasangan internet.</div>

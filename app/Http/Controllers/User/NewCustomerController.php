@@ -75,7 +75,7 @@ class NewCustomerController extends Controller
                 'geolocation' => $requestAPI->get('geolocation_personal'),
                 'class' => 'Personal',
                 'email' => $requestAPI->get('email_address_personal'),
-                'phone_number' => $requestAPI->get('phone_number_personal'),
+                'phone_number' => "0" . $requestAPI->get('phone_number_personal'),
                 'identity_number' => $requestAPI->get('id_number_personal'),
                 'reference_id' => $requestAPI->get('salesID') != null ? $requestAPI->get('salesID') : null,
                 'created_at' => Carbon::now(),
@@ -86,7 +86,7 @@ class NewCustomerController extends Controller
             $savedDataBilling = [
                 'id' => $uuid,
                 'billing_name' => $requestAPI->get('fullname_biller'),
-                'billing_contact' => $requestAPI->get('phone_number_biller'),
+                'billing_contact' => "0" . $requestAPI->get('phone_number_biller'),
                 'billing_email' => json_encode([$requestAPI->get('email_address_biller_primary'), $requestAPI->get('email_address_biller_one'), $requestAPI->get('email_address_biller_two')]),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -96,7 +96,7 @@ class NewCustomerController extends Controller
             $savedDataTechnical = [
                 'id' => $uuid,
                 'technical_name' => $requestAPI->get('fullname_technical'),
-                'technical_contact' => $requestAPI->get('phone_number_technical'),
+                'technical_contact' => "0" . $requestAPI->get('phone_number_technical'),
                 'technical_email' => $requestAPI->get('email_address_technical'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

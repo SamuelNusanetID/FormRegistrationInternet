@@ -164,7 +164,7 @@
                                             <label for="pic_address" class="form-label">Alamat Lengkap <span
                                                     class="text-danger">*</span></label>
                                             <textarea class="form-control @error('pic_address') is-invalid @enderror" id="pic_address" name="pic_address"
-                                                aria-describedby="pic_address_help" rows="4" placeholder="Masukkan Alamat Lengkap Anda..." readonly>{{ old('pic_address') }}</textarea>
+                                                aria-describedby="pic_address_help" rows="4" placeholder="Masukkan Alamat Lengkap Anda...">{{ old('pic_address') }}</textarea>
                                             <div id="pic_address_help" class="form-text mb-1">
                                                 Alamat ini digunakan sebagai alamat pemasangan internet.
                                             </div>

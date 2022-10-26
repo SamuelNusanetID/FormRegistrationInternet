@@ -129,13 +129,18 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="phone_number_personal" class="form-label">Nomor HP/WA yang aktif
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text"
-                                                class="form-control @error('phone_number_personal') is-invalid @enderror"
-                                                id="phone_number_personal" name="phone_number_personal"
-                                                placeholder="Masukkan Nomor Handphone/Whatsapp Anda..."
-                                                value="{{ old('phone_number_personal') }}">
+                                            <label for="phone_number_personal" class="form-label">
+                                                Nomor HP/WA yang aktif
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text fw-bold bg-success text-white">+62</span>
+                                                <input type="text"
+                                                    class="form-control @error('phone_number_personal') is-invalid @enderror"
+                                                    id="phone_number_personal" name="phone_number_personal"
+                                                    placeholder="Masukkan Nomor Handphone/Whatsapp Anda..."
+                                                    value="{{ old('phone_number_personal') }}">
+                                            </div>
                                             @error('phone_number_personal')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -174,7 +179,7 @@
                                                     class="text-danger">*</span></label>
                                             <textarea class="form-control @error('address_personal') is-invalid @enderror" id="address_personal"
                                                 name="address_personal" aria-describedby="address_personal_help" rows="3"
-                                                placeholder="Masukkan Alamat Lengkap Anda..." readonly>{{ old('address_personal') }}</textarea>
+                                                placeholder="Masukkan Alamat Lengkap Anda...">{{ old('address_personal') }}</textarea>
                                             <div id="address_personal_help" class="form-text mb-1">
                                                 Alamat ini digunakan sebagai alamat pemasangan internet.
                                             </div>
@@ -217,13 +222,19 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="phone_number_biller" class="form-label">Nomor Handphone
-                                                <span class="text-danger">*</span></label>
-                                            <input type="tel"
-                                                class="form-control @error('phone_number_biller') is-invalid @enderror"
-                                                id="phone_number_biller" name="phone_number_biller"
-                                                placeholder="Masukkan Nomor Handphone Anda..."
-                                                value="{{ old('phone_number_biller') }}">
+                                            <label for="phone_number_biller" class="form-label">
+                                                Nomor Handphone
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text fw-bold bg-success text-white"
+                                                    id="phone_number_personal">+62</span>
+                                                <input type="tel"
+                                                    class="form-control @error('phone_number_biller') is-invalid @enderror"
+                                                    id="phone_number_biller" name="phone_number_biller"
+                                                    placeholder="Masukkan Nomor Handphone Anda..."
+                                                    value="{{ old('phone_number_biller') }}">
+                                            </div>
                                             @error('phone_number_biller')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -307,20 +318,24 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="phone_number_technical" class="form-label">Nomor Handphone
-                                                <span class="text-danger">*</span></label>
-                                            <input type="tel"
-                                                class="form-control @error('phone_number_technical') is-invalid @enderror"
-                                                id="phone_number_technical" name="phone_number_technical"
-                                                placeholder="Masukkan Nomor Handphone Anda..."
-                                                value="{{ old('phone_number_technical') }}">
+                                            <label for="phone_number_technical" class="form-label">
+                                                Nomor Handphone
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text fw-bold bg-success text-white">+62</span>
+                                                <input type="tel"
+                                                    class="form-control @error('phone_number_technical') is-invalid @enderror"
+                                                    id="phone_number_technical" name="phone_number_technical"
+                                                    placeholder="Masukkan Nomor Handphone Anda..."
+                                                    value="{{ old('phone_number_technical') }}">
+                                            </div>
                                             @error('phone_number_technical')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-
                                     </div>
                                     <div class="col-0 col-md-6">
                                         <div class="mb-3">
