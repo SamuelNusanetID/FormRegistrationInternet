@@ -45,10 +45,18 @@ $(document).ready(function () {
     }, "Silahkan isi alamat email dengan domain yang valid");
 
     $.validator.addMethod('filesize', function (value, element, param) {
-        return this.optional(element) || (element.files[0].size <= param * 1000000)
+        return this.optional(element) || (element.files[0].size <= param * 1048576)
     }, 'File foto harus berukuran max. {0} MB');
 
     $('#bussinessForm').validate({
+        errorPlacement: (error, element) => {
+            console.log(element.parent('.input-group').length);
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        },
         rules: {
             pic_name: {
                 required: true
@@ -82,6 +90,11 @@ $(document).ready(function () {
             },
             company_npwp: {
                 required: true
+            },
+            company_npwp_upload: {
+                required: true,
+                accept: 'jpg,jpeg,png',
+                filesize: 3
             },
             company_phone_number: {
                 required: true,
@@ -180,6 +193,10 @@ $(document).ready(function () {
             service_selfie_photo: {
                 required: 'Kolom Upload Foto Selfie dan KTP Wajib Diisi',
                 accept: 'Foto Selfie dan KTP harus berformat jpeg, jpg, atau png'
+            },
+            company_npwp_upload: {
+                required: 'Kolom Upload NPWP Wajib Diisi',
+                accept: 'file NPWP harus berformat jpeg, jpg, atau png'
             },
             billing_name: {
                 required: 'Kolom Nama Lengkap Pembayaran Wajib Diisi'

@@ -22,10 +22,15 @@ return new class extends Migration
             $table->enum('class', ['Personal', 'Bussiness']);
             $table->string('email');
             $table->string('identity_number');
+            $table->string('npwp_number')->nullable();
+            $table->string('npwp_files')->nullable();
             $table->string('phone_number');
             $table->string('company_name')->nullable();
             $table->text('company_address')->nullable();
             $table->string('company_npwp')->nullable();
+            $table->string('company_npwp_files')->nullable();
+            $table->string('company_sppkp')->nullable();
+            $table->string('company_sppkp_files')->nullable();
             $table->string('company_phone_number')->nullable();
             $table->string('company_employees')->nullable();
             $table->string('survey_id')->nullable();

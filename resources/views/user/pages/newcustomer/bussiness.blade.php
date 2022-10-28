@@ -28,9 +28,6 @@
                 <form action="{{ URL::to('new-member/bussiness') }}" method="POST" id="bussinessForm"
                     enctype="multipart/form-data">
                     @csrf
-                    {{-- <div class="g-recaptcha" data-sitekey="6LfutlwhAAAAACs1VgAQOYZlok2dejtrePnFt4z0"
-                        data-callback="onSubmit" data-size="invisible" data-badge="bottomleft">
-                    </div> --}}
                     @error('uuid')
                         <div class="text-center mb-3 h3 text-danger fw-bold">
                             {{ $message }}. Maaf, data kamu tidak tersimpan.
@@ -135,13 +132,18 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="pic_phone_number" class="form-label">Nomor HP/WA yang aktif
-                                                <span class="text-danger">*</span></label>
-                                            <input type="tel"
-                                                class="form-control @error('pic_phone_number') is-invalid @enderror"
-                                                id="pic_phone_number" name="pic_phone_number"
-                                                placeholder="Masukkan Nomor Handphone/Whatsapp Anda..."
-                                                value="{{ old('pic_phone_number') }}">
+                                            <label for="pic_phone_number" class="form-label">
+                                                Nomor HP/WA yang aktif
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text fw-bold bg-success text-white">+62</span>
+                                                <input type="text"
+                                                    class="form-control @error('pic_phone_number') is-invalid @enderror"
+                                                    id="pic_phone_number" name="pic_phone_number"
+                                                    placeholder="Masukkan Nomor Handphone/Whatsapp Anda..."
+                                                    value="{{ old('pic_phone_number') }}" maxlength="11">
+                                            </div>
                                             @error('pic_phone_number')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -217,6 +219,43 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
+                                            <label for="company_npwp_upload" class="form-label">Upload NPWP Perusahaan
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input class="form-control @error('company_npwp_upload') is-invalid @enderror"
+                                                type="file" id="company_npwp_upload" name="company_npwp_upload">
+                                            @error('company_npwp_upload')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="company_sppkp" class="form-label">No. SPPKP Perusahaan
+                                            </label>
+                                            <input type="text"
+                                                class="form-control @error('company_sppkp') is-invalid @enderror"
+                                                name="company_sppkp" size="13" value="{{ old('company_sppkp') }}"
+                                                id="company_sppkp">
+                                            @error('company_sppkp')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="company_sppkp_upload" class="form-label">Upload SPPKP Perusahaan
+                                            </label>
+                                            <input
+                                                class="form-control @error('company_sppkp_upload') is-invalid @enderror"
+                                                type="file" id="company_sppkp_upload" name="company_sppkp_upload">
+                                            @error('company_sppkp_upload')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
                                             <label for="company_phone_number" class="form-label">No. Telepon Perusahaan
                                                 <span class="text-danger">*</span></label>
                                             <input type="text"
@@ -273,13 +312,19 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="billing_phone" class="form-label">Nomor Handphone
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text"
-                                                class="form-control @error('billing_phone') is-invalid @enderror"
-                                                id="billing_phone" name="billing_phone"
-                                                placeholder="Masukkan Nomor Handphone Anda..."
-                                                value="{{ old('billing_phone') }}">
+                                            <label for="billing_phone" class="form-label">
+                                                Nomor Handphone
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text fw-bold bg-success text-white"
+                                                    id="billing_phone_label">+62</span>
+                                                <input type="tel"
+                                                    class="form-control @error('billing_phone') is-invalid @enderror"
+                                                    id="billing_phone" name="billing_phone"
+                                                    placeholder="Masukkan Nomor Handphone Anda..."
+                                                    value="{{ old('billing_phone') }}" maxlength="11">
+                                            </div>
                                             @error('billing_phone')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -362,20 +407,25 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="phone_number_technical" class="form-label">Nomor Handphone
-                                                <span class="text-danger">*</span></label>
-                                            <input type="text"
-                                                class="form-control @error('phone_number_technical') is-invalid @enderror"
-                                                id="phone_number_technical" name="phone_number_technical"
-                                                placeholder="Masukkan Nomor Handphone Anda..."
-                                                value="{{ old('phone_number_technical') }}">
+                                            <label for="phone_number_technical" class="form-label">
+                                                Nomor Handphone
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text fw-bold bg-success text-white"
+                                                    id="phone_number_technical_label">+62</span>
+                                                <input type="tel"
+                                                    class="form-control @error('phone_number_technical') is-invalid @enderror"
+                                                    id="phone_number_technical" name="phone_number_technical"
+                                                    placeholder="Masukkan Nomor Handphone Anda..."
+                                                    value="{{ old('phone_number_technical') }}" maxlength="11">
+                                            </div>
                                             @error('phone_number_technical')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-
                                     </div>
                                     <div class="col-0 col-md-6">
                                         <div class="mb-3">

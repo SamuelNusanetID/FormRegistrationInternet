@@ -45,7 +45,8 @@ $(document).ready(function () {
     }, "Silahkan isi alamat email dengan domain yang valid");
 
     $.validator.addMethod('filesize', function (value, element, param) {
-        return this.optional(element) || (element.files[0].size <= param * 1000000)
+        console.log(param * 1048576);
+        return this.optional(element) || (element.files[0].size <= param * 1048576)
     }, 'File foto harus berukuran max. {0} MB');
 
     $('#personalForm').validate({
@@ -84,6 +85,10 @@ $(document).ready(function () {
             },
             service_identity_photo: {
                 required: true,
+                accept: 'jpg,jpeg,png',
+                filesize: 3
+            },
+            additionalnpwpphotopersonal: {
                 accept: 'jpg,jpeg,png',
                 filesize: 3
             },
@@ -156,6 +161,9 @@ $(document).ready(function () {
             service_identity_photo: {
                 required: 'Kolom Upload Foto KTP Wajib Diisi',
                 accept: 'Foto KTP harus berformat jpeg, jpg, atau png',
+            },
+            additionalnpwpphotopersonal: {
+                accept: 'File NPWP harus berformat jpeg, jpg, atau png',
             },
             fullname_biller: {
                 required: 'Kolom Nama Lengkap Pembayaran Wajib Diisi'
