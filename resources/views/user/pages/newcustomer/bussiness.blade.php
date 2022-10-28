@@ -654,6 +654,10 @@
                         $('#geolocation_bussiness').val(JSON.stringify(e.latlng));
                     });
 
+                map.locate({
+                    setView: true,
+                    watch: true
+                });
             }
 
             function onClick(e) {

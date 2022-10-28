@@ -544,6 +544,10 @@
                         $('#geolocation_existing').val(JSON.stringify(e.latlng));
                     });
 
+                map.locate({
+                    setView: true,
+                    watch: true
+                });
             }
 
             function onClick(e) {
