@@ -163,7 +163,7 @@ class NewCustomerController extends Controller
                         }
                     }
                 } catch (\Throwable $th) {
-                    dd($th->getMessage());
+                    return redirect()->to('new-member')->with('errorMessage', $th->getMessage());
                 }
             } else {
                 try {
@@ -189,7 +189,7 @@ class NewCustomerController extends Controller
                         $message->to($dataEm['SalesEmailPIC'])->subject('Registrasi Berhasil!');
                     });
                 } catch (\Throwable $th) {
-                    dd($th->getMessage());
+                    return redirect()->to('new-member')->with('errorMessage', $th->getMessage());
                 }
             }
         });
@@ -345,7 +345,7 @@ class NewCustomerController extends Controller
                         }
                     }
                 } catch (\Throwable $th) {
-                    dd($th->getMessage());
+                    return redirect()->to('new-member')->with('errorMessage', $th->getMessage());
                 }
             } else {
                 try {
@@ -371,7 +371,7 @@ class NewCustomerController extends Controller
                         $message->to($dataEm['SalesEmailPIC'])->subject('Registrasi Berhasil!');
                     });
                 } catch (\Throwable $th) {
-                    dd($th->getMessage());
+                    return redirect()->to('new-member')->with('errorMessage', $th->getMessage());
                 }
             }
         });

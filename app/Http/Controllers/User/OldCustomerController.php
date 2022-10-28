@@ -205,7 +205,7 @@ class OldCustomerController extends Controller
                     }
                 }
             } catch (\Throwable $th) {
-                dd($th->getMessage());
+                return back()->with('errorMessage', $th->getMessage());
             }
 
             return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
@@ -333,7 +333,7 @@ class OldCustomerController extends Controller
                     }
                 }
             } catch (\Throwable $th) {
-                dd($th->getMessage());
+                return back()->with('errorMessage', $th->getMessage());
             }
 
             return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');

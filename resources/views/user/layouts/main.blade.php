@@ -55,32 +55,6 @@
         </br>
         Send Feedback
     </a>
-    {{-- <div class="form-popup" id="myForm">
-        <form action="{{ URL::to('feedback') }}" class="form-container" method="POST" enctype="multipart/form-data">
-            @csrf
-            <p class="text-center fw-bold">Form Feedback</p>
-            <p style="text-align: justify;">
-                Silahkan diisi ya teman-teman. Bagi yang ingin memberikan feedback dan kritik juga saran, dipersilahkan
-                untuk mengisi form yang ada dibawah ini ya. Terima Kasih
-            </p>
-            <div class="mb-3">
-                <label for="name" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="name" name="name">
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label">Pesan</label>
-                <textarea type="text" class="form-control" id="message" name="message" rows="3"></textarea>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-                <div class="col-sm-6 text-end">
-                    <button type="button" class="btn btn-danger" onclick="closeForm()">Close</button>
-                </div>
-            </div>
-        </form>
-    </div> --}}
     <div class="card begin-content">
         <div class="card-header p-0 m-0">
             @include('user.partials.navbar')
