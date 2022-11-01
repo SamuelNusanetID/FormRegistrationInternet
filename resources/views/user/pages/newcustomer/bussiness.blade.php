@@ -104,18 +104,32 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="pic_identity_number" class="form-label">Nomor Identitas
-                                                (KTP/SIM/KITAS) <span class="text-danger">*</span></label>
-                                            <input type="text"
-                                                class="form-control @error('pic_identity_number') is-invalid @enderror"
-                                                id="pic_identity_number" name="pic_identity_number"
-                                                placeholder="Masukkan Nomor Identitas Anda..."
-                                                value="{{ old('pic_identity_number') }}">
-                                            @error('pic_identity_number')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <label for="inputGroupIdentityNumberPersonal" class="form-label">
+                                                Nomor Identitas
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group" id="inputGroupIdentityNumberPersonal"
+                                                style="width: 100%;">
+                                                <select class="form-select bg-success text-white"
+                                                    name="option_pic_identity_number" id="option_pic_identity_number"
+                                                    style="width: 20%;">
+                                                    <option disabled selected>Pilih...</option>
+                                                    <option value="KTP">KTP</option>
+                                                    <option value="SIM">SIM</option>
+                                                    <option value="KITAS">KITAS</option>
+                                                    <option value="PASPOR">PASPOR</option>
+                                                </select>
+                                                <input type="text"
+                                                    class="form-control @error('pic_identity_number') is-invalid @enderror col-sm-10"
+                                                    id="pic_identity_number" name="pic_identity_number"
+                                                    placeholder="Masukkan Nomor Identitas Anda..."
+                                                    value="{{ old('pic_identity_number') }}" style="width: 80%;">
+                                                @error('pic_identity_number')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="pic_email_address" class="form-label">Alamat Email

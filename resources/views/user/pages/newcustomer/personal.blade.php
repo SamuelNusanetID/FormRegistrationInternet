@@ -98,18 +98,32 @@
                                                 value="{{ old('fullname_personal') }}">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="id_number_personal" class="form-label">Nomor Identitas
-                                                (KTP/SIM/KITAS) <span class="text-danger">*</span></label>
-                                            <input type="text"
-                                                class="form-control @error('id_number_personal') is-invalid @enderror"
-                                                id="id_number_personal" name="id_number_personal"
-                                                placeholder="Masukkan Nomor Identitas Anda..."
-                                                value="{{ old('id_number_personal') }}">
-                                            @error('id_number_personal')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <label for="inputGroupIdentityNumberPersonal" class="form-label">
+                                                Nomor Identitas
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group" id="inputGroupIdentityNumberPersonal"
+                                                style="width: 100%;">
+                                                <select class="form-select bg-success text-white"
+                                                    name="option_id_number_personal" id="option_id_number_personal"
+                                                    style="width: 20%;">
+                                                    <option disabled selected>Pilih...</option>
+                                                    <option value="KTP">KTP</option>
+                                                    <option value="SIM">SIM</option>
+                                                    <option value="KITAS">KITAS</option>
+                                                    <option value="PASPOR">PASPOR</option>
+                                                </select>
+                                                <input type="text"
+                                                    class="form-control @error('id_number_personal') is-invalid @enderror col-sm-10"
+                                                    id="id_number_personal" name="id_number_personal"
+                                                    placeholder="Masukkan Nomor Identitas Anda..."
+                                                    value="{{ old('id_number_personal') }}" style="width: 80%;">
+                                                @error('id_number_personal')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="email_address_personal" class="form-label">Alamat Email
@@ -145,7 +159,7 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="service_identity_photo" class="form-label">Upload Foto KTP
+                                            <label for="service_identity_photo" class="form-label">Upload Foto Identitas
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input
@@ -583,6 +597,11 @@
                 map.addLayer(marker);
                 map.addLayer(circle);
 
+                map.locate({
+                    setView: true,
+                    watch: true
+                });
+
                 // Ajax to search address by lat and lang
                 var latitude = e.latlng.lat;
                 var langitude = e.latlng.lng;
@@ -592,11 +611,6 @@
                         $('#address_personal').val(data.display_name);
                         $('#geolocation_personal').val(JSON.stringify(e.latlng));
                     });
-
-                map.locate({
-                    setView: true,
-                    watch: true
-                });
             }
 
             function onClick(e) {

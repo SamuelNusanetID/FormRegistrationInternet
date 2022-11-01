@@ -45,13 +45,11 @@ $(document).ready(function () {
     }, "Silahkan isi alamat email dengan domain yang valid");
 
     $.validator.addMethod('filesize', function (value, element, param) {
-        console.log(param * 1048576);
         return this.optional(element) || (element.files[0].size <= param * 1048576)
     }, 'File foto harus berukuran max. {0} MB');
 
     $('#personalForm').validate({
         errorPlacement: (error, element) => {
-            console.log(element.parent('.input-group').length);
             if (element.parent('.input-group').length) {
                 error.insertAfter(element.parent());
             } else {
@@ -62,10 +60,8 @@ $(document).ready(function () {
             fullname_personal: {
                 required: true
             },
-            id_number_personal: {
-                required: true,
-                minlength: 16,
-                maxlength: 16
+            option_id_number_personal: {
+                required: true
             },
             email_address_personal: {
                 required: true,
@@ -141,10 +137,8 @@ $(document).ready(function () {
             fullname_personal: {
                 required: 'Kolom Nama Lengkap Wajib Diisi'
             },
-            id_number_personal: {
-                required: 'Kolom Nomor Identitas Wajib Diisi',
-                minlength: 'Nomor Identitas harus mengandung min. 16 karakter',
-                maxlength: 'Nomor Identitas melewati batas karakter'
+            option_id_number_personal: {
+                required: 'Kolom Opsi Pilihan Identitas Wajib Diisi'
             },
             email_address_personal: {
                 required: 'Kolom Alamat Email Wajib Diisi',
@@ -207,6 +201,50 @@ $(document).ready(function () {
             custom_bulanan: {
                 required: 'Kolom Custom Bulan Wajib Diisi'
             }
+        }
+    });
+
+    $('select[name="option_id_number_personal"]').on('change', function () {
+        var settings = $('#personalForm').validate().settings;
+        delete settings.rules.id_number_personal;
+        delete settings.messages.id_number_personal;
+
+        if ($(this).val() == "KTP") {
+            settings.rules.id_number_personal = {
+                required: true,
+                minlength: 16,
+                maxlength: 16
+            };
+            settings.messages.id_number_personal = {
+                required: "Field Nomor KTP Wajib Diisi",
+                minlength: "Minimal karakter Nomor KTP adalah 16 karakter",
+                maxlength: "Maximal karakter Nomor KTP adalah 16 karakter"
+            };
+        } else if ($(this).val() == "SIM") {
+            settings.rules.id_number_personal = {
+                required: true,
+                minlength: 12,
+                maxlength: 12
+            };
+            settings.messages.id_number_personal = {
+                required: "Field Nomor SIM Wajib Diisi",
+                minlength: "Minimal karakter Nomor SIM adalah 12 karakter",
+                maxlength: "Maximal karakter Nomor SIM adalah 12 karakter"
+            };
+        } else if ($(this).val() == "KITAS") {
+            settings.rules.id_number_personal = {
+                required: true
+            };
+            settings.messages.id_number_personal = {
+                required: "Field Nomor KITAS Wajib Diisi"
+            };
+        } else if ($(this).val() == "PASPOR") {
+            settings.rules.id_number_personal = {
+                required: true
+            };
+            settings.messages.id_number_personal = {
+                required: "Field Nomor Paspor Wajib Diisi"
+            };
         }
     });
 

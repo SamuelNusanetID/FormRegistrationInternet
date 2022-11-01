@@ -50,7 +50,6 @@ $(document).ready(function () {
 
     $('#bussinessForm').validate({
         errorPlacement: (error, element) => {
-            console.log(element.parent('.input-group').length);
             if (element.parent('.input-group').length) {
                 error.insertAfter(element.parent());
             } else {
@@ -61,10 +60,8 @@ $(document).ready(function () {
             pic_name: {
                 required: true
             },
-            pic_identity_number: {
-                required: true,
-                minlength: 16,
-                maxlength: 16
+            option_pic_identity_number: {
+                required: true
             },
             pic_email_address: {
                 required: true,
@@ -155,10 +152,8 @@ $(document).ready(function () {
             pic_name: {
                 required: 'Kolom Nama Lengkap Wajib Diisi'
             },
-            pic_identity_number: {
-                required: 'Kolom Nomor Identitas Wajib Diisi',
-                minlength: 'Nomor Identitas harus mengandung min. 16 karakter',
-                maxlength: 'Nomor Identitas melewati batas karakter'
+            option_pic_identity_number: {
+                required: 'Opsi Pilihan Identitas Wajib Diisi'
             },
             pic_email_address: {
                 required: 'Kolom Alamat Email Wajib Diisi',
@@ -240,6 +235,50 @@ $(document).ready(function () {
             custom_bulanan: {
                 required: 'Kolom Custom Bulan Wajib Diisi'
             }
+        }
+    });
+
+    $('select[name="option_pic_identity_number"]').on('change', function () {
+        var settings = $('#bussinessForm').validate().settings;
+        delete settings.rules.pic_identity_number;
+        delete settings.messages.pic_identity_number;
+
+        if ($(this).val() == "KTP") {
+            settings.rules.pic_identity_number = {
+                required: true,
+                minlength: 16,
+                maxlength: 16
+            };
+            settings.messages.pic_identity_number = {
+                required: "Field Nomor KTP Wajib Diisi",
+                minlength: "Minimal karakter Nomor KTP adalah 16 karakter",
+                maxlength: "Maximal karakter Nomor KTP adalah 16 karakter"
+            };
+        } else if ($(this).val() == "SIM") {
+            settings.rules.pic_identity_number = {
+                required: true,
+                minlength: 12,
+                maxlength: 12
+            };
+            settings.messages.pic_identity_number = {
+                required: "Field Nomor SIM Wajib Diisi",
+                minlength: "Minimal karakter Nomor SIM adalah 12 karakter",
+                maxlength: "Maximal karakter Nomor SIM adalah 12 karakter"
+            };
+        } else if ($(this).val() == "KITAS") {
+            settings.rules.pic_identity_number = {
+                required: true
+            };
+            settings.messages.pic_identity_number = {
+                required: "Field Nomor KITAS Wajib Diisi"
+            };
+        } else if ($(this).val() == "PASPOR") {
+            settings.rules.pic_identity_number = {
+                required: true
+            };
+            settings.messages.pic_identity_number = {
+                required: "Field Nomor Paspor Wajib Diisi"
+            };
         }
     });
 
