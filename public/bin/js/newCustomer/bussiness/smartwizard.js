@@ -254,17 +254,6 @@ $(document).ready(function () {
                 minlength: "Minimal karakter Nomor KTP adalah 16 karakter",
                 maxlength: "Maximal karakter Nomor KTP adalah 16 karakter"
             };
-        } else if ($(this).val() == "SIM") {
-            settings.rules.pic_identity_number = {
-                required: true,
-                minlength: 12,
-                maxlength: 12
-            };
-            settings.messages.pic_identity_number = {
-                required: "Field Nomor SIM Wajib Diisi",
-                minlength: "Minimal karakter Nomor SIM adalah 12 karakter",
-                maxlength: "Maximal karakter Nomor SIM adalah 12 karakter"
-            };
         } else if ($(this).val() == "KITAS") {
             settings.rules.pic_identity_number = {
                 required: true

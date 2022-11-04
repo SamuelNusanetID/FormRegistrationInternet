@@ -17,6 +17,7 @@ class Customer extends Model
         'address',
         'class',
         'email',
+        'identity_type',
         'identity_number',
         'npwp_number',
         'npwp_files',

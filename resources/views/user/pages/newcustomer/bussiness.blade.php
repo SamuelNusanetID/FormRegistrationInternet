@@ -104,34 +104,6 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="inputGroupIdentityNumberPersonal" class="form-label">
-                                                Nomor Identitas
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="input-group" id="inputGroupIdentityNumberPersonal"
-                                                style="width: 100%;">
-                                                <select class="form-select bg-success text-white"
-                                                    name="option_pic_identity_number" id="option_pic_identity_number"
-                                                    style="width: 20%;">
-                                                    <option disabled selected>Pilih...</option>
-                                                    <option value="KTP">KTP</option>
-                                                    <option value="SIM">SIM</option>
-                                                    <option value="KITAS">KITAS</option>
-                                                    <option value="PASPOR">PASPOR</option>
-                                                </select>
-                                                <input type="text"
-                                                    class="form-control @error('pic_identity_number') is-invalid @enderror col-sm-10"
-                                                    id="pic_identity_number" name="pic_identity_number"
-                                                    placeholder="Masukkan Nomor Identitas Anda..."
-                                                    value="{{ old('pic_identity_number') }}" style="width: 80%;">
-                                                @error('pic_identity_number')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
                                             <label for="pic_email_address" class="form-label">Alamat Email
                                                 <span class="text-danger">*</span></label>
                                             <input type="email"
@@ -192,6 +164,46 @@
                                         </div>
                                         <input type="hidden" name="geolocation_bussiness" id="geolocation_bussiness"
                                             value="">
+                                        <div class="mb-3">
+                                            <label for="inputGroupIdentityNumberPersonal" class="form-label">
+                                                Nomor Identitas
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group" id="inputGroupIdentityNumberPersonal"
+                                                style="width: 100%;">
+                                                <select class="form-select bg-success text-white"
+                                                    name="option_pic_identity_number" id="option_pic_identity_number"
+                                                    style="width: 20%;">
+                                                    <option disabled selected>Pilih...</option>
+                                                    <option value="KTP">KTP</option>
+                                                    <option value="KITAS">KITAS</option>
+                                                    <option value="PASPOR">PASPOR</option>
+                                                </select>
+                                                <input type="text"
+                                                    class="form-control @error('pic_identity_number') is-invalid @enderror col-sm-10"
+                                                    id="pic_identity_number" name="pic_identity_number"
+                                                    placeholder="Masukkan Nomor Identitas Anda..."
+                                                    value="{{ old('pic_identity_number') }}" style="width: 80%;">
+                                                @error('pic_identity_number')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="service_identity_photo" class="form-label">Upload Foto Identitas
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input
+                                                class="form-control @error('service_identity_photo') is-invalid @enderror"
+                                                type="file" id="service_identity_photo" name="service_identity_photo">
+                                            @error('service_identity_photo')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="col-0 col-md-6">
                                         <div class="mb-3">
@@ -278,19 +290,6 @@
                                                 placeholder="Masukkan Nomor Telepon Perusahaan Anda..."
                                                 value="{{ old('company_phone_number') }}">
                                             @error('company_phone_number')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="service_identity_photo" class="form-label">Upload Foto KTP
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input
-                                                class="form-control @error('service_identity_photo') is-invalid @enderror"
-                                                type="file" id="service_identity_photo" name="service_identity_photo">
-                                            @error('service_identity_photo')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -501,55 +500,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-3" id="option_package_type_price">
-                                        <label for="package_top_type" class="form-label">
-                                            Pilihan Tipe Harga
-                                        </label>
-                                        <div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineTopPaketType"
-                                                    id="inlineTopPaketType_1" value="Retail">
-                                                <label class="form-check-label" for="inlineTopPaketType_1">Retail</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineTopPaketType"
-                                                    id="inlineTopPaketType_2" value="Pemerintah">
-                                                <label class="form-check-label"
-                                                    for="inlineTopPaketType_2">Pemerintah</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3" id="option_custom_bulanan">
-                                        <label for="custom_bulanan" class="form-label">Custom Field Bulan</label>
-                                        <input class="form-control" type="text" id="custom_bulanan"
-                                            name="custom_bulanan" placeholder="Masukkan Jumlah Bulan">
-                                    </div>
-                                    <div class="rounded border-white bg-white p-3 d-none" id="subTotalBayarWidget">
-                                        <p class="fw-bold mb-4">Detail Pembayaran</p>
-                                        <div class="row mb-2">
-                                            <div class="col-12 col-lg-6 fw-bold">
-                                                Nama Paket
-                                            </div>
-                                            <div class="col-12 col-lg-6" id="package_name_show_details">
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-12 col-lg-6 fw-bold">
-                                                Jangka Waktu Pembayaran
-                                            </div>
-                                            <div class="col-12 col-lg-6" id="package_top_show_details">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-lg-6">
-                                                <div class="p-2"
-                                                    style="border-radius:12px; border: 1px solid #dedede; background-color: #dedede;">
-                                                    <p class="fw-bold mb-2">Subtotal</p>
-                                                    <p class="h1 fw-bold text-end" id="package_price_show_detail"></p>
-                                                </div>
-                                                <p>Harga diatas belum termasuk PPN 11%</p>
-                                            </div>
-                                        </div>
+                                    <div class="mb-3" id="option_custom_bulanan_tahunan">
+                                        <label for="custom_bulanan_tahunan" class="form-label">Custom Field
+                                            Bulan/Tahunan</label>
+                                        <input class="form-control" type="text" id="custom_bulanan_tahunan"
+                                            name="custom_bulanan_tahunan" placeholder="Masukkan Jumlah Bulan/Tahun">
                                     </div>
                                 </div>
                                 <input type="hidden" name="RequestHandler" id="RequestHandler">
@@ -586,6 +541,10 @@
             Kembali Ke Halaman Sebelumnya
         </a>
     </div>
+
+    @php
+        $errorMessage = session()->has('errorMessage') ? session('errorMessage') : false;
+    @endphp
 @endsection
 
 @section('JS')
@@ -610,195 +569,9 @@
     </script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <!-- GeoLocation ScriptJS -->
-    <script>
-        $(document).ready(() => {
-            var formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-            });
-
-            const map = L.map('map');
-            var marker;
-            var circle;
-            var gpsRead = true;
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            var lc = L.control.locate({
-                locateOptions: {
-                    enableHighAccuracy: true
-                },
-                strings: {
-                    title: "Klik untuk melihat lokasi anda saat ini!"
-                },
-                icon: "fa-solid fa-location-crosshairs"
-            }).addTo(map);
-            lc.start();
-
-            map.on('locationfound', onLocationFound);
-            map.on('click', onClick);
-
-            var idxOnLoc = 0;
-
-            function onLocationFound(e) {
-                idxOnLoc += 1;
-                if (marker || idxOnLoc > 1) {
-                    map.removeLayer(marker);
-                    map.removeLayer(circle);
-                } else if (marker && idxOnLoc > 1) {
-                    map.removeLayer(marker);
-                    map.removeLayer(circle);
-                    lc.stopFollowing();
-                }
-                var radius = e.accuracy;
-                marker = new L.marker(e.latlng, {
-                    draggable: true
-                }).on('dragend', onDragEnd);
-                circle = new L.circle(e.latlng, radius);
-                map.addLayer(marker);
-                map.addLayer(circle);
-
-                // Ajax to search address by lat and lang
-                var latitude = e.latlng.lat;
-                var langitude = e.latlng.lng;
-                $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${langitude}`,
-                    function(data) {
-                        marker.bindPopup(`${data.display_name}`).openPopup();
-                        $('#pic_address').val(data.display_name);
-                        $('#geolocation_bussiness').val(JSON.stringify(e.latlng));
-                    });
-
-                map.locate({
-                    setView: true,
-                    watch: true
-                });
-            }
-
-            function onClick(e) {
-                if (marker) {
-                    map.removeLayer(marker);
-                    map.removeLayer(circle);
-                    if (lc._active) {
-                        lc.stopFollowing();
-                        lc.stop();
-                    }
-                }
-                var radius = 25;
-                marker = new L.Marker(e.latlng, {
-                    draggable: true
-                }).on('dragend', onDragEnd);
-                circle = new L.circle(e.latlng, radius);
-                map.addLayer(marker);
-                map.addLayer(circle);
-
-                // Ajax to search address by lat and lang
-                var latitude = e.latlng.lat;
-                var langitude = e.latlng.lng;
-                $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${langitude}`,
-                    function(data) {
-                        marker.bindPopup(`${data.display_name}`).openPopup();
-                        $('#pic_address').val(data.display_name);
-                        $('#geolocation_bussiness').val(JSON.stringify(e.latlng));
-                    });
-            }
-
-            var geocoder = L.Control.geocoder({
-                    defaultMarkGeocode: false
-                })
-                .on('markgeocode', function(e) {
-                    if (marker) {
-                        map.removeLayer(marker);
-                        map.removeLayer(circle);
-                        if (lc._active) {
-                            lc.stopFollowing();
-                            lc.stop();
-                        }
-                    }
-
-                    var radius = 25;
-                    var latLang = e.geocode.center;
-
-                    marker = new L.marker(latLang, {
-                        draggable: true
-                    }).on('dragend', onDragEnd);
-                    circle = new L.circle(latLang, radius);
-                    map.addLayer(marker);
-                    map.addLayer(circle);
-                    // Ajax to search address by lat and lang
-                    var latitude = latLang.lat;
-                    var langitude = latLang.lng;
-                    $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${langitude}`,
-                        function(data) {
-                            marker.bindPopup(`${data.display_name}`).openPopup();
-                            $('#pic_address').val(data.display_name);
-                            $('#geolocation_bussiness').val(JSON.stringify(latLang));
-                        });
-                })
-                .addTo(map);
-
-            function onDragEnd(e) {
-                if (marker) {
-                    map.removeLayer(marker);
-                    map.removeLayer(circle);
-                    if (lc._active) {
-                        lc.stopFollowing();
-                        lc.stop();
-                    }
-                }
-
-                var latlng = e.target.getLatLng();
-                var radius = 25;
-                marker = new L.Marker(latlng, {
-                    draggable: true
-                }).on('dragend', onDragEnd);
-                circle = new L.circle(latlng, radius);
-                map.addLayer(marker);
-                map.addLayer(circle);
-
-                // Ajax to search address by lat and lang
-                var latitude = latlng.lat;
-                var langitude = latlng.lng;
-                $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${langitude}`,
-                    function(data) {
-                        marker.bindPopup(`${data.display_name}`).openPopup();
-                        $('#pic_address').val(data.display_name);
-                        $('#geolocation_bussiness').val(JSON.stringify(latlng));
-                    });
-            }
-        });
-    </script>
+    <script src="{{ URL::to('bin/js/newCustomer/bussiness/mapconfig.js') }}"></script>
     <script src="{{ URL::to('lib/jQuerymask/regex-mask-plugin.js') }}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            for (const el of document.querySelectorAll("[placeholder][data-slots]")) {
-                const pattern = el.getAttribute("placeholder"),
-                    slots = new Set(el.dataset.slots || "_"),
-                    prev = (j => Array.from(pattern, (c, i) => slots.has(c) ? j = i + 1 : j))(0),
-                    first = [...pattern].findIndex(c => slots.has(c)),
-                    accept = new RegExp(el.dataset.accept || "\\d", "g"),
-                    clean = input => {
-                        input = input.match(accept) || [];
-                        return Array.from(pattern, c =>
-                            input[0] === c || slots.has(c) ? input.shift() || c : c
-                        );
-                    },
-                    format = () => {
-                        const [i, j] = [el.selectionStart, el.selectionEnd].map(i => {
-                            i = clean(el.value.slice(0, i)).findIndex(c => slots.has(c));
-                            return i < 0 ? prev[prev.length - 1] : back ? prev[i - 1] || first : i;
-                        });
-                        el.value = clean(el.value).join``;
-                        el.setSelectionRange(i, j);
-                        back = false;
-                    };
-                let back = false;
-                el.addEventListener("keydown", (e) => back = e.key === "Backspace");
-                el.addEventListener("input", format);
-                el.addEventListener("focus", format);
-                el.addEventListener("blur", () => el.value === pattern && (el.value = ""));
-            }
-        });
-    </script>
+    <script src="{{ URL::to('bin/js/newCustomer/bussiness/inputmask.js') }}"></script>
     <!-- Data Layanan ScriptJS -->
     <script>
         $(document).ready(() => {
@@ -821,24 +594,19 @@
             $('#option_package_type').addClass('d-none');
             $('#option_package_categories').addClass('d-none');
             $('#option_package_top').addClass('d-none');
-            $('#option_package_type_price').addClass('d-none');
-            $('#option_custom_bulanan').addClass('d-none');
-            $('#subTotalBayarWidget').addClass('d-none');
-            $('#custom_bulanan').attr('readonly', false);
+            $('#option_custom_bulanan_tahunan').addClass('d-none');
+            $('#custom_bulanan_tahunan').attr('readonly', false);
 
             $('#package_name').on('change', () => {
-                $('#custom_bulanan').attr('readonly', false);
+                $('#custom_bulanan_tahunan').attr('readonly', false);
                 $('#package_type').empty();
                 $('#package_categories').empty();
                 $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
-                $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
-                $('#custom_bulanan').empty();
+                $('#custom_bulanan_tahunan').empty();
 
                 $('#option_package_categories').addClass('d-none');
                 $('#option_package_top').addClass('d-none');
-                $('#option_package_type_price').addClass('d-none');
-                $('#option_custom_bulanan').addClass('d-none');
-                $('#subTotalBayarWidget').addClass('d-none');
+                $('#option_custom_bulanan_tahunan').addClass('d-none');
 
                 var packageName = $('#package_name').val();
 
@@ -867,17 +635,14 @@
             });
 
             $('#package_type').on('change', () => {
-                $('#custom_bulanan').attr('readonly', false);
+                $('#custom_bulanan_tahunan').attr('readonly', false);
                 $('#package_categories').empty();
                 $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
-                $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
-                $('#custom_bulanan').empty();
+                $('#custom_bulanan_tahunan').empty();
 
                 $('#option_package_categories').addClass('d-none');
                 $('#option_package_top').addClass('d-none');
-                $('#option_package_type_price').addClass('d-none');
-                $('#option_custom_bulanan').addClass('d-none');
-                $('#subTotalBayarWidget').addClass('d-none');
+                $('#option_custom_bulanan_tahunan').addClass('d-none');
 
                 var packageName = $('#package_name').val();
                 var packageType = $('#package_type').val();
@@ -922,305 +687,39 @@
             });
 
             $('#package_categories').on('change', () => {
-                $('#custom_bulanan').attr('readonly', false);
+                $('#custom_bulanan_tahunan').attr('readonly', false);
                 $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
-                $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
-                $('#custom_bulanan').empty();
+                $('#custom_bulanan_tahunan').empty();
 
                 $('#option_package_top').addClass('d-none');
-                $('#option_package_type_price').addClass('d-none');
-                $('#option_custom_bulanan').addClass('d-none');
-                $('#subTotalBayarWidget').addClass('d-none');
+                $('#option_custom_bulanan_tahunan').addClass('d-none');
 
                 $('#option_package_top').removeClass('d-none');
                 dataShowDetail['package_categories'] = $('#package_categories').val();
                 dataShowDetail['package_speed'] = isNaN(parseInt($('#package_categories').val())) ?
                     $('#package_categories').val() : '-';
 
-                $('input[type=radio][name=inlineTopPaket]').change(function() {
-                    $('#custom_bulanan').attr('readonly', false);
-                    $('input[type=radio][name=inlineTopPaketType]').prop('checked', false);
-                    $('#custom_bulanan').val('');
 
-                    $('#subTotalBayarWidget').addClass('d-none');
+                $('input[type=radio][name=inlineTopPaket]').change(function() {
+                    $('#custom_bulanan_tahunan').attr('readonly', false);
+                    $('#custom_bulanan_tahunan').val('');
+
                     if (this.value == 'Bulanan') {
                         dataShowDetail['package_top'] = 'Bulanan';
-
-                        if (dataShowDetail['package_speed'] == dataShowDetail[
-                                'package_categories']) {
-                            // Data Paket Basic
-                            packageData.forEach((element) => {
-                                if (element.package_name == dataShowDetail[
-                                        'package_name'] && element.package_type ==
-                                    dataShowDetail['package_type'] && element
-                                    .package_categories == dataShowDetail[
-                                        'package_categories']) {
-                                    hargaPaket = element.package_price;
-                                }
-                            });
-
-                            $('#subTotalBayarWidget').addClass('d-none');
-                            $('#option_package_type_price').addClass('d-none');
-                            $('#option_custom_bulanan').removeClass('d-none');
-                        } else {
-                            $('#option_package_type_price').removeClass('d-none');
-                            $('#option_custom_bulanan').addClass('d-none');
-
-                            $('input:radio[name="inlineTopPaketType"]').change(
-                                function() {
-                                    if ($(this).is(':checked') && $(this).val() == 'Retail' &&
-                                        dataShowDetail['package_top'] == 'Bulanan') {
-                                        $('#custom_bulanan').attr('readonly', false);
-                                        $('#option_custom_bulanan').removeClass('d-none');
-                                        $('#custom_bulanan').val('');
-                                        $('#subTotalBayarWidget').addClass('d-none');
-                                        packageData.forEach((element) => {
-                                            if (element.package_name == dataShowDetail[
-                                                    'package_name'] && element
-                                                .package_type == dataShowDetail[
-                                                    'package_type'] && element
-                                                .package_speed == dataShowDetail[
-                                                    'package_categories']) {
-                                                hargaPaket = element
-                                                    .retail_package_price;
-                                            }
-                                        });
-                                        dataShowDetail['package_option'] = 'Retail';
-                                    } else if ($(this).is(':checked') && $(this).val() ==
-                                        'Pemerintah' &&
-                                        dataShowDetail['package_top'] == 'Bulanan') {
-                                        $('#custom_bulanan').attr('readonly', false);
-                                        $('#option_custom_bulanan').removeClass('d-none');
-                                        $('#custom_bulanan').val('');
-                                        $('#subTotalBayarWidget').addClass('d-none');
-                                        packageData.forEach((element) => {
-                                            if (element.package_name == dataShowDetail[
-                                                    'package_name'] && element
-                                                .package_type == dataShowDetail[
-                                                    'package_type'] && element
-                                                .package_speed == dataShowDetail[
-                                                    'package_categories']) {
-                                                hargaPaket = element
-                                                    .government_package_price;
-                                            }
-                                        });
-                                        dataShowDetail['package_option'] = 'Pemerintah';
-                                    }
-                                });
-                        }
+                        $('#option_custom_bulanan_tahunan').removeClass('d-none');
                     } else if (this.value == 'Tahunan') {
                         dataShowDetail['package_top'] = 'Tahunan';
-                        $('#option_custom_bulanan').addClass('d-none');
-
-                        if (dataShowDetail['package_speed'] == dataShowDetail[
-                                'package_categories']) {
-                            // Data Paket Basic
-                            packageData.forEach((element) => {
-                                if (element.package_name == dataShowDetail[
-                                        'package_name'] && element.package_type ==
-                                    dataShowDetail['package_type'] && element
-                                    .package_categories == dataShowDetail[
-                                        'package_categories']) {
-                                    hargaPaket = element.package_price * 12;
-                                }
-                            });
-
-                            $('#option_package_type_price').addClass('d-none');
-                            $('#option_custom_bulanan').addClass('d-none');
-                            $('#subTotalBayarWidget').removeClass('d-none');
-                            $('#subTotalBayarWidget').removeClass('d-none');
-                            $('#package_name_show_details').html("Paket " + dataShowDetail[
-                                    'package_name'] + ' ' +
-                                (isEmpty(dataShowDetail['package_categories']) ? '(' +
-                                    dataShowDetail[
-                                        'package_speed'] + ' Mbps) ' + dataShowDetail[
-                                        'package_type'] :
-                                    dataShowDetail['package_categories'] + ' (' +
-                                    dataShowDetail[
-                                        'package_type'] + ')'));
-                            $('#package_top_show_details').html('Tahunan');
-
-                            // Perhitungan Sub Total
-                            const hargaSetelahPPN = parseInt(hargaPaket);
-                            $('#package_price_show_detail').html(formatter.format(
-                                hargaSetelahPPN));
-                            dataShowDetail['fix_price'] = hargaSetelahPPN;
-                            dataShowDetail['counted'] = 12;
-
-                            // Send Data to Database
-                            var arrResultData = {};
-                            packageData.forEach((item) => {
-                                if (dataShowDetail['package_speed'] == dataShowDetail[
-                                        'package_categories']) {
-                                    if (item.package_name === dataShowDetail[
-                                            'package_name'] &&
-                                        item.package_type === dataShowDetail[
-                                            'package_type'] &&
-                                        item.package_categories === dataShowDetail[
-                                            'package_categories']
-                                    ) {
-                                        arrResultData = item;
-                                    }
-                                } else {
-                                    if (item.package_name === dataShowDetail[
-                                            'package_name'] &&
-                                        item.package_type === dataShowDetail[
-                                            'package_type'] &&
-                                        item.package_speed === dataShowDetail[
-                                            'package_categories']
-                                    ) {
-                                        arrResultData = item;
-                                    }
-                                }
-                            });
-
-                            var ResultJSON = {
-                                'package_name': dataShowDetail['package_name'],
-                                'package_type': dataShowDetail['package_type'],
-                                'package_categories': isNaN(parseInt(dataShowDetail[
-                                        'package_categories'])) ?
-                                    dataShowDetail['package_categories'] : '-',
-                                'package_speed': arrResultData['package_speed'],
-                                'package_top': dataShowDetail['package_top'],
-                                'package_price': dataShowDetail['fix_price'],
-                                'optional_package': isEmpty(dataShowDetail['package_option']) ?
-                                    null : dataShowDetail['package_option'],
-                                'counted': dataShowDetail['counted']
-                            };
-
-                            $('#RequestHandler').val(JSON.stringify(ResultJSON));
-                        } else {
-                            $('#option_package_type_price').removeClass('d-none');
-
-                            $('input:radio[name="inlineTopPaketType"]').change(
-                                function() {
-                                    if ($(this).is(':checked') && $(this).val() == 'Retail' &&
-                                        dataShowDetail['package_top'] == 'Tahunan') {
-                                        $('#custom_bulanan').attr('readonly', false);
-                                        $('#option_custom_bulanan').addClass('d-none');
-                                        $('#custom_bulanan').val('');
-                                        $('#subTotalBayarWidget').addClass('d-none');
-                                        packageData.forEach((element) => {
-                                            if (element.package_name == dataShowDetail[
-                                                    'package_name'] && element
-                                                .package_type == dataShowDetail[
-                                                    'package_type'] && element
-                                                .package_speed == dataShowDetail[
-                                                    'package_categories']) {
-                                                hargaPaket = element
-                                                    .retail_package_price * 12;
-                                                dataShowDetail['fix_price'] =
-                                                    hargaPaket;
-                                            }
-                                        });
-                                        dataShowDetail['package_option'] = 'Retail';
-                                    } else if ($(this).is(':checked') && $(this).val() ==
-                                        'Pemerintah' &&
-                                        dataShowDetail['package_top'] == 'Tahunan') {
-                                        $('#custom_bulanan').attr('readonly', false);
-                                        $('#option_custom_bulanan').addClass('d-none');
-                                        $('#custom_bulanan').val('');
-                                        $('#subTotalBayarWidget').addClass('d-none');
-                                        packageData.forEach((element) => {
-                                            if (element.package_name == dataShowDetail[
-                                                    'package_name'] && element
-                                                .package_type == dataShowDetail[
-                                                    'package_type'] && element
-                                                .package_speed == dataShowDetail[
-                                                    'package_categories']) {
-                                                hargaPaket = element
-                                                    .government_package_price * 12;
-                                                dataShowDetail['fix_price'] =
-                                                    hargaPaket;
-                                            }
-                                        });
-                                        dataShowDetail['package_option'] = 'Pemerintah';
-                                    }
-
-                                    $('#subTotalBayarWidget').removeClass('d-none');
-                                    $('#package_name_show_details').html("Paket " +
-                                        dataShowDetail['package_name'] + ' ' +
-                                        (isEmpty(dataShowDetail['package_categories']) ?
-                                            '(' + dataShowDetail[
-                                                'package_speed'] + ' Mbps) ' +
-                                            dataShowDetail['package_type'] :
-                                            dataShowDetail['package_categories'] + ' (' +
-                                            dataShowDetail[
-                                                'package_type'] + ')'));
-                                    $('#package_top_show_details').html('Tahunan');
-
-                                    // Perhitungan Sub Total
-                                    const hargaSetelahPPN = parseInt(hargaPaket);
-                                    $('#package_price_show_detail').html(formatter.format(
-                                        hargaSetelahPPN));
-                                    dataShowDetail['fix_price'] = hargaSetelahPPN;
-                                    dataShowDetail['counted'] = 12;
-
-                                    // Send Data to Database
-                                    var arrResultData = {};
-                                    packageData.forEach((item) => {
-                                        if (dataShowDetail['package_speed'] ==
-                                            dataShowDetail[
-                                                'package_categories']) {
-                                            if (item.package_name === dataShowDetail[
-                                                    'package_name'] &&
-                                                item.package_type === dataShowDetail[
-                                                    'package_type'] &&
-                                                item.package_categories ===
-                                                dataShowDetail['package_categories']) {
-                                                arrResultData = item;
-                                            }
-                                        } else {
-                                            if (item.package_name === dataShowDetail[
-                                                    'package_name'] &&
-                                                item.package_type === dataShowDetail[
-                                                    'package_type'] &&
-                                                item.package_speed === dataShowDetail[
-                                                    'package_categories']) {
-                                                arrResultData = item;
-                                            }
-                                        }
-                                    });
-
-                                    var ResultJSON = {
-                                        'package_name': dataShowDetail['package_name'],
-                                        'package_type': dataShowDetail['package_type'],
-                                        'package_categories': isNaN(parseInt(dataShowDetail[
-                                                'package_categories'])) ?
-                                            dataShowDetail['package_categories'] : '-',
-                                        'package_speed': arrResultData['package_speed'],
-                                        'package_top': dataShowDetail['package_top'],
-                                        'package_price': dataShowDetail['fix_price'],
-                                        'optional_package': isEmpty(dataShowDetail[
-                                            'package_option']) ? null : dataShowDetail[
-                                            'package_option'],
-                                        'counted': dataShowDetail['counted']
-                                    };
-
-                                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
-                                });
-                        }
+                        $('#option_custom_bulanan_tahunan').addClass('d-none');
+                        $('#option_custom_bulanan_tahunan').removeClass('d-none');
                     }
                 });
             });
 
-            $('#custom_bulanan').on('input', function() {
-                if ($('#custom_bulanan').val() < 12 && $('#custom_bulanan').val() != "") {
-                    const hargaCustomBulanan = $('#custom_bulanan').val();
+            $('#custom_bulanan_tahunan').on('input', function() {
+                const hargaCustomBulanan = $('#custom_bulanan_tahunan').val();
 
-                    $('#subTotalBayarWidget').removeClass('d-none');
-                    $('#package_name_show_details').html("Paket " + dataShowDetail['package_name'] + ' ' +
-                        (isEmpty(dataShowDetail['package_categories']) ? '(' + dataShowDetail[
-                                'package_speed'] + ' Mbps) ' + dataShowDetail['package_type'] :
-                            dataShowDetail['package_categories'] + ' (' + dataShowDetail[
-                                'package_type'] + ')'));
-                    $('#package_top_show_details').html(hargaCustomBulanan + ' Bulan');
+                if (dataShowDetail['package_top'] == "Bulanan") {
                     dataShowDetail['counted'] = hargaCustomBulanan;
-
-                    // Perhitungan Sub Total
-                    const hargaSebelumPPN = parseInt(hargaPaket) * hargaCustomBulanan;
-                    $('#package_price_show_detail').html(formatter.format(hargaSebelumPPN));
-                    dataShowDetail['fix_price'] = hargaSebelumPPN;
 
                     // Send Data to Database
                     var arrResultData = {};
@@ -1250,62 +749,58 @@
                         'package_top': dataShowDetail['package_top'],
                         'package_price': dataShowDetail['fix_price'],
                         'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
-                            dataShowDetail[
-                                'package_option'],
+                            dataShowDetail['package_option'],
                         'counted': dataShowDetail['counted']
                     };
 
                     $('#RequestHandler').val(JSON.stringify(ResultJSON));
-                } else if ($('#custom_bulanan').val() >= 12) {
-                    $('#subTotalBayarWidget').addClass('d-none');
+                } else if (dataShowDetail['package_top'] == "Tahunan") {
+                    dataShowDetail['counted'] = hargaCustomBulanan;
+
+                    // Send Data to Database
+                    var arrResultData = {};
+                    packageData.forEach((item) => {
+                        if (dataShowDetail['package_speed'] == dataShowDetail[
+                                'package_categories']) {
+                            if (item.package_name === dataShowDetail['package_name'] &&
+                                item.package_type === dataShowDetail['package_type'] &&
+                                item.package_categories === dataShowDetail['package_categories']) {
+                                arrResultData = item;
+                            }
+                        } else {
+                            if (item.package_name === dataShowDetail['package_name'] &&
+                                item.package_type === dataShowDetail['package_type'] &&
+                                item.package_speed === dataShowDetail['package_categories']) {
+                                arrResultData = item;
+                            }
+                        }
+                    });
+
+                    var ResultJSON = {
+                        'package_name': dataShowDetail['package_name'],
+                        'package_type': dataShowDetail['package_type'],
+                        'package_categories': isNaN(parseInt(dataShowDetail['package_categories'])) ?
+                            dataShowDetail['package_categories'] : '-',
+                        'package_speed': arrResultData['package_speed'],
+                        'package_top': dataShowDetail['package_top'],
+                        'package_price': dataShowDetail['fix_price'],
+                        'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
+                            dataShowDetail['package_option'],
+                        'counted': dataShowDetail['counted']
+                    };
+
+                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
                 }
             });
         });
-
-        function dateTimeConverter(datetime) {
-            var dateParts = new Date(Date.parse(datetime.replace(/-/g, '/'))).getTime();
-            return dateParts;
-        }
-
-        function isEmpty(value) {
-            if (value == null || value == undefined) {
-                return true;
-            } else if (value == 0) {
-                return true;
-            } else if (value == '-') {
-                return true;
+    </script>
+    <script src="{{ URL::to('bin/js/newCustomer/bussiness/dateconverter.js') }}"></script>
+    <script type="text/javascript">
+        var msgstat = "<?php echo "$errorMessage"; ?>";
+        $(document).ready(() => {
+            if (msgstat) {
+                alert(msgstat);
             }
-            return false;
-        }
-
-        var dates = {
-            convert: function(d) {
-                return (
-                    d.constructor === Date ? d :
-                    d.constructor === Array ? new Date(d[0], d[1], d[2]) :
-                    d.constructor === Number ? new Date(d) :
-                    d.constructor === String ? new Date(d) :
-                    typeof d === "object" ? new Date(d.year, d.month, d.date) :
-                    NaN
-                );
-            },
-            compare: function(a, b) {
-                return (
-                    isFinite(a = this.convert(a).valueOf()) &&
-                    isFinite(b = this.convert(b).valueOf()) ?
-                    (a > b) - (a < b) :
-                    NaN
-                );
-            },
-            inRange: function(d, start, end) {
-                return (
-                    isFinite(d = this.convert(d).valueOf()) &&
-                    isFinite(start = this.convert(start).valueOf()) &&
-                    isFinite(end = this.convert(end).valueOf()) ?
-                    start <= d && d <= end :
-                    NaN
-                );
-            }
-        }
+        });
     </script>
 @endsection

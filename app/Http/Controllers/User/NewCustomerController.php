@@ -83,6 +83,7 @@ class NewCustomerController extends Controller
                     'class' => 'Personal',
                     'email' => $requestAPI->get('email_address_personal'),
                     'phone_number' => "0" . $requestAPI->get('phone_number_personal'),
+                    'identity_type' => $requestAPI->get('option_id_number_personal'),
                     'identity_number' => $requestAPI->get('id_number_personal'),
                     'npwp_number' => $requestAPI->get('additionalnpwpnumberpersonal'),
                     'npwp_files' => $urlSavedNPWP,
@@ -127,6 +128,7 @@ class NewCustomerController extends Controller
                     $package_price = "";
                     $package_top = $fetchDataLayanan->counted . ' Tahun';
                 }
+
                 $savedDataService = [
                     'id' => $uuid,
                     'service_package' => json_encode([
@@ -294,6 +296,7 @@ class NewCustomerController extends Controller
                     'class' => 'Bussiness',
                     'email' => $requestAPI->get('pic_email_address'),
                     'phone_number' => "0" . $requestAPI->get('pic_phone_number'),
+                    'identity_type' => $requestAPI->get('option_pic_identity_number'),
                     'identity_number' => $requestAPI->get('pic_identity_number'),
                     'company_name' => $requestAPI->get('company_name'),
                     'company_address' => $requestAPI->get('company_address'),
@@ -337,15 +340,16 @@ class NewCustomerController extends Controller
                 $urlSaved1 = url('/bin/img/Bussiness/Identity/' . $fileIdentityPhoto->getClientOriginalName());
 
                 $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
-                if ($fetchDataLayanan->optional_package === null) {
+                if ($fetchDataLayanan->package_top == "Bulanan") {
                     $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                    $package_price = $fetchDataLayanan->package_price;
+                    $package_price = "";
                     $package_top = $fetchDataLayanan->counted . ' Bulan';
                 } else {
                     $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                    $package_price = $fetchDataLayanan->package_price;
-                    $package_top = $fetchDataLayanan->counted . ' Bulan';
+                    $package_price = "";
+                    $package_top = $fetchDataLayanan->counted . ' Tahun';
                 }
+
                 $savedDataService = [
                     'id' => $uuid,
                     'service_package' => json_encode([
@@ -392,7 +396,14 @@ class NewCustomerController extends Controller
 
                     foreach (User::all() as $key => $value) {
                         if ($value->utype === 'AuthMaster') {
-                            Mail::send('email.sales', $dataEm, function ($message) use ($dataEm, $value) {
+                            $dataEm = [
+                                'CustNamePIC' => $request->get('pic_name'),
+                                'CustEmailPIC' => $request->get('pic_email_address'),
+                                'SalesNamePIC' => $value->name,
+                                'SalesEmailPIC' => $value->email,
+                            ];
+
+                            Mail::send('email.sales', $dataEm, function ($message) use ($value) {
                                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                                 $message->to($value->email)->subject('Registrasi Berhasil!');
                             });

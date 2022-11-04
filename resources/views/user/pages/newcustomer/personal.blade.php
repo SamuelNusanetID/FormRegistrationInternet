@@ -531,7 +531,6 @@
             $('#option_package_categories').addClass('d-none');
             $('#option_package_top').addClass('d-none');
             $('#option_custom_bulanan_tahunan').addClass('d-none');
-            $('#subTotalBayarWidget').addClass('d-none');
             $('#custom_bulanan_tahunan').attr('readonly', false);
 
             $('#package_name').on('change', () => {
@@ -544,7 +543,6 @@
                 $('#option_package_categories').addClass('d-none');
                 $('#option_package_top').addClass('d-none');
                 $('#option_custom_bulanan_tahunan').addClass('d-none');
-                $('#subTotalBayarWidget').addClass('d-none');
 
                 var packageName = $('#package_name').val();
 
@@ -581,7 +579,6 @@
                 $('#option_package_categories').addClass('d-none');
                 $('#option_package_top').addClass('d-none');
                 $('#option_custom_bulanan_tahunan').addClass('d-none');
-                $('#subTotalBayarWidget').addClass('d-none');
 
                 var packageName = $('#package_name').val();
                 var packageType = $('#package_type').val();
@@ -632,7 +629,6 @@
 
                 $('#option_package_top').addClass('d-none');
                 $('#option_custom_bulanan_tahunan').addClass('d-none');
-                $('#subTotalBayarWidget').addClass('d-none');
 
                 $('#option_package_top').removeClass('d-none');
                 dataShowDetail['package_categories'] = $('#package_categories').val();
@@ -644,36 +640,12 @@
                     $('#custom_bulanan_tahunan').attr('readonly', false);
                     $('#custom_bulanan_tahunan').val('');
 
-                    $('#subTotalBayarWidget').addClass('d-none');
                     if (this.value == 'Bulanan') {
                         dataShowDetail['package_top'] = 'Bulanan';
-
-                        packageData.forEach((element) => {
-                            if (element.package_name == dataShowDetail[
-                                    'package_name'] && element.package_type ==
-                                dataShowDetail['package_type'] && element
-                                .package_categories == dataShowDetail[
-                                    'package_categories']) {
-                                hargaPaket = element.package_price;
-                            }
-                        });
-
                         $('#option_custom_bulanan_tahunan').removeClass('d-none');
                     } else if (this.value == 'Tahunan') {
                         dataShowDetail['package_top'] = 'Tahunan';
                         $('#option_custom_bulanan_tahunan').addClass('d-none');
-
-                        // Data Paket Basic
-                        packageData.forEach((element) => {
-                            if (element.package_name == dataShowDetail[
-                                    'package_name'] && element.package_type ==
-                                dataShowDetail['package_type'] && element
-                                .package_categories == dataShowDetail[
-                                    'package_categories']) {
-                                hargaPaket = element.package_price * 12;
-                            }
-                        });
-
                         $('#option_custom_bulanan_tahunan').removeClass('d-none');
                     }
                 });

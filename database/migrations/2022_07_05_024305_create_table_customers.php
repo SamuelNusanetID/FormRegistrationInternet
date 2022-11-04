@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('geolocation');
             $table->enum('class', ['Personal', 'Bussiness']);
             $table->string('email');
+            $table->string('identity_type')->nullable();
             $table->string('identity_number');
             $table->string('npwp_number')->nullable();
             $table->string('npwp_files')->nullable();

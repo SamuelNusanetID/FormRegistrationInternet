@@ -165,14 +165,14 @@ class OldCustomerController extends Controller
             }
 
             $fetchDataLayanan = json_decode($request->get('RequestHandler'));
-            if ($fetchDataLayanan->optional_package === null) {
+            if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
+                $package_price = "";
                 $package_top = $fetchDataLayanan->counted . ' Bulan';
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_price = "";
+                $package_top = $fetchDataLayanan->counted . ' Tahun';
             }
 
             $newDataService = [
@@ -196,12 +196,21 @@ class OldCustomerController extends Controller
                     $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                 });
 
-                foreach (User::all() as $key => $value) {
-                    if ($value->utype === 'AuthMaster') {
-                        Mail::send('email.sales', $dataEm, function ($message) use ($dataEm, $value) {
-                            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                            $message->to($value->email)->subject('Registrasi Berhasil!');
-                        });
+                if (User::count() > 0) {
+                    foreach (User::all() as $key => $value) {
+                        if ($value->utype == 'AuthMaster') {
+                            $dataEm = [
+                                'SalesNamePIC' => $value->name,
+                                'SalesEmailPIC' => $value->email,
+                                'CustNamePIC' => $request->get('fullname_personal'),
+                                'CustEmailPIC' => $request->get('email_address_personal')
+                            ];
+
+                            Mail::send('email.sales', $dataEm, function ($message) use ($value) {
+                                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                                $message->to($value->email)->subject('Registrasi Berhasil!');
+                            });
+                        }
                     }
                 }
             } catch (\Throwable $th) {
@@ -286,14 +295,14 @@ class OldCustomerController extends Controller
             $newTechnical->save();
 
             $fetchDataLayanan = json_decode($request->get('RequestHandler'));
-            if ($fetchDataLayanan->optional_package === null) {
+            if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
+                $package_price = "";
                 $package_top = $fetchDataLayanan->counted . ' Bulan';
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_price = "";
+                $package_top = $fetchDataLayanan->counted . ' Tahun';
             }
 
             $newService = new Service();
@@ -324,12 +333,21 @@ class OldCustomerController extends Controller
                     $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                 });
 
-                foreach (User::all() as $key => $value) {
-                    if ($value->utype === 'AuthMaster') {
-                        Mail::send('email.sales', $dataEm, function ($message) use ($dataEm, $value) {
-                            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                            $message->to($value->email)->subject('Registrasi Berhasil!');
-                        });
+                if (User::count() > 0) {
+                    foreach (User::all() as $key => $value) {
+                        if ($value->utype == 'AuthMaster') {
+                            $dataEm = [
+                                'SalesNamePIC' => $value->name,
+                                'SalesEmailPIC' => $value->email,
+                                'CustNamePIC' => $request->get('fullname_personal'),
+                                'CustEmailPIC' => $request->get('email_address_personal')
+                            ];
+
+                            Mail::send('email.sales', $dataEm, function ($message) use ($value) {
+                                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                                $message->to($value->email)->subject('Registrasi Berhasil!');
+                            });
+                        }
                     }
                 }
             } catch (\Throwable $th) {
