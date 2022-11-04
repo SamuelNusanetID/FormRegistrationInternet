@@ -85,14 +85,6 @@ $(document).ready(function () {
             company_address: {
                 required: true
             },
-            company_npwp: {
-                required: true
-            },
-            company_npwp_upload: {
-                required: true,
-                accept: 'jpg,jpeg,png',
-                filesize: 3
-            },
             company_phone_number: {
                 required: true,
                 minlength: 10,
@@ -173,9 +165,6 @@ $(document).ready(function () {
             company_address: {
                 required: 'Kolom Alamat Lengkap Perusahaan Wajib Diisi'
             },
-            company_npwp: {
-                required: 'Kolom NPWP Perusahaan Wajib Diisi'
-            },
             company_phone_number: {
                 required: 'Kolom Nomor Telepon Perusahaan Wajib Diisi',
                 minlength: 'Nomor Telepon Perusahaan harus mengandung min. 10 karakter',
@@ -188,10 +177,6 @@ $(document).ready(function () {
             service_selfie_photo: {
                 required: 'Kolom Upload Foto Selfie dan KTP Wajib Diisi',
                 accept: 'Foto Selfie dan KTP harus berformat jpeg, jpg, atau png'
-            },
-            company_npwp_upload: {
-                required: 'Kolom Upload NPWP Wajib Diisi',
-                accept: 'file NPWP harus berformat jpeg, jpg, atau png'
             },
             billing_name: {
                 required: 'Kolom Nama Lengkap Pembayaran Wajib Diisi'

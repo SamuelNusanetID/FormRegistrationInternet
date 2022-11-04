@@ -233,7 +233,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="company_npwp" class="form-label">No. NPWP Perusahaan
-                                                <span class="text-danger">*</span></label>
+                                            </label>
                                             <input type="text"
                                                 class="form-control @error('company_npwp') is-invalid @enderror"
                                                 name="company_npwp" placeholder="__.___.___._-___.___" data-slots="_"
@@ -246,7 +246,6 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="company_npwp_upload" class="form-label">Upload NPWP Perusahaan
-                                                <span class="text-danger">*</span>
                                             </label>
                                             <input class="form-control @error('company_npwp_upload') is-invalid @enderror"
                                                 type="file" id="company_npwp_upload" name="company_npwp_upload">
