@@ -118,14 +118,14 @@ class NewCustomerController extends Controller
                 $urlSaved1 = url('/bin/img/Personal/Identity/' . $fileIdentityPhoto->getClientOriginalName());
 
                 $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
-                if ($fetchDataLayanan->optional_package === null) {
+                if ($fetchDataLayanan->package_top == "Bulanan") {
                     $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                    $package_price = $fetchDataLayanan->package_price;
+                    $package_price = "";
                     $package_top = $fetchDataLayanan->counted . ' Bulan';
                 } else {
                     $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                    $package_price = $fetchDataLayanan->package_price;
-                    $package_top = $fetchDataLayanan->counted . ' Bulan';
+                    $package_price = "";
+                    $package_top = $fetchDataLayanan->counted . ' Tahun';
                 }
                 $savedDataService = [
                     'id' => $uuid,
@@ -171,16 +171,27 @@ class NewCustomerController extends Controller
                         $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                     });
 
-                    foreach (User::all() as $key => $value) {
-                        if ($value->utype === 'AuthMaster') {
-                            Mail::send('email.sales', $dataEm, function ($message) use ($dataEm, $value) {
-                                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                                $message->to($value->email)->subject('Registrasi Berhasil!');
-                            });
+                    if (User::count() > 0) {
+                        foreach (User::all() as $key => $value) {
+                            if ($value->utype == 'AuthMaster') {
+                                $dataEm = [
+                                    'SalesNamePIC' => $value->name,
+                                    'SalesEmailPIC' => $value->email,
+                                    'CustNamePIC' => $request->get('fullname_personal'),
+                                    'CustEmailPIC' => $request->get('email_address_personal')
+                                ];
+
+                                Mail::send('email.sales', $dataEm, function ($message) use ($value) {
+                                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                                    $message->to($value->email)->subject('Registrasi Berhasil!');
+                                });
+                            }
                         }
                     }
+
+                    return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
                 } catch (\Throwable $th) {
-                    return redirect()->to('new-member')->with('errorMessage', $th->getMessage());
+                    return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
                 }
             } else {
                 try {
@@ -205,12 +216,12 @@ class NewCustomerController extends Controller
                         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                         $message->to($dataEm['SalesEmailPIC'])->subject('Registrasi Berhasil!');
                     });
+
+                    return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
                 } catch (\Throwable $th) {
-                    return redirect()->to('new-member')->with('errorMessage', $th->getMessage());
+                    return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
                 }
             }
-
-            return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
         } else {
             return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))
                 ->withInput($request->input())
