@@ -62,104 +62,106 @@ class NewCustomerController extends Controller
 
     public function storePersonal(Request $request)
     {
-        $isSuccess = DB::transaction(function () {
-            try {
-                $requestAPI = Request();
+        $isSuccess = false;
+        $message = "";
 
-                $uuid = $requestAPI->get('uuid');
-                $idPelanggan = 'NUSA' . date('YmdHis');
+        DB::beginTransaction();
+        try {
+            $uuid = $request->get('uuid');
+            $idPelanggan = 'NUSA' . date('YmdHis');
 
-                $fileIdentityNPWP = $requestAPI->file('additionalnpwpphotopersonal');
-                $tujuan_uploadNPWP = public_path() . '/bin/img/Personal/NPWP';
-                $fileIdentityNPWP->move($tujuan_uploadNPWP, $fileIdentityNPWP->getClientOriginalName());
-                $urlSavedNPWP = url('/bin/img/Personal/NPWP/' . $fileIdentityNPWP->getClientOriginalName());
+            $fileIdentityNPWP = $request->file('additionalnpwpphotopersonal');
+            $tujuan_uploadNPWP = public_path() . '/bin/img/Personal/NPWP';
+            $fileIdentityNPWP->move($tujuan_uploadNPWP, $fileIdentityNPWP->getClientOriginalName());
+            $urlSavedNPWP = url('/bin/img/Personal/NPWP/' . $fileIdentityNPWP->getClientOriginalName());
 
-                $savedDataCustomer = [
-                    'id' => $uuid,
-                    'customer_id' => $idPelanggan,
-                    'name' => $requestAPI->get('fullname_personal'),
-                    'address' => json_encode([$requestAPI->get('address_personal')]),
-                    'geolocation' => $requestAPI->get('geolocation_personal'),
-                    'class' => 'Personal',
-                    'email' => $requestAPI->get('email_address_personal'),
-                    'phone_number' => "0" . $requestAPI->get('phone_number_personal'),
-                    'identity_type' => $requestAPI->get('option_id_number_personal'),
-                    'identity_number' => $requestAPI->get('id_number_personal'),
-                    'npwp_number' => $requestAPI->get('additionalnpwpnumberpersonal'),
-                    'npwp_files' => $urlSavedNPWP,
-                    'reference_id' => $requestAPI->get('salesID') != null ? $requestAPI->get('salesID') : null,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('customers')->insert($savedDataCustomer);
+            $savedDataCustomer = [
+                'id' => $uuid,
+                'customer_id' => $idPelanggan,
+                'name' => $request->get('fullname_personal'),
+                'address' => json_encode([$request->get('address_personal')]),
+                'geolocation' => $request->get('geolocation_personal'),
+                'class' => 'Personal',
+                'email' => $request->get('email_address_personal'),
+                'phone_number' => "0" . $request->get('phone_number_personal'),
+                'identity_type' => $request->get('option_id_number_personal'),
+                'identity_number' => $request->get('id_number_personal'),
+                'npwp_number' => $request->get('additionalnpwpnumberpersonal'),
+                'npwp_files' => $urlSavedNPWP,
+                'reference_id' => $request->get('salesID') != null ? $request->get('salesID') : null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('customers')->insert($savedDataCustomer);
 
-                $savedDataBilling = [
-                    'id' => $uuid,
-                    'billing_name' => $requestAPI->get('fullname_biller'),
-                    'billing_contact' => "0" . $requestAPI->get('phone_number_biller'),
-                    'billing_email' => json_encode([$requestAPI->get('email_address_biller_primary'), $requestAPI->get('email_address_biller_one'), $requestAPI->get('email_address_biller_two')]),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('billings')->insert($savedDataBilling);
+            $savedDataBilling = [
+                'id' => $uuid,
+                'billing_name' => $request->get('fullname_biller'),
+                'billing_contact' => "0" . $request->get('phone_number_biller'),
+                'billing_email' => json_encode([$request->get('email_address_biller_primary'), $request->get('email_address_biller_one'), $request->get('email_address_biller_two')]),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('billings')->insert($savedDataBilling);
 
-                $savedDataTechnical = [
-                    'id' => $uuid,
-                    'technical_name' => $requestAPI->get('fullname_technical'),
-                    'technical_contact' => "0" . $requestAPI->get('phone_number_technical'),
-                    'technical_email' => $requestAPI->get('email_address_technical'),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('technicals')->insert($savedDataTechnical);
+            $savedDataTechnical = [
+                'id' => $uuid,
+                'technical_name' => $request->get('fullname_technical'),
+                'technical_contact' => "0" . $request->get('phone_number_technical'),
+                'technical_email' => $request->get('email_address_technical'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('technicals')->insert($savedDataTechnical);
 
-                $fileIdentityPhoto = $requestAPI->file('service_identity_photo');
-                $tujuan_upload1 = public_path() . '/bin/img/Personal/Identity';
-                $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
-                $urlSaved1 = url('/bin/img/Personal/Identity/' . $fileIdentityPhoto->getClientOriginalName());
+            $fileIdentityPhoto = $request->file('service_identity_photo');
+            $tujuan_upload1 = public_path() . '/bin/img/Personal/Identity';
+            $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
+            $urlSaved1 = url('/bin/img/Personal/Identity/' . $fileIdentityPhoto->getClientOriginalName());
 
-                $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
-                if ($fetchDataLayanan->package_top == "Bulanan") {
-                    $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                    $package_price = "";
-                    $package_top = $fetchDataLayanan->counted . ' Bulan';
-                } else {
-                    $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                    $package_price = "";
-                    $package_top = $fetchDataLayanan->counted . ' Tahun';
-                }
-
-                $savedDataService = [
-                    'id' => $uuid,
-                    'service_package' => json_encode([
-                        [
-                            'service_name' => $package_name,
-                            'service_price' => $package_price,
-                            'termofpaymentDeals' => $package_top
-                        ],
-                    ]),
-                    'id_photo_url' => $urlSaved1,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('services')->insert($savedDataService);
-
-                $savedDataApproval = [
-                    'id' => $uuid,
-                    'isApproved' => false,
-                    'isRejected' => false,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('approvals')->insert($savedDataApproval);
-
-                return true;
-            } catch (\Throwable $th) {
-                DB::rollBack();
-                $request = Request();
-                return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
+            $fetchDataLayanan = json_decode($request->get('RequestHandler'));
+            if ($fetchDataLayanan->package_top == "Bulanan") {
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
+                $package_price = "";
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
+            } else {
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
+                $package_price = "";
+                $package_top = $fetchDataLayanan->counted . ' Tahun';
             }
-        });
+
+            $savedDataService = [
+                'id' => $uuid,
+                'service_package' => json_encode([
+                    [
+                        'service_name' => $package_name,
+                        'service_price' => $package_price,
+                        'termofpaymentDeals' => $package_top
+                    ],
+                ]),
+                'id_photo_url' => $urlSaved1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('services')->insert($savedDataService);
+
+            $savedDataApproval = [
+                'id' => $uuid,
+                'isApproved' => false,
+                'isRejected' => false,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('approvals')->insert($savedDataApproval);
+
+            DB::commit();
+
+            $isSuccess = true;
+        } catch (\Throwable $th) {
+            $isSuccess = false;
+            $message = $th->getMessage();
+            DB::rollBack();
+        }
 
         if ($isSuccess) {
             if ($request->get('salesID') == null) {
@@ -225,6 +227,8 @@ class NewCustomerController extends Controller
                     return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
                 }
             }
+        } else {
+            return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $message);
         }
     }
 
@@ -267,117 +271,118 @@ class NewCustomerController extends Controller
 
     public function storeBussiness(Request $request)
     {
-        $isSuccess = DB::transaction(function () {
-            try {
-                $requestAPI = Request();
+        $isSuccess = false;
+        $message = "";
 
-                $uuid = $requestAPI->get('uuid');
-                $idPelanggan = 'NUSA' . date('YmdHis');
+        DB::beginTransaction();
+        try {
+            $uuid = $request->get('uuid');
+            $idPelanggan = 'NUSA' . date('YmdHis');
 
-                $fileIdentityNPWP = $requestAPI->file('company_npwp_upload');
-                $tujuan_uploadNPWP = public_path() . '/bin/img/Bussiness/NPWP';
-                $fileIdentityNPWP->move($tujuan_uploadNPWP, $fileIdentityNPWP->getClientOriginalName());
-                $urlSavedNPWP = url('/bin/img/Bussiness/NPWP/' . $fileIdentityNPWP->getClientOriginalName());
+            $fileIdentityNPWP = $request->file('company_npwp_upload');
+            $tujuan_uploadNPWP = public_path() . '/bin/img/Bussiness/NPWP';
+            $fileIdentityNPWP->move($tujuan_uploadNPWP, $fileIdentityNPWP->getClientOriginalName());
+            $urlSavedNPWP = url('/bin/img/Bussiness/NPWP/' . $fileIdentityNPWP->getClientOriginalName());
 
-                $fileIdentitySPPKP = $requestAPI->file('company_sppkp_upload');
-                $tujuan_uploadSPPKP = public_path() . '/bin/img/Bussiness/SPPKP';
-                $fileIdentitySPPKP->move($tujuan_uploadSPPKP, $fileIdentitySPPKP->getClientOriginalName());
-                $urlSavedSPPKP = url('/bin/img/Bussiness/SPPKP/' . $fileIdentitySPPKP->getClientOriginalName());
+            $fileIdentitySPPKP = $request->file('company_sppkp_upload');
+            $tujuan_uploadSPPKP = public_path() . '/bin/img/Bussiness/SPPKP';
+            $fileIdentitySPPKP->move($tujuan_uploadSPPKP, $fileIdentitySPPKP->getClientOriginalName());
+            $urlSavedSPPKP = url('/bin/img/Bussiness/SPPKP/' . $fileIdentitySPPKP->getClientOriginalName());
 
-                $savedDataCustomer = [
-                    'id' => $uuid,
-                    'customer_id' => $idPelanggan,
-                    'name' => $requestAPI->get('pic_name'),
-                    'address' => json_encode([$requestAPI->get('pic_address')]),
-                    'geolocation' => $requestAPI->get('geolocation_bussiness'),
-                    'class' => 'Bussiness',
-                    'email' => $requestAPI->get('pic_email_address'),
-                    'phone_number' => "0" . $requestAPI->get('pic_phone_number'),
-                    'identity_type' => $requestAPI->get('option_pic_identity_number'),
-                    'identity_number' => $requestAPI->get('pic_identity_number'),
-                    'company_name' => $requestAPI->get('company_name'),
-                    'company_address' => $requestAPI->get('company_address'),
-                    'company_npwp' => $requestAPI->get('company_npwp'),
-                    'company_npwp_files' => $urlSavedNPWP,
-                    'company_sppkp' => $requestAPI->get('company_sppkp'),
-                    'company_sppkp_files' => $urlSavedSPPKP,
-                    'company_phone_number' => $requestAPI->get('company_phone_number'),
-                    'company_employees' => $requestAPI->get('company_employees') != null ? $requestAPI->get('company_employees') : null,
-                    'reference_id' => $requestAPI->get('salesID') != null ? $requestAPI->get('salesID') : null,
-                    'survey_id' => $requestAPI->get('survey_id'),
-                    'extend_note' => $requestAPI->get('addonsnote'),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('customers')->insert($savedDataCustomer);
+            $savedDataCustomer = [
+                'id' => $uuid,
+                'customer_id' => $idPelanggan,
+                'name' => $request->get('pic_name'),
+                'address' => json_encode([$request->get('pic_address')]),
+                'geolocation' => $request->get('geolocation_bussiness'),
+                'class' => 'Bussiness',
+                'email' => $request->get('pic_email_address'),
+                'phone_number' => "0" . $request->get('pic_phone_number'),
+                'identity_type' => $request->get('option_pic_identity_number'),
+                'identity_number' => $request->get('pic_identity_number'),
+                'company_name' => $request->get('company_name'),
+                'company_address' => $request->get('company_address'),
+                'company_npwp' => $request->get('company_npwp'),
+                'company_npwp_files' => $urlSavedNPWP,
+                'company_sppkp' => $request->get('company_sppkp'),
+                'company_sppkp_files' => $urlSavedSPPKP,
+                'company_phone_number' => $request->get('company_phone_number'),
+                'company_employees' => $request->get('company_employees') != null ? $request->get('company_employees') : null,
+                'reference_id' => $request->get('salesID') != null ? $request->get('salesID') : null,
+                'survey_id' => $request->get('survey_id'),
+                'extend_note' => $request->get('addonsnote'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('customers')->insert($savedDataCustomer);
 
-                $savedDataBilling = [
-                    'id' => $uuid,
-                    'billing_name' => $requestAPI->get('billing_name'),
-                    'billing_contact' => "0" . $requestAPI->get('billing_phone'),
-                    'billing_email' => json_encode([$requestAPI->get('billing_email'), $requestAPI->get('email_address_biller_one'), $requestAPI->get('email_address_biller_two')]),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('billings')->insert($savedDataBilling);
+            $savedDataBilling = [
+                'id' => $uuid,
+                'billing_name' => $request->get('billing_name'),
+                'billing_contact' => "0" . $request->get('billing_phone'),
+                'billing_email' => json_encode([$request->get('billing_email'), $request->get('email_address_biller_one'), $request->get('email_address_biller_two')]),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('billings')->insert($savedDataBilling);
 
-                $savedDataTechnical = [
-                    'id' => $uuid,
-                    'technical_name' => $requestAPI->get('fullname_technical'),
-                    'technical_contact' => "0" . $requestAPI->get('phone_number_technical'),
-                    'technical_email' => $requestAPI->get('email_address_technical'),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('technicals')->insert($savedDataTechnical);
+            $savedDataTechnical = [
+                'id' => $uuid,
+                'technical_name' => $request->get('fullname_technical'),
+                'technical_contact' => "0" . $request->get('phone_number_technical'),
+                'technical_email' => $request->get('email_address_technical'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('technicals')->insert($savedDataTechnical);
 
-                $fileIdentityPhoto = $requestAPI->file('service_identity_photo');
-                $tujuan_upload1 = public_path() . '/bin/img/Bussiness/Identity';
-                $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
-                $urlSaved1 = url('/bin/img/Bussiness/Identity/' . $fileIdentityPhoto->getClientOriginalName());
+            $fileIdentityPhoto = $request->file('service_identity_photo');
+            $tujuan_upload1 = public_path() . '/bin/img/Bussiness/Identity';
+            $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
+            $urlSaved1 = url('/bin/img/Bussiness/Identity/' . $fileIdentityPhoto->getClientOriginalName());
 
-                $fetchDataLayanan = json_decode($requestAPI->get('RequestHandler'));
-                if ($fetchDataLayanan->package_top == "Bulanan") {
-                    $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                    $package_price = "";
-                    $package_top = $fetchDataLayanan->counted . ' Bulan';
-                } else {
-                    $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                    $package_price = "";
-                    $package_top = $fetchDataLayanan->counted . ' Tahun';
-                }
-
-                $savedDataService = [
-                    'id' => $uuid,
-                    'service_package' => json_encode([
-                        [
-                            'service_name' => $package_name,
-                            'service_price' => $package_price,
-                            'termofpaymentDeals' => $package_top
-                        ],
-                    ]),
-                    'id_photo_url' => $urlSaved1,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('services')->insert($savedDataService);
-
-                $savedDataApproval = [
-                    'id' => $uuid,
-                    'isApproved' => false,
-                    'isRejected' => false,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-                DB::table('approvals')->insert($savedDataApproval);
-
-                return true;
-            } catch (\Throwable $th) {
-                DB::rollBack();
-                $request = Request();
-                return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
+            $fetchDataLayanan = json_decode($request->get('RequestHandler'));
+            if ($fetchDataLayanan->package_top == "Bulanan") {
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
+                $package_price = "";
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
+            } else {
+                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
+                $package_price = "";
+                $package_top = $fetchDataLayanan->counted . ' Tahun';
             }
-        });
+
+            $savedDataService = [
+                'id' => $uuid,
+                'service_package' => json_encode([
+                    [
+                        'service_name' => $package_name,
+                        'service_price' => $package_price,
+                        'termofpaymentDeals' => $package_top
+                    ],
+                ]),
+                'id_photo_url' => $urlSaved1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('services')->insert($savedDataService);
+
+            $savedDataApproval = [
+                'id' => $uuid,
+                'isApproved' => false,
+                'isRejected' => false,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+            DB::table('approvals')->insert($savedDataApproval);
+
+            DB::commit();
+            $isSuccess = true;
+        } catch (\Throwable $th) {
+            $isSuccess = false;
+            $message = $th->getMessage();
+            DB::rollBack();
+        }
 
         if ($isSuccess) {
             if ($request->get('salesID') == null) {
@@ -408,7 +413,7 @@ class NewCustomerController extends Controller
                         }
                     }
                 } catch (\Throwable $th) {
-                    return redirect()->to('new-member')->with('errorMessage', $th->getMessage());
+                    return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
                 }
             } else {
                 try {
@@ -434,11 +439,13 @@ class NewCustomerController extends Controller
                         $message->to($dataEm['SalesEmailPIC'])->subject('Registrasi Berhasil!');
                     });
                 } catch (\Throwable $th) {
-                    return redirect()->to('new-member')->with('errorMessage', $th->getMessage());
+                    return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
                 }
             }
 
             return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
+        } else {
+            return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', $message);
         }
     }
 
