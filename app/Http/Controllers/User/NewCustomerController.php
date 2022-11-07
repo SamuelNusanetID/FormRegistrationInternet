@@ -375,7 +375,7 @@ class NewCustomerController extends Controller
             } catch (\Throwable $th) {
                 DB::rollBack();
                 $request = Request();
-                return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
+                return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
             }
         });
 
