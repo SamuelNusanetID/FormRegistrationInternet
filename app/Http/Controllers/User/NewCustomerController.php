@@ -155,8 +155,9 @@ class NewCustomerController extends Controller
 
                 return true;
             } catch (\Throwable $th) {
-                return false;
                 DB::rollBack();
+                $request = Request();
+                return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
             }
         });
 
@@ -224,10 +225,6 @@ class NewCustomerController extends Controller
                     return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
                 }
             }
-        } else {
-            return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))
-                ->withInput($request->input())
-                ->with('errorMessage', 'Server tidak merespon dengan baik. Silahkan coba lagi.');
         }
     }
 
@@ -376,8 +373,9 @@ class NewCustomerController extends Controller
 
                 return true;
             } catch (\Throwable $th) {
-                return false;
                 DB::rollBack();
+                $request = Request();
+                return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
             }
         });
 
@@ -441,10 +439,6 @@ class NewCustomerController extends Controller
             }
 
             return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
-        } else {
-            return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))
-                ->withInput($request->input())
-                ->with('errorMessage', 'Server tidak merespon dengan baik. Silahkan coba lagi.');
         }
     }
 
