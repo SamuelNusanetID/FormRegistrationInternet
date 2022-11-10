@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('approvals', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->boolean('isApproved');
-            $table->boolean('isRejected');
+            $table->longText('array_approval');
             $table->timestamps();
         });
     }

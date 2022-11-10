@@ -185,6 +185,30 @@ class OldCustomerController extends Controller
             $ServiceCustomer->service_package = json_encode($OldServiceCustomerArr);
             $ServiceCustomer->save();
 
+            // Approval Update
+            $ApprovalCustomer = Approval::find($UUIDCustomer);
+            $ApprovalCustomer->array_approval = json_encode([
+                'AuthCRO' => [
+                    'PIC_Name' => null,
+                    'isApproved' => false,
+                    'isRejected' => false,
+                    'message' => null
+                ],
+                'AuthSalesManager' => [
+                    'PIC_Name' => null,
+                    'isApproved' => false,
+                    'isRejected' => false,
+                    'message' => null
+                ],
+                'AuthSales' => [
+                    'PIC_Name' => null,
+                    'isApproved' => false,
+                    'isRejected' => false,
+                    'message' => null
+                ]
+            ]);
+            $ApprovalCustomer->save();
+
             try {
                 $dataEm = [
                     'CustNamePIC' => $customerDataFetch->name,
@@ -317,8 +341,26 @@ class OldCustomerController extends Controller
 
             $newApproval = new Approval();
             $newApproval->id = $UUIDNewCustomer;
-            $newApproval->isApproved = false;
-            $newApproval->isRejected = false;
+            $newApproval->array_approval = json_encode([
+                'AuthCRO' => [
+                    'PIC_Name' => null,
+                    'isApproved' => false,
+                    'isRejected' => false,
+                    'message' => null
+                ],
+                'AuthSalesManager' => [
+                    'PIC_Name' => null,
+                    'isApproved' => false,
+                    'isRejected' => false,
+                    'message' => null
+                ],
+                'AuthSales' => [
+                    'PIC_Name' => null,
+                    'isApproved' => false,
+                    'isRejected' => false,
+                    'message' => null
+                ]
+            ]);
             $newApproval->save();
 
 

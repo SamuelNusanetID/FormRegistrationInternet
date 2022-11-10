@@ -145,13 +145,73 @@ class NewCustomerController extends Controller
             ];
             DB::table('services')->insert($savedDataService);
 
-            $savedDataApproval = [
-                'id' => $uuid,
-                'isApproved' => false,
-                'isRejected' => false,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
+            if ($request->get('salesID') == null) {
+                $savedDataApproval = [
+                    'id' => $uuid,
+                    'array_approval' => json_encode([
+                        'AuthCRO' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ],
+                        'AuthSalesManager' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ],
+                        'AuthSales' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ]
+                    ]),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            } else {
+                $PIC_Name = "";
+
+                try {
+                    $SalesID = $request->get('salesID');
+                    $response = Http::withHeaders([
+                        'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                    ])->get('https://legacy.is5.nusa.net.id/employees/' . $SalesID);
+                    $resultJSON = json_decode($response->body());
+
+                    $PIC_Name = $resultJSON->name;
+                } catch (\Throwable $th) {
+                    $PIC_Name = null;
+                }
+
+                $savedDataApproval = [
+                    'id' => $uuid,
+                    'array_approval' => json_encode([
+                        'AuthCRO' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ],
+                        'AuthSalesManager' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ],
+                        'AuthSales' => [
+                            'PIC_Name' => $PIC_Name,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ]
+                    ]),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }
             DB::table('approvals')->insert($savedDataApproval);
 
             DB::commit();
@@ -367,13 +427,73 @@ class NewCustomerController extends Controller
             ];
             DB::table('services')->insert($savedDataService);
 
-            $savedDataApproval = [
-                'id' => $uuid,
-                'isApproved' => false,
-                'isRejected' => false,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
+            if ($request->get('salesID') == null) {
+                $savedDataApproval = [
+                    'id' => $uuid,
+                    'array_approval' => json_encode([
+                        'AuthCRO' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ],
+                        'AuthSalesManager' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ],
+                        'AuthSales' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ]
+                    ]),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            } else {
+                $PIC_Name = "";
+
+                try {
+                    $SalesID = $request->get('salesID');
+                    $response = Http::withHeaders([
+                        'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                    ])->get('https://legacy.is5.nusa.net.id/employees/' . $SalesID);
+                    $resultJSON = json_decode($response->body());
+
+                    $PIC_Name = $resultJSON->name;
+                } catch (\Throwable $th) {
+                    $PIC_Name = null;
+                }
+
+                $savedDataApproval = [
+                    'id' => $uuid,
+                    'array_approval' => json_encode([
+                        'AuthCRO' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ],
+                        'AuthSalesManager' => [
+                            'PIC_Name' => null,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ],
+                        'AuthSales' => [
+                            'PIC_Name' => $PIC_Name,
+                            'isApproved' => false,
+                            'isRejected' => false,
+                            'message' => null
+                        ]
+                    ]),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }
             DB::table('approvals')->insert($savedDataApproval);
 
             DB::commit();

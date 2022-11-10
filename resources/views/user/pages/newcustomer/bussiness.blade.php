@@ -746,7 +746,7 @@
                             dataShowDetail['package_categories'] : '-',
                         'package_speed': arrResultData['package_speed'],
                         'package_top': dataShowDetail['package_top'],
-                        'package_price': dataShowDetail['fix_price'],
+                        'package_price': arrResultData['package_price'] * dataShowDetail['counted'],
                         'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
                             dataShowDetail['package_option'],
                         'counted': dataShowDetail['counted']
@@ -782,10 +782,11 @@
                             dataShowDetail['package_categories'] : '-',
                         'package_speed': arrResultData['package_speed'],
                         'package_top': dataShowDetail['package_top'],
-                        'package_price': dataShowDetail['fix_price'],
+                        'package_price': arrResultData['package_price'] * (dataShowDetail['counted'] *
+                            12),
                         'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
                             dataShowDetail['package_option'],
-                        'counted': dataShowDetail['counted']
+                        'counted': dataShowDetail['counted'] * 12
                     };
 
                     $('#RequestHandler').val(JSON.stringify(ResultJSON));
