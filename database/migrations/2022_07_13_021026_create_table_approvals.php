@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('approvals', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('staging_area');
             $table->longText('array_approval');
             $table->timestamps();
         });

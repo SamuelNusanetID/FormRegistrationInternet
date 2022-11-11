@@ -153,21 +153,25 @@ class NewCustomerController extends Controller
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ],
                         'AuthSalesManager' => [
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ],
                         'AuthSales' => [
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ]
                     ]),
+                    'staging_area' => 'AuthCRO',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
@@ -193,21 +197,25 @@ class NewCustomerController extends Controller
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ],
                         'AuthSalesManager' => [
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ],
                         'AuthSales' => [
                             'PIC_Name' => $PIC_Name,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ]
                     ]),
+                    'staging_area' => 'AuthSales',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
@@ -435,21 +443,25 @@ class NewCustomerController extends Controller
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ],
                         'AuthSalesManager' => [
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ],
                         'AuthSales' => [
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ]
                     ]),
+                    'staging_area' => 'AuthCRO',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
@@ -475,21 +487,25 @@ class NewCustomerController extends Controller
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ],
                         'AuthSalesManager' => [
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ],
                         'AuthSales' => [
                             'PIC_Name' => $PIC_Name,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null
+                            'message' => null,
+                            'replied_at' => null
                         ]
                     ]),
+                    'staging_area' => 'AuthSales',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];

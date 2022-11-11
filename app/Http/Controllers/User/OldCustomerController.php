@@ -192,21 +192,25 @@ class OldCustomerController extends Controller
                     'PIC_Name' => null,
                     'isApproved' => false,
                     'isRejected' => false,
-                    'message' => null
+                    'message' => null,
+                    'replied_at' => null
                 ],
                 'AuthSalesManager' => [
                     'PIC_Name' => null,
                     'isApproved' => false,
                     'isRejected' => false,
-                    'message' => null
+                    'message' => null,
+                    'replied_at' => null
                 ],
                 'AuthSales' => [
                     'PIC_Name' => null,
                     'isApproved' => false,
                     'isRejected' => false,
-                    'message' => null
+                    'message' => null,
+                    'replied_at' => null
                 ]
             ]);
+            $ApprovalCustomer->staging_area = "AuthCRO";
             $ApprovalCustomer->save();
 
             try {
@@ -346,21 +350,25 @@ class OldCustomerController extends Controller
                     'PIC_Name' => null,
                     'isApproved' => false,
                     'isRejected' => false,
-                    'message' => null
+                    'message' => null,
+                    'replied_at' => null
                 ],
                 'AuthSalesManager' => [
                     'PIC_Name' => null,
                     'isApproved' => false,
                     'isRejected' => false,
-                    'message' => null
+                    'message' => null,
+                    'replied_at' => null
                 ],
                 'AuthSales' => [
                     'PIC_Name' => null,
                     'isApproved' => false,
                     'isRejected' => false,
-                    'message' => null
+                    'message' => null,
+                    'replied_at' => null
                 ]
             ]);
+            $newApproval->staging_area = "AuthCRO";
             $newApproval->save();
 
 
