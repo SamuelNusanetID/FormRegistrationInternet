@@ -70,10 +70,14 @@ class NewCustomerController extends Controller
             $uuid = $request->get('uuid');
             $idPelanggan = 'NUSA' . date('YmdHis');
 
-            $fileIdentityNPWP = $request->file('additionalnpwpphotopersonal');
-            $tujuan_uploadNPWP = public_path() . '/bin/img/Personal/NPWP';
-            $fileIdentityNPWP->move($tujuan_uploadNPWP, $fileIdentityNPWP->getClientOriginalName());
-            $urlSavedNPWP = url('/bin/img/Personal/NPWP/' . $fileIdentityNPWP->getClientOriginalName());
+            $urlSavedNPWP = null;
+
+            if ($request->file('additionalnpwpphotopersonal')) {
+                $fileIdentityNPWP = $request->file('additionalnpwpphotopersonal');
+                $tujuan_uploadNPWP = public_path() . '/bin/img/Personal/NPWP';
+                $fileIdentityNPWP->move($tujuan_uploadNPWP, $fileIdentityNPWP->getClientOriginalName());
+                $urlSavedNPWP = url('/bin/img/Personal/NPWP/' . $fileIdentityNPWP->getClientOriginalName());
+            }
 
             $savedDataCustomer = [
                 'id' => $uuid,
@@ -86,7 +90,7 @@ class NewCustomerController extends Controller
                 'phone_number' => "0" . $request->get('phone_number_personal'),
                 'identity_type' => $request->get('option_id_number_personal'),
                 'identity_number' => $request->get('id_number_personal'),
-                'npwp_number' => $request->get('additionalnpwpnumberpersonal'),
+                'npwp_number' => $request->get('additionalnpwpnumberpersonal') ? $request->get('additionalnpwpnumberpersonal') : null,
                 'npwp_files' => $urlSavedNPWP,
                 'reference_id' => $request->get('salesID') != null ? $request->get('salesID') : null,
                 'created_at' => Carbon::now(),
