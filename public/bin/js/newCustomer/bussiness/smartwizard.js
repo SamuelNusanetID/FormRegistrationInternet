@@ -85,6 +85,12 @@ $(document).ready(function () {
             company_address: {
                 required: true
             },
+            company_npwp_sppkp: {
+                required: true
+            },
+            company_npwp_sppkp_upload: {
+                required: true
+            },
             company_phone_number: {
                 required: true,
                 minlength: 10,
@@ -165,6 +171,12 @@ $(document).ready(function () {
             company_address: {
                 required: 'Kolom Alamat Lengkap Perusahaan Wajib Diisi'
             },
+            company_npwp_sppkp: {
+                required: 'Kolom NPWP/SPPKP Wajib Diisi'
+            },
+            company_npwp_sppkp_upload: {
+                required: 'Kolom Upload NPWP/SPPKP Wajib Diisi'
+            },
             company_phone_number: {
                 required: 'Kolom Nomor Telepon Perusahaan Wajib Diisi',
                 minlength: 'Nomor Telepon Perusahaan harus mengandung min. 10 karakter',
@@ -241,17 +253,25 @@ $(document).ready(function () {
             };
         } else if ($(this).val() == "KITAS") {
             settings.rules.pic_identity_number = {
-                required: true
+                required: true,
+                minlength: 11,
+                maxlength: 11
             };
             settings.messages.pic_identity_number = {
-                required: "Field Nomor KITAS Wajib Diisi"
+                required: "Field Nomor KITAS Wajib Diisi",
+                minlength: "Minimal karakter Nomor KITAS adalah 11 karakter",
+                maxlength: "Maximal karakter Nomor KITAS adalah 11 karakter"
             };
         } else if ($(this).val() == "PASPOR") {
             settings.rules.pic_identity_number = {
-                required: true
+                required: true,
+                minlength: 8,
+                maxlength: 8
             };
             settings.messages.pic_identity_number = {
-                required: "Field Nomor Paspor Wajib Diisi"
+                required: "Field Nomor Paspor Wajib Diisi",
+                minlength: "Minimal karakter Nomor Paspor adalah 8 karakter",
+                maxlength: "Maximal karakter Nomor Paspor adalah 8 karakter"
             };
         }
     });

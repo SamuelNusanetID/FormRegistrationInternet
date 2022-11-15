@@ -122,11 +122,11 @@ class NewCustomerController extends Controller
             $fetchDataLayanan = json_decode($request->get('RequestHandler'));
             if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = "";
+                $package_price = $fetchDataLayanan->package_price;
                 $package_top = $fetchDataLayanan->counted . ' Bulan';
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = "";
+                $package_price = $fetchDataLayanan->package_price;
                 $package_top = $fetchDataLayanan->counted . ' Tahun';
             }
 
@@ -347,15 +347,10 @@ class NewCustomerController extends Controller
             $uuid = $request->get('uuid');
             $idPelanggan = 'NUSA' . date('YmdHis');
 
-            $fileIdentityNPWP = $request->file('company_npwp_upload');
+            $fileIdentityNPWP = $request->file('company_npwp_sppkp_upload');
             $tujuan_uploadNPWP = public_path() . '/bin/img/Bussiness/NPWP';
             $fileIdentityNPWP->move($tujuan_uploadNPWP, $fileIdentityNPWP->getClientOriginalName());
             $urlSavedNPWP = url('/bin/img/Bussiness/NPWP/' . $fileIdentityNPWP->getClientOriginalName());
-
-            $fileIdentitySPPKP = $request->file('company_sppkp_upload');
-            $tujuan_uploadSPPKP = public_path() . '/bin/img/Bussiness/SPPKP';
-            $fileIdentitySPPKP->move($tujuan_uploadSPPKP, $fileIdentitySPPKP->getClientOriginalName());
-            $urlSavedSPPKP = url('/bin/img/Bussiness/SPPKP/' . $fileIdentitySPPKP->getClientOriginalName());
 
             $savedDataCustomer = [
                 'id' => $uuid,
@@ -370,10 +365,8 @@ class NewCustomerController extends Controller
                 'identity_number' => $request->get('pic_identity_number'),
                 'company_name' => $request->get('company_name'),
                 'company_address' => $request->get('company_address'),
-                'company_npwp' => $request->get('company_npwp'),
+                'company_npwp' => $request->get('company_npwp_sppkp_upload'),
                 'company_npwp_files' => $urlSavedNPWP,
-                'company_sppkp' => $request->get('company_sppkp'),
-                'company_sppkp_files' => $urlSavedSPPKP,
                 'company_phone_number' => $request->get('company_phone_number'),
                 'company_employees' => $request->get('company_employees') != null ? $request->get('company_employees') : null,
                 'reference_id' => $request->get('salesID') != null ? $request->get('salesID') : null,

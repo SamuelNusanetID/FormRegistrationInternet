@@ -30,8 +30,6 @@ return new class extends Migration
             $table->text('company_address')->nullable();
             $table->string('company_npwp')->nullable();
             $table->string('company_npwp_files')->nullable();
-            $table->string('company_sppkp')->nullable();
-            $table->string('company_sppkp_files')->nullable();
             $table->string('company_phone_number')->nullable();
             $table->string('company_employees')->nullable();
             $table->string('survey_id')->nullable();

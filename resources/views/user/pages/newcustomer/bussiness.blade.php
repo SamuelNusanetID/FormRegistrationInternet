@@ -232,49 +232,28 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="company_npwp" class="form-label">No. NPWP Perusahaan
+                                            <label for="company_npwp_sppkp" class="form-label">No. NPWP/SPPKP Perusahaan
                                             </label>
                                             <input type="text"
-                                                class="form-control @error('company_npwp') is-invalid @enderror"
-                                                name="company_npwp" placeholder="__.___.___._-___.___" data-slots="_"
-                                                size="13" value="{{ old('company_npwp') }}" id="company_npwp">
-                                            @error('company_npwp')
+                                                class="form-control @error('company_npwp_sppkp') is-invalid @enderror"
+                                                name="company_npwp_sppkp" placeholder="__.___.___._-___.___"
+                                                data-slots="_" size="13" value="{{ old('company_npwp_sppkp') }}"
+                                                id="company_npwp_sppkp">
+                                            @error('company_npwp_sppkp')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="company_npwp_upload" class="form-label">Upload NPWP Perusahaan
-                                            </label>
-                                            <input class="form-control @error('company_npwp_upload') is-invalid @enderror"
-                                                type="file" id="company_npwp_upload" name="company_npwp_upload">
-                                            @error('company_npwp_upload')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="company_sppkp" class="form-label">No. SPPKP Perusahaan
-                                            </label>
-                                            <input type="text"
-                                                class="form-control @error('company_sppkp') is-invalid @enderror"
-                                                name="company_sppkp" size="13" value="{{ old('company_sppkp') }}"
-                                                id="company_sppkp">
-                                            @error('company_sppkp')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="company_sppkp_upload" class="form-label">Upload SPPKP Perusahaan
+                                            <label for="company_npwp_sppkp_upload" class="form-label">Upload NPWP/SPPKP
+                                                Perusahaan
                                             </label>
                                             <input
-                                                class="form-control @error('company_sppkp_upload') is-invalid @enderror"
-                                                type="file" id="company_sppkp_upload" name="company_sppkp_upload">
-                                            @error('company_sppkp_upload')
+                                                class="form-control @error('company_npwp_sppkp_upload') is-invalid @enderror"
+                                                type="file" id="company_npwp_sppkp_upload"
+                                                name="company_npwp_sppkp_upload">
+                                            @error('company_npwp_sppkp_upload')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
