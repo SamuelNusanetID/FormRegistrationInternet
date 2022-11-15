@@ -165,6 +165,7 @@ class OldCustomerController extends Controller
             }
 
             $fetchDataLayanan = json_decode($request->get('RequestHandler'));
+
             if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = "";

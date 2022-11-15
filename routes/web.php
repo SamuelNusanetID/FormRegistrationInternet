@@ -5,6 +5,7 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\NewCustomerController;
 use App\Http\Controllers\User\OldCustomerController;
 use Google\Service\Compute\Resource\Routes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('login', function () {
+    return redirect('/');
+})->name('login');
+
+Route::get('dashboard', function () {
+    return redirect('/');
+})->name('dashboard');
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -31,13 +40,3 @@ Route::get('/old-member', [OldCustomerController::class, 'index']);
 Route::post('/old-member/{class_customer}/{id_customer}', [OldCustomerController::class, 'showDataCustomer']);
 
 Route::get('/generate', [NewCustomerController::class, 'generateNewLink']);
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
