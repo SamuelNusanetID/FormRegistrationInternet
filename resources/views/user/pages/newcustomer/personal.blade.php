@@ -447,7 +447,15 @@
                             <div id="form-step-4" class="tab-pane" role="tabpanel" aria-labelledby="form-step-4"
                                 style="overflow-y:scroll; min-height:550px !important;">
                                 <div class="container-fluid p-5 mb-3" id="terms-and-condition">
-                                    @include('user.pages.terms.index')
+                                    <div class="d-none" id="tnc-home">
+                                        @include('user.pages.terms.home')
+                                    </div>
+                                    <div class="d-none" id="tnc-bussiness">
+                                        @include('user.pages.terms.bussiness')
+                                    </div>
+                                    <div class="d-none" id="tnc-dedicated">
+                                        @include('user.pages.terms.dedicated')
+                                    </div>
                                 </div>
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="termsCbo" name="termsCbo">

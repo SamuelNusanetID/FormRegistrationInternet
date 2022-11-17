@@ -230,6 +230,7 @@ class NewCustomerController extends Controller
 
             $isSuccess = true;
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             $isSuccess = false;
             $message = $th->getMessage();
             DB::rollBack();

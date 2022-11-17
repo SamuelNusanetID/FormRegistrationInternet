@@ -347,7 +347,15 @@
                             <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info"
                                 style="min-height:550px !important;">
                                 <div class="container-fluid p-5 mb-3" id="terms-and-condition">
-                                    @include('user.pages.terms.index')
+                                    <div class="d-none" id="tnc-home">
+                                        @include('user.pages.terms.home')
+                                    </div>
+                                    <div class="d-none" id="tnc-bussiness">
+                                        @include('user.pages.terms.bussiness')
+                                    </div>
+                                    <div class="d-none" id="tnc-dedicated">
+                                        @include('user.pages.terms.dedicated')
+                                    </div>
                                 </div>
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="termsCbo" name="termsCbo">
@@ -431,8 +439,46 @@
                 errorSteps: [], // Array Steps error
                 warningSteps: [], // Array Steps warning
                 hiddenSteps: [], // Hidden steps
-                getContent: null // Callback function for content loading
+                getContent: provideContent // Callback function for content loading
             });
+
+            function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
+                if (idx == 4) {
+                    $('#tnc-home').addClass('d-none');
+                    $('#tnc-bussiness').addClass('d-none');
+                    $('#tnc-dedicated').addClass('d-none');
+                    const namaPaket = $("#package_name").val();
+
+                    switch (namaPaket) {
+                        case "Broadband Home":
+                            $('#tnc-home').removeClass('d-none');
+                            $('#tnc-bussiness').addClass('d-none');
+                            $('#tnc-dedicated').addClass('d-none');
+                            break;
+                        case "Broadband Bussiness":
+                            $('#tnc-home').addClass('d-none');
+                            $('#tnc-bussiness').removeClass('d-none');
+                            $('#tnc-dedicated').addClass('d-none');
+                            break;
+                        case "Dedicated 1 : 1":
+                            $('#tnc-home').addClass('d-none');
+                            $('#tnc-bussiness').addClass('d-none');
+                            $('#tnc-dedicated').removeClass('d-none');
+                            break;
+                        case "Dedicated 1 : 4":
+                            $('#tnc-home').addClass('d-none');
+                            $('#tnc-bussiness').addClass('d-none');
+                            $('#tnc-dedicated').removeClass('d-none');
+                            break;
+                        default:
+                            $('#tnc-home').addClass('d-none');
+                            $('#tnc-bussiness').removeClass('d-none');
+                            $('#tnc-dedicated').addClass('d-none');
+                            break;
+                    }
+                }
+                callback();
+            }
 
             $("#btnSubmitBussinessForms").toggle(false);
 

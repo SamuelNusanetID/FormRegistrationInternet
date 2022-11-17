@@ -37,8 +37,46 @@ $(document).ready(function () {
         errorSteps: [], // Array Steps error
         warningSteps: [], // Array Steps warning
         hiddenSteps: [], // Hidden steps
-        getContent: null // Callback function for content loading
+        getContent: provideContent // Callback function for content loading
     });
+
+    function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
+        if (idx == 4) {
+            $('#tnc-home').addClass('d-none');
+            $('#tnc-bussiness').addClass('d-none');
+            $('#tnc-dedicated').addClass('d-none');
+            const namaPaket = $("#package_name").val();
+
+            switch (namaPaket) {
+                case "Broadband Home":
+                    $('#tnc-home').removeClass('d-none');
+                    $('#tnc-bussiness').addClass('d-none');
+                    $('#tnc-dedicated').addClass('d-none');
+                    break;
+                case "Broadband Bussiness":
+                    $('#tnc-home').addClass('d-none');
+                    $('#tnc-bussiness').removeClass('d-none');
+                    $('#tnc-dedicated').addClass('d-none');
+                    break;
+                case "Dedicated 1 : 1":
+                    $('#tnc-home').addClass('d-none');
+                    $('#tnc-bussiness').addClass('d-none');
+                    $('#tnc-dedicated').removeClass('d-none');
+                    break;
+                case "Dedicated 1 : 4":
+                    $('#tnc-home').addClass('d-none');
+                    $('#tnc-bussiness').addClass('d-none');
+                    $('#tnc-dedicated').removeClass('d-none');
+                    break;
+                default:
+                    $('#tnc-home').addClass('d-none');
+                    $('#tnc-bussiness').removeClass('d-none');
+                    $('#tnc-dedicated').addClass('d-none');
+                    break;
+            }
+        }
+        callback();
+    }
 
     jQuery.validator.addMethod("emailordomain", function (value, element) {
         return this.optional(element) || /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value) || /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/.test(value);
