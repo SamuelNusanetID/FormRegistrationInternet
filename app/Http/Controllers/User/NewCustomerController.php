@@ -379,7 +379,7 @@ class NewCustomerController extends Controller
                 'identity_number' => $request->get('pic_identity_number'),
                 'company_name' => $request->get('company_name'),
                 'company_address' => $request->get('company_address'),
-                'company_npwp' => $request->get('company_npwp_sppkp_upload'),
+                'company_npwp' => $request->get('company_npwp_sppkp'),
                 'company_npwp_files' => $urlSavedNPWP,
                 'company_phone_number' => $request->get('company_phone_number'),
                 'company_employees' => $request->get('company_employees') != null ? $request->get('company_employees') : null,
