@@ -194,6 +194,7 @@ class OldCustomerController extends Controller
                     'isApproved' => false,
                     'isRejected' => false,
                     'message' => null,
+                    'sended_at' => null,
                     'replied_at' => null
                 ],
                 'AuthSalesManager' => [
@@ -201,6 +202,7 @@ class OldCustomerController extends Controller
                     'isApproved' => false,
                     'isRejected' => false,
                     'message' => null,
+                    'sended_at' => null,
                     'replied_at' => null
                 ],
                 'AuthSales' => [
@@ -208,10 +210,11 @@ class OldCustomerController extends Controller
                     'isApproved' => false,
                     'isRejected' => false,
                     'message' => null,
+                    'sended_at' => null,
                     'replied_at' => null
                 ]
             ]);
-            $ApprovalCustomer->staging_area = "AuthCRO";
+            $ApprovalCustomer->current_staging_area = "AuthCRO";
             $ApprovalCustomer->save();
 
             try {
@@ -352,6 +355,7 @@ class OldCustomerController extends Controller
                     'isApproved' => false,
                     'isRejected' => false,
                     'message' => null,
+                    'sended_at' => null,
                     'replied_at' => null
                 ],
                 'AuthSalesManager' => [
@@ -359,6 +363,7 @@ class OldCustomerController extends Controller
                     'isApproved' => false,
                     'isRejected' => false,
                     'message' => null,
+                    'sended_at' => null,
                     'replied_at' => null
                 ],
                 'AuthSales' => [
@@ -366,10 +371,11 @@ class OldCustomerController extends Controller
                     'isApproved' => false,
                     'isRejected' => false,
                     'message' => null,
+                    'sended_at' => null,
                     'replied_at' => null
                 ]
             ]);
-            $newApproval->staging_area = "AuthCRO";
+            $newApproval->current_staging_area = "AuthCRO";
             $newApproval->save();
 
 

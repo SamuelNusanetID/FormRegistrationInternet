@@ -25,8 +25,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'employee_id',
         'email',
         'password',
+        'under_employee_id',
+        'utype',
+        'isApprovedByAdmin'
     ];
 
     /**

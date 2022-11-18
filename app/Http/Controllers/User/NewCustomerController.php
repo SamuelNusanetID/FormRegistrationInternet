@@ -158,6 +158,7 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ],
                         'AuthSalesManager' => [
@@ -165,6 +166,8 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'replied_at' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ],
                         'AuthSales' => [
@@ -172,10 +175,12 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ]
                     ]),
-                    'staging_area' => 'AuthCRO',
+                    'current_staging_area' => 'AuthCRO',
+                    'next_staging_area' => null,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
@@ -202,6 +207,7 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ],
                         'AuthSalesManager' => [
@@ -209,6 +215,7 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ],
                         'AuthSales' => [
@@ -216,10 +223,12 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ]
                     ]),
-                    'staging_area' => 'AuthSales',
+                    'current_staging_area' => 'AuthSales',
+                    'next_staging_area' => null,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
@@ -442,6 +451,7 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ],
                         'AuthSalesManager' => [
@@ -449,6 +459,7 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ],
                         'AuthSales' => [
@@ -456,10 +467,12 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ]
                     ]),
-                    'staging_area' => 'AuthCRO',
+                    'current_staging_area' => 'AuthCRO',
+                    'next_staging_area' => null,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
@@ -486,6 +499,7 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ],
                         'AuthSalesManager' => [
@@ -493,6 +507,7 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ],
                         'AuthSales' => [
@@ -500,10 +515,12 @@ class NewCustomerController extends Controller
                             'isApproved' => false,
                             'isRejected' => false,
                             'message' => null,
+                            'sended_at' => null,
                             'replied_at' => null
                         ]
                     ]),
-                    'staging_area' => 'AuthSales',
+                    'current_staging_area' => 'AuthSales',
+                    'next_staging_area' => null,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];

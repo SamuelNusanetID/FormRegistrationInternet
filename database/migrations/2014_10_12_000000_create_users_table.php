@@ -16,16 +16,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('employee_id');
+            $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->default(Carbon::now());
             $table->string('password');
-            $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
-            $table->string('utype');
+            $table->string('under_employee_id')->nullable();
             $table->boolean('isApprovedByAdmin')->default(false);
+            $table->string('utype');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
