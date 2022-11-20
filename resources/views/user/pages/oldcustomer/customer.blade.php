@@ -55,7 +55,21 @@
                                 </a>
                             </li>
                         </ul>
+                        <style>
+                            .form-control.error {
+                                border-color: #dc3545;
+                                padding-right: calc(1.5em + .75rem);
+                                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+                                background-repeat: no-repeat;
+                                background-position: right calc(.375em + .1875rem) center;
+                                background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+                            }
 
+                            .error {
+                                font-size: .875em;
+                                color: #dc3545;
+                            }
+                        </style>
                         <div class="tab-content">
                             <div id="person-in-charge" class="tab-pane" role="tabpanel" aria-labelledby="person-in-charge">
                                 <div class="container row">
@@ -391,6 +405,11 @@
     <script src="{{ URL::to('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- Smart Wizard -->
     <script src="{{ URL::to('lib/jquery-smartwizard/dist/js/jquery.smartWizard.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+    <script src="{{ URL::to('bin/js/custExist/validation.js') }}"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
         integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="

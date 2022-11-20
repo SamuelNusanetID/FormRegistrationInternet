@@ -131,7 +131,7 @@ class NewCustomerController extends Controller
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Tahun';
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
             }
 
             $savedDataService = [
@@ -419,12 +419,12 @@ class NewCustomerController extends Controller
             $fetchDataLayanan = json_decode($request->get('RequestHandler'));
             if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = "";
+                $package_price = $fetchDataLayanan->package_price;
                 $package_top = $fetchDataLayanan->counted . ' Bulan';
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = "";
-                $package_top = $fetchDataLayanan->counted . ' Tahun';
+                $package_price = $fetchDataLayanan->package_price;
+                $package_top = $fetchDataLayanan->counted . ' Bulan';
             }
 
             $savedDataService = [
