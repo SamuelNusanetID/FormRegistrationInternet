@@ -299,7 +299,7 @@ class OldCustomerController extends Controller
             $newCustomer->customer_id = $id_customer;
             $newCustomer->name = $result->name;
             $newCustomer->address = $result->address == $request->get('new_address') ? json_encode([$result->address]) : json_encode([$result->address, $request->get('new_address')]);
-            $newCustomer->geolocation = json_encode([$request->get('geolocation_existing')]);
+            $newCustomer->geolocation = json_encode(['{"lat":0,"lng":0}', $request->get('geolocation_existing')]);
             $newCustomer->class = $class_customer;
             $newCustomer->email = $primaryEmail;
             $newCustomer->identity_number = $result->identity_number;
