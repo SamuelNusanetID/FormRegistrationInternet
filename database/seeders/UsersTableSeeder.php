@@ -30,21 +30,21 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'employee_id' => '0202233',
-                'name'      => 'M. Fikri Pasaribu',
-                'email'     => 'fikri@nusa.net.id',
+                'employee_id' => '0202261',
+                'name'      => 'Teguh Dana Prayuda',
+                'email'     => 'teguhdana@nusa.net.id',
                 'email_verified_at' => Carbon::now(),
                 'password'  => bcrypt('12345678'),
-                'under_employee_id' => '0202261',
+                'under_employee_id' => '0202232',
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthSales',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'employee_id' => '0202261',
-                'name'      => 'Teguh Dana Prayuda',
-                'email'     => 'teguhdana@nusa.net.id',
+                'employee_id' => '0202232',
+                'name'      => 'Anggi Saputra Edwarsa Siregar',
+                'email'     => 'anggisaputra@nusa.net.id',
                 'email_verified_at' => Carbon::now(),
                 'password'  => bcrypt('12345678'),
                 'under_employee_id' => null,
