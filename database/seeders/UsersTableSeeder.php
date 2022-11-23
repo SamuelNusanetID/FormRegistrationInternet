@@ -65,6 +65,78 @@ class UsersTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+            [
+                'employee_id' => '0202233',
+                'name'      => 'M. Fikri Pasaribu',
+                'email'     => 'fikri@nusa.net.id',
+                'email_verified_at' => Carbon::now(),
+                'password'  => bcrypt('12345678'),
+                'under_employee_id' => '0201926',
+                'isApprovedByAdmin'     => 1,
+                'utype'     => 'AuthSales',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'employee_id' => '0201926',
+                'name'      => 'Abdul Majid',
+                'email'     => 'abdulmajid@nusa.net.id',
+                'email_verified_at' => Carbon::now(),
+                'password'  => bcrypt('12345678'),
+                'under_employee_id' => null,
+                'isApprovedByAdmin'     => 1,
+                'utype'     => 'AuthSalesManager',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'employee_id' => '0201516',
+                'name'      => 'Fani Hardianto',
+                'email'     => 'fani@nusa.net.id',
+                'email_verified_at' => Carbon::now(),
+                'password'  => bcrypt('12345678'),
+                'under_employee_id' => null,
+                'isApprovedByAdmin'     => 1,
+                'utype'     => 'AuthSalesManager',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'employee_id' => '0201318',
+                'name'      => 'Jimmy Heryanto',
+                'email'     => 'jimmy@nusa.net.id',
+                'email_verified_at' => Carbon::now(),
+                'password'  => bcrypt('12345678'),
+                'under_employee_id' => null,
+                'isApprovedByAdmin'     => 1,
+                'utype'     => 'AuthSalesManager',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'employee_id' => '0201005',
+                'name'      => 'Budiman Silalahi',
+                'email'     => 'budiman@nusa.net.id',
+                'email_verified_at' => Carbon::now(),
+                'password'  => bcrypt('12345678'),
+                'under_employee_id' => null,
+                'isApprovedByAdmin'     => 1,
+                'utype'     => 'AuthSalesManager',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'employee_id' => '0202149',
+                'name'      => 'Dita Refieta',
+                'email'     => 'ditarefieta@nusa.net.id',
+                'email_verified_at' => Carbon::now(),
+                'password'  => bcrypt('12345678'),
+                'under_employee_id' => null,
+                'isApprovedByAdmin'     => 1,
+                'utype'     => 'AuthCRO',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ]);
     }
 }
