@@ -35,16 +35,16 @@ class UsersTableSeeder extends Seeder
                 'email'     => 'teguhdana@nusa.net.id',
                 'email_verified_at' => Carbon::now(),
                 'password'  => bcrypt('12345678'),
-                'under_employee_id' => '0202232',
+                'under_employee_id' => '0202169',
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthSales',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'employee_id' => '0202232',
-                'name'      => 'Anggi Saputra Edwarsa Siregar',
-                'email'     => 'anggisaputra@nusa.net.id',
+                'employee_id' => '0202169',
+                'name'      => 'Abdul Azis Laia',
+                'email'     => 'abdulazis@nusa.net.id',
                 'email_verified_at' => Carbon::now(),
                 'password'  => bcrypt('12345678'),
                 'under_employee_id' => null,
@@ -54,9 +54,9 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'employee_id' => '0201826',
-                'name'      => 'Cut Amalia',
-                'email'     => 'cutamalia@nusa.net.id',
+                'employee_id' => '0201924',
+                'name'      => 'M. Sabrino Raharjo',
+                'email'     => 'sabrino@nusa.net.id',
                 'email_verified_at' => Carbon::now(),
                 'password'  => bcrypt('12345678'),
                 'under_employee_id' => null,
