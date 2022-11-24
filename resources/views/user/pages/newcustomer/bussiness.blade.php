@@ -233,6 +233,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="company_npwp_sppkp" class="form-label">No. NPWP/SPPKP Perusahaan
+                                                <span class="text-danger">*</span></label>
                                             </label>
                                             <input type="text"
                                                 class="form-control @error('company_npwp_sppkp') is-invalid @enderror"
@@ -248,6 +249,7 @@
                                         <div class="mb-3">
                                             <label for="company_npwp_sppkp_upload" class="form-label">Upload NPWP/SPPKP
                                                 Perusahaan
+                                                <span class="text-danger">*</span></label>
                                             </label>
                                             <input
                                                 class="form-control @error('company_npwp_sppkp_upload') is-invalid @enderror"
