@@ -970,4 +970,15 @@
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        var isFalse = {!! json_encode(session()->has('errorMessage')) !!};
+        if (isFalse) {
+            Swal.fire(
+                'Gagal!',
+                {!! json_encode(session('errorMessage')) !!},
+                'error'
+            )
+        }
+    </script>
 @endsection

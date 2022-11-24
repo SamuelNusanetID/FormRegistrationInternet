@@ -76,23 +76,23 @@
             </a>
         </div>
     </div>
-
-    @php
-        $messageStatus = session()->has('message') ? session('message') : false;
-    @endphp
 @endsection
 
 @section('JS')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
-        var msgstat = "<?php echo "$messageStatus"; ?>";
         $(document).ready(() => {
-            if (msgstat) {
+            if ({!! json_encode(session()->has('successMessage')) !!}) {
                 Swal.fire({
                     title: 'Berhasil!',
-                    text: msgstat,
-                    icon: 'success',
-                    confirmButtonText: 'Baik, akan saya tunggu.'
+                    text: {!! json_encode(session('successMessage')) !!},
+                    icon: 'success'
+                })
+            } else if ({!! json_encode(session()->has('errorMessage')) !!}) {
+                Swal.fire({
+                    title: 'Gagal!',
+                    text: {!! json_encode(session('errorMessage')) !!},
+                    icon: 'error'
                 })
             }
         });

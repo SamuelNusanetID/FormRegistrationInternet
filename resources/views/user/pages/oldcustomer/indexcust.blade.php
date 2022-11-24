@@ -54,29 +54,22 @@
             </a>
         </div>
     </div>
-
-    @php
-    $messageStatusSuccess = session()->has('successMessage') ? session('successMessage') : false;
-    $messageStatusError = session()->has('errorMessage') ? session('errorMessage') : false;
-    @endphp
 @endsection
 
 @section('JS')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
-        var msgstatSucc = "<?php echo "$messageStatusSuccess"; ?>";
-        var msgstatErr = "<?php echo "$messageStatusError"; ?>";
         $(document).ready(() => {
-            if (msgstatSucc) {
+            if ({!! json_encode(session()->has('successMessage')) !!}) {
                 Swal.fire({
                     title: 'Berhasil!',
-                    text: msgstatSucc,
+                    text: {!! json_encode(session('successMessage')) !!},
                     icon: 'success'
                 })
-            } else if (msgstatErr) {
+            } else if ({!! json_encode(session()->has('errorMessage')) !!}) {
                 Swal.fire({
                     title: 'Gagal!',
-                    text: msgstatErr,
+                    text: {!! json_encode(session('errorMessage')) !!},
                     icon: 'error'
                 })
             }
