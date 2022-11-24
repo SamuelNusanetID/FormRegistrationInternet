@@ -169,11 +169,11 @@ class OldCustomerController extends Controller
             if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_top = $fetchDataLayanan->counted;
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_top = $fetchDataLayanan->counted;
             }
 
             $newDataService = [
@@ -330,11 +330,11 @@ class OldCustomerController extends Controller
             if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_top = $fetchDataLayanan->counted;
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_top = $fetchDataLayanan->counted;
             }
 
             $newService = new Service();

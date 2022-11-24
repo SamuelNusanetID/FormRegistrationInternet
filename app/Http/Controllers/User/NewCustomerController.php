@@ -127,11 +127,11 @@ class NewCustomerController extends Controller
             if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_top = $fetchDataLayanan->counted;
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_top = $fetchDataLayanan->counted;
             }
 
             $savedDataService = [
@@ -157,7 +157,7 @@ class NewCustomerController extends Controller
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null,
+                            '' => null,
                             'sended_at' => null,
                             'replied_at' => null
                         ],
@@ -165,7 +165,7 @@ class NewCustomerController extends Controller
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null,
+                            '' => null,
                             'replied_at' => null,
                             'sended_at' => null,
                             'replied_at' => null
@@ -174,7 +174,7 @@ class NewCustomerController extends Controller
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null,
+                            '' => null,
                             'sended_at' => null,
                             'replied_at' => null
                         ]
@@ -206,7 +206,7 @@ class NewCustomerController extends Controller
                             'PIC_Name' => null,
                             'isApproved' => false,
                             'isRejected' => false,
-                            'message' => null,
+                            '' => null,
                             'sended_at' => null,
                             'replied_at' => null
                         ],
@@ -275,7 +275,7 @@ class NewCustomerController extends Controller
                         }
                     }
 
-                    return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
+                    return redirect()->to('new-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
                 } catch (\Throwable $th) {
                     return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
                 }
@@ -303,7 +303,7 @@ class NewCustomerController extends Controller
                         $message->to($dataEm['SalesEmailPIC'])->subject('Registrasi Berhasil!');
                     });
 
-                    return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
+                    return redirect()->to('new-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
                 } catch (\Throwable $th) {
                     return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', $th->getMessage());
                 }
@@ -419,11 +419,11 @@ class NewCustomerController extends Controller
             if ($fetchDataLayanan->package_top == "Bulanan") {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_top = $fetchDataLayanan->counted;
             } else {
                 $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
                 $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted . ' Bulan';
+                $package_top = $fetchDataLayanan->counted;
             }
 
             $savedDataService = [
@@ -593,7 +593,7 @@ class NewCustomerController extends Controller
                 }
             }
 
-            return redirect()->to('new-member')->with('message', 'Selamat, Anda Berhasil Registrasi.');
+            return redirect()->to('new-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
         } else {
             return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', $message);
         }
