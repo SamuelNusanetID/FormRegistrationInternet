@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('current_staging_area')->nullable();
             $table->string('next_staging_area')->nullable();
             $table->longText('array_approval');
+            $table->boolean('isSendedtoIS')->default(false);
             $table->timestamps();
         });
     }

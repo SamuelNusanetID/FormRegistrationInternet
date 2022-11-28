@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->default(Carbon::now());
             $table->string('password');
             $table->string('under_employee_id')->nullable();
+            $table->string('profile_pic')->nullable();
             $table->boolean('isApprovedByAdmin')->default(false);
             $table->string('utype');
             $table->rememberToken();
