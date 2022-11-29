@@ -12,9 +12,11 @@ class Customer extends Model
 
     protected $keyType = 'string';
     protected $fillable = [
+        'branch_id',
         'customer_id',
         'name',
         'address',
+        'geolocation',
         'class',
         'email',
         'identity_type',
@@ -30,6 +32,8 @@ class Customer extends Model
         'company_sppkp_files',
         'company_phone_number',
         'company_employees',
+        'survey_id',
+        'extend_note',
         'reference_id'
     ];
 

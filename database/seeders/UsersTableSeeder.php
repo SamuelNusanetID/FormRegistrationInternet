@@ -27,6 +27,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthMaster',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -40,6 +41,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthSales',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -52,6 +54,7 @@ class UsersTableSeeder extends Seeder
                 'under_employee_id' => null,
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
+                'branch_id' => '020',
                 'utype'     => 'AuthSalesManager',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -66,6 +69,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthCRO',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -79,6 +83,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthMaster',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -92,6 +97,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthMaster',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -105,6 +111,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthSales',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -118,6 +125,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthSalesManager',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -131,6 +139,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthSalesManager',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -144,6 +153,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthSalesManager',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -157,6 +167,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthSalesManager',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -170,6 +181,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthCRO',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],

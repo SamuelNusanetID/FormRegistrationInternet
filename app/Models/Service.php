@@ -14,6 +14,5 @@ class Service extends Model
     protected $fillable = [
         'service_package',
         'id_photo_url',
-        'selfie_id_photo_url'
     ];
 }

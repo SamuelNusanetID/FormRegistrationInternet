@@ -95,6 +95,9 @@ $(document).ready(function () {
             }
         },
         rules: {
+            branch_id: {
+                required: true
+            },
             pic_name: {
                 required: true
             },
@@ -185,6 +188,9 @@ $(document).ready(function () {
             }
         },
         messages: {
+            branch_id: {
+                required: 'Kolom Regional Wajib Diisi'
+            },
             pic_name: {
                 required: 'Kolom Nama Lengkap Wajib Diisi'
             },

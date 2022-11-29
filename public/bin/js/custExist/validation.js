@@ -7,6 +7,9 @@ $('#oldCustomerForm').validate({
         }
     },
     rules: {
+        branch_id: {
+            required: true,
+        },
         package_name: {
             required: true,
         },
@@ -27,6 +30,9 @@ $('#oldCustomerForm').validate({
         }
     },
     messages: {
+        branch_id: {
+            required: 'Kolom Regional Wajib Diisi',
+        },
         package_name: {
             required: 'Kolom Nama Paket Wajib Diisi',
         },

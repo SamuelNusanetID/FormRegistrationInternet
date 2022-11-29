@@ -296,6 +296,7 @@ class OldCustomerController extends Controller
             // Customer Table
             $newCustomer = new Customer();
             $newCustomer->id = $UUIDNewCustomer;
+            $newCustomer->branch_id = $request->get('branch_id');
             $newCustomer->customer_id = $id_customer;
             $newCustomer->name = $result->name;
             $newCustomer->address = $result->address == $request->get('new_address') ? json_encode([$result->address]) : json_encode([$result->address, $request->get('new_address')]);

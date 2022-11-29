@@ -14,6 +14,7 @@ class Approval extends Model
     protected $fillable = [
         'current_staging_area',
         'next_staging_area',
-        'array_approval'
+        'array_approval',
+        'isSendedtoIS'
     ];
 }

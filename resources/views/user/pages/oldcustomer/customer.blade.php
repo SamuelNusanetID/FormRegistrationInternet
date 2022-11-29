@@ -307,6 +307,38 @@
                                     <div id="address" class="form-text mb-1">Alamat ini digunakan
                                         sebagai
                                         alamat pemasangan internet.</div>
+                                    <div class="mb-3">
+                                        <label for="branch_id" class="form-label">
+                                            Regional
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        @php
+                                            $regionalForm = [
+                                                [
+                                                    'branch_id' => '020',
+                                                    'branch_name' => 'Medan Multatuli',
+                                                ],
+                                                [
+                                                    'branch_id' => '062',
+                                                    'branch_name' => 'Bali',
+                                                ],
+                                            ];
+                                        @endphp
+                                        <select class="form-select" name="branch_id" id="branch_id">
+                                            <option selected disabled>Pilih Regional Anda...</option>
+                                            @foreach ($regionalForm as $item)
+                                                @if (old('branch_id') == $item['branch_id'])
+                                                    <option value="{{ $item['branch_id'] }}" selected>
+                                                        {{ $item['branch_name'] }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $item['branch_id'] }}">
+                                                        {{ $item['branch_name'] }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <input type="hidden" name="geolocation_existing" id="geolocation_existing">
                                 </div>
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark"

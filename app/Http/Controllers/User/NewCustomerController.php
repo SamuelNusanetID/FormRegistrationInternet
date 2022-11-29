@@ -81,6 +81,7 @@ class NewCustomerController extends Controller
 
             $savedDataCustomer = [
                 'id' => $uuid,
+                'branch_id' => $request->get('branch_id'),
                 'customer_id' => $idPelanggan,
                 'name' => $request->get('fullname_personal'),
                 'address' => json_encode([$request->get('address_personal')]),
@@ -367,6 +368,7 @@ class NewCustomerController extends Controller
 
             $savedDataCustomer = [
                 'id' => $uuid,
+                'branch_id' => $request->get('branch_id'),
                 'customer_id' => $idPelanggan,
                 'name' => $request->get('pic_name'),
                 'address' => json_encode([$request->get('pic_address')]),

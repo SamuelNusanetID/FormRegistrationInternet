@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('profile_pic')->nullable();
             $table->boolean('isApprovedByAdmin')->default(false);
             $table->string('utype');
+            $table->enum('branch_id', ['020', '062']);
             $table->rememberToken();
             $table->timestamps();
         });
