@@ -65,6 +65,27 @@ class NewCustomerController extends Controller
         $isSuccess = false;
         $message = "";
 
+        if ($request->get('salesID') == null) {
+            $branch_code = $request->get('branch_id');
+            $CROFetch = User::where([
+                'branch_id' => $branch_code,
+                'utype' => 'AuthCRO'
+            ]);
+            if ($CROFetch->count() < 1) {
+                return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', 'Data tidak berhasil dimasukkan');
+            }
+        } else {
+            $branch_code = $request->get('branch_id');
+            $SalesFetch = User::where([
+                'employee_id' => $request->get('salesID'),
+                'branch_id' => $branch_code,
+                'utype' => 'AuthSales'
+            ]);
+            if ($SalesFetch->count() < 1) {
+                return redirect()->to(URL::to('new-member/personal/' . $request->get('uuid')))->with('errorMessage', 'Data tidak berhasil dimasukkan');
+            }
+        }
+
         DB::beginTransaction();
         try {
             $uuid = $request->get('uuid');
@@ -355,6 +376,27 @@ class NewCustomerController extends Controller
     {
         $isSuccess = false;
         $message = "";
+
+        if ($request->get('salesID') == null) {
+            $branch_code = $request->get('branch_id');
+            $CROFetch = User::where([
+                'branch_id' => $branch_code,
+                'utype' => 'AuthCRO'
+            ]);
+            if ($CROFetch->count() < 1) {
+                return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', 'Data tidak berhasil dimasukkan');
+            }
+        } else {
+            $branch_code = $request->get('branch_id');
+            $SalesFetch = User::where([
+                'employee_id' => $request->get('salesID'),
+                'branch_id' => $branch_code,
+                'utype' => 'AuthSales'
+            ]);
+            if ($SalesFetch->count() < 1) {
+                return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', 'Data tidak berhasil dimasukkan');
+            }
+        }
 
         DB::beginTransaction();
         try {

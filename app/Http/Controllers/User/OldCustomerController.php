@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -113,6 +114,16 @@ class OldCustomerController extends Controller
 
     public function showDataCustomer(Request $request, $class_customer, $id_customer)
     {
+
+        $branch_code = $request->get('branch_id');
+        $CROFetch = User::where([
+            'branch_id' => $branch_code,
+            'utype' => 'AuthCRO'
+        ]);
+        if ($CROFetch->count() < 1) {
+            return redirect()->to(URL::to('old-member?id=' . $id_customer . '#person-in-charge'))->with('errorMessage', 'Data tidak berhasil dimasukkan');
+        }
+
         $CustomerData = Customer::where('customer_id', $id_customer);
 
         if ($CustomerData->exists()) {
