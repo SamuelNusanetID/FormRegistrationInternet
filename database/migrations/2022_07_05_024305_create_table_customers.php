@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('survey_id')->nullable();
             $table->string('extend_note')->nullable();
             $table->string('reference_id')->nullable();
+            $table->string('assigned_sales_manager')->nullable();
             $table->timestamps();
         });
     }

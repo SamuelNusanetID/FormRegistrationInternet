@@ -15,7 +15,9 @@ class CreateLogRevisiTabel extends Migration
     {
         Schema::create('tabel_log_revisi', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('revision_message');
+            $table->string('status_message');
+            $table->longText('revision_message');
+            $table->string('pic');
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('promo_list', function (Blueprint $table) {
             $table->id();
+            $table->enum('branch_id', ['020', '062']);
             $table->string('promo_code');
             $table->string('package_name');
             $table->enum('package_top', ['Bulanan', 'Tahunan']);

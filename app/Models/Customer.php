@@ -34,7 +34,8 @@ class Customer extends Model
         'company_employees',
         'survey_id',
         'extend_note',
-        'reference_id'
+        'reference_id',
+        'assigned_sales_manager'
     ];
 
 

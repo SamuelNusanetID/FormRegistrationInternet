@@ -9,6 +9,7 @@ class PromoList extends Model
 {
     protected $table = 'promo_list';
     protected $fillable = [
+        'branch_id',
         'promo_code',
         'package_name',
         'package_top',

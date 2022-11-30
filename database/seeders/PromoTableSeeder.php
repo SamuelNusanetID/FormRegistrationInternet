@@ -28,6 +28,7 @@ class PromoTableSeeder extends Seeder
                 'monthly_cut_status' => 'Pengurangan',
                 'activate_date' => '2022-11-20 00:00:00',
                 'expired_date' => '2022-11-25 00:00:00',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -40,6 +41,7 @@ class PromoTableSeeder extends Seeder
                 'monthly_cut_status' => 'Penambahan',
                 'activate_date' => '2022-11-20 00:00:00',
                 'expired_date' => '2022-11-25 00:00:00',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -52,6 +54,7 @@ class PromoTableSeeder extends Seeder
                 'monthly_cut_status' => 'Pengurangan',
                 'activate_date' => '2022-11-20 00:00:00',
                 'expired_date' => '2022-11-25 00:00:00',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],

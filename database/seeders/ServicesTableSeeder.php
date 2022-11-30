@@ -27,6 +27,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '388500',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -38,6 +39,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '499500',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -49,6 +51,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '888000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -60,6 +63,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '700000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -71,6 +75,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '1200000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -82,6 +87,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '1980000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -93,6 +99,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '649000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -104,6 +111,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '999000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -115,6 +123,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '1599000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -126,6 +135,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '1999000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -137,6 +147,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '2899000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -148,6 +159,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '3499000',
                 'retail_package_price' => null,
                 'government_package_price' => null,
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -159,6 +171,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '2070000',
                 'government_package_price' => '1800000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -170,6 +183,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '2800000',
                 'government_package_price' => '2500000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -182,6 +196,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '3600000',
                 'government_package_price' => '3200000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -193,6 +208,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '4800000',
                 'government_package_price' => '4500000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -205,6 +221,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '6300000',
                 'government_package_price' => '5900000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -216,6 +233,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '7000000',
                 'government_package_price' => '6500000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -227,6 +245,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '8300000',
                 'government_package_price' => '7700000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -238,6 +257,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '9300000',
                 'government_package_price' => '8900000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -250,6 +270,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '10500000',
                 'government_package_price' => '9800000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -261,6 +282,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '11800000',
                 'government_package_price' => '10800000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -273,6 +295,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '11600000',
                 'government_package_price' => '11000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -284,6 +307,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '17900000',
                 'government_package_price' => '16500000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -296,6 +320,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '22700000',
                 'government_package_price' => '21000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -307,6 +332,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '33900000',
                 'government_package_price' => '29500000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -319,6 +345,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '42900000',
                 'government_package_price' => '37000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -330,6 +357,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '52000000',
                 'government_package_price' => '44000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -342,6 +370,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '63000000',
                 'government_package_price' => '53000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -353,6 +382,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '67900000',
                 'government_package_price' => '61000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -365,6 +395,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '69700000',
                 'government_package_price' => '66000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -376,6 +407,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '78300000',
                 'government_package_price' => '74000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -388,6 +420,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '87000000',
                 'government_package_price' => '82000000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -399,6 +432,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '2700000',
                 'government_package_price' => '2500000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -410,6 +444,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '3500000',
                 'government_package_price' => '3200000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -421,6 +456,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '4200000',
                 'government_package_price' => '3800000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -432,6 +468,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '5500000',
                 'government_package_price' => '5200000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -443,6 +480,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '6500000',
                 'government_package_price' => '6200000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -454,6 +492,7 @@ class ServicesTableSeeder extends Seeder
                 'package_price' => '0',
                 'retail_package_price' => '7700000',
                 'government_package_price' => '7200000',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

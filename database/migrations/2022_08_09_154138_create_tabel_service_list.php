@@ -16,6 +16,7 @@ class CreateTabelServiceList extends Migration
     {
         Schema::create('services_list', function (Blueprint $table) {
             $table->id();
+            $table->enum('branch_id', ['020', '062']);
             $table->string('package_name');
             $table->enum('package_type', ['Fiber Optic', 'Wireless']);
             $table->string('package_categories');
