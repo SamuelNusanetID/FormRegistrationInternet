@@ -608,8 +608,49 @@
                 String(currentdate.getSeconds()).padStart(2, '0');
             const packageData = {!! json_encode($serviceData) !!};
             const promoData = {!! json_encode($promoData) !!};
+            var branch_id = "";
+            var packageDataArr = [];
             var dataShowDetail = [];
             let hargaPaket = 0;
+
+            $('#branch_id').on('change', () => {
+                $('#package_name')
+                    .find('option')
+                    .remove();
+
+                packageDataArr = {!! json_encode($serviceData) !!};
+
+                var IDBranch = $('#branch_id').val();
+
+                var arrNotFilterPackage = [];
+                for (var dataPaket in packageDataArr) {
+                    if (packageDataArr[dataPaket].branch_id !== IDBranch) {
+                        delete packageDataArr[dataPaket];
+                    } else {
+                        arrNotFilterPackage[dataPaket] = packageDataArr[dataPaket].package_name;
+                    }
+                }
+
+                var arrNotFilterPackagecounts = {};
+                for (var i = 0; i < arrNotFilterPackage.length; i++) {
+                    var key = arrNotFilterPackage[i];
+                    if (typeof key !== 'undefined') {
+                        arrNotFilterPackagecounts[key] = (arrNotFilterPackagecounts[key]) ?
+                            arrNotFilterPackagecounts[key] +
+                            1 : 1;
+                    }
+                }
+
+                $('#package_name').append('<option disabled selected>Pilih Nama Paket...</option>');
+                for (const key in arrNotFilterPackagecounts) {
+                    $('#package_name').append($('<option>', {
+                        value: key,
+                        text: key
+                    }));
+                }
+
+                branch_id = IDBranch;
+            });
 
             $('#option_package_type').addClass('d-none');
             $('#option_package_categories').addClass('d-none');
@@ -635,7 +676,7 @@
 
                     var arrPackageType = [];
                     packageData.forEach(package => {
-                        if (package.package_name == packageName) {
+                        if (package.package_name == packageName && package.branch_id == branch_id) {
                             arrPackageType[package.package_type] = 0;
                         }
                     });
@@ -675,7 +716,7 @@
                     var i = 0;
                     packageData.forEach(package => {
                         if (package.package_name == packageName && package.package_type ==
-                            packageType) {
+                            packageType && package.branch_id == branch_id) {
                             if (!isEmpty(package.package_categories)) {
                                 arrPackageCategories[package.package_categories] = package
                                     .package_speed;
@@ -748,13 +789,15 @@
                                 'package_categories']) {
                             if (item.package_name === dataShowDetail['package_name'] &&
                                 item.package_type === dataShowDetail['package_type'] &&
-                                item.package_categories === dataShowDetail['package_categories']) {
+                                item.package_categories === dataShowDetail['package_categories'] &&
+                                item.branch_id == branch_id) {
                                 arrResultData = item;
                             }
                         } else {
                             if (item.package_name === dataShowDetail['package_name'] &&
                                 item.package_type === dataShowDetail['package_type'] &&
-                                item.package_speed === dataShowDetail['package_categories']) {
+                                item.package_speed === dataShowDetail['package_categories'] &&
+                                item.branch_id == branch_id) {
                                 arrResultData = item;
                             }
                         }
@@ -784,13 +827,15 @@
                                 'package_categories']) {
                             if (item.package_name === dataShowDetail['package_name'] &&
                                 item.package_type === dataShowDetail['package_type'] &&
-                                item.package_categories === dataShowDetail['package_categories']) {
+                                item.package_categories === dataShowDetail['package_categories'] &&
+                                item.branch_id == branch_id) {
                                 arrResultData = item;
                             }
                         } else {
                             if (item.package_name === dataShowDetail['package_name'] &&
                                 item.package_type === dataShowDetail['package_type'] &&
-                                item.package_speed === dataShowDetail['package_categories']) {
+                                item.package_speed === dataShowDetail['package_categories'] &&
+                                item.branch_id == branch_id) {
                                 arrResultData = item;
                             }
                         }
@@ -803,8 +848,8 @@
                             dataShowDetail['package_categories'] : '-',
                         'package_speed': arrResultData['package_speed'],
                         'package_top': dataShowDetail['package_top'],
-                        'package_price': arrResultData['package_price'] * (dataShowDetail['counted'] *
-                            12),
+                        'package_price': arrResultData['package_price'] * dataShowDetail['counted'] *
+                            12,
                         'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
                             dataShowDetail['package_option'],
                         'counted': dataShowDetail['counted'] * 12
