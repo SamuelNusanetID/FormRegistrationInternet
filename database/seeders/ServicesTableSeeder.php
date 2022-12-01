@@ -187,7 +187,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -212,7 +211,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -261,7 +259,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -286,7 +283,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -311,7 +307,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -336,7 +331,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -361,7 +355,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -386,7 +379,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -411,7 +403,6 @@ class ServicesTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-
             [
                 'package_name' => 'Dedicated 1 : 1',
                 'package_type' => 'Fiber Optic',
@@ -495,7 +486,432 @@ class ServicesTableSeeder extends Seeder
                 'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ]
+            ],
+            // Akun Bali
+            [
+                'package_name' => 'Broadband',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => 'Basic',
+                'package_speed' => '',
+                'package_price' => '',
+                'retail_package_price' => null,
+                'government_package_price' => null,
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Broadband',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => 'Start Up',
+                'package_speed' => '',
+                'package_price' => '',
+                'retail_package_price' => null,
+                'government_package_price' => null,
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Broadband',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => 'Fast',
+                'package_speed' => '',
+                'package_price' => '',
+                'retail_package_price' => null,
+                'government_package_price' => null,
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Broadband',
+                'package_type' => 'Wireless',
+                'package_categories' => 'Bronze',
+                'package_speed' => '',
+                'package_price' => '',
+                'retail_package_price' => null,
+                'government_package_price' => null,
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Broadband Bussiness',
+                'package_type' => 'Wireless',
+                'package_categories' => 'Gold',
+                'package_speed' => '',
+                'package_price' => '',
+                'retail_package_price' => null,
+                'government_package_price' => null,
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 4',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '50',
+                'package_price' => '1999000',
+                'retail_package_price' => null,
+                'government_package_price' => null,
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 4',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '75',
+                'package_price' => '2899000',
+                'retail_package_price' => null,
+                'government_package_price' => null,
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 4',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '100',
+                'package_price' => '3499000',
+                'retail_package_price' => null,
+                'government_package_price' => null,
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '10',
+                'package_price' => '0',
+                'retail_package_price' => '2070000',
+                'government_package_price' => '1800000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '15',
+                'package_price' => '0',
+                'retail_package_price' => '2800000',
+                'government_package_price' => '2500000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '20',
+                'package_price' => '0',
+                'retail_package_price' => '3600000',
+                'government_package_price' => '3200000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '30',
+                'package_price' => '0',
+                'retail_package_price' => '4800000',
+                'government_package_price' => '4500000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '40',
+                'package_price' => '0',
+                'retail_package_price' => '6300000',
+                'government_package_price' => '5900000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '50',
+                'package_price' => '0',
+                'retail_package_price' => '7000000',
+                'government_package_price' => '6500000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '60',
+                'package_price' => '0',
+                'retail_package_price' => '8300000',
+                'government_package_price' => '7700000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '70',
+                'package_price' => '0',
+                'retail_package_price' => '9300000',
+                'government_package_price' => '8900000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '80',
+                'package_price' => '0',
+                'retail_package_price' => '10500000',
+                'government_package_price' => '9800000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '90',
+                'package_price' => '0',
+                'retail_package_price' => '11800000',
+                'government_package_price' => '10800000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '100',
+                'package_price' => '0',
+                'retail_package_price' => '11600000',
+                'government_package_price' => '11000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '150',
+                'package_price' => '0',
+                'retail_package_price' => '17900000',
+                'government_package_price' => '16500000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '200',
+                'package_price' => '0',
+                'retail_package_price' => '22700000',
+                'government_package_price' => '21000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '300',
+                'package_price' => '0',
+                'retail_package_price' => '33900000',
+                'government_package_price' => '29500000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '400',
+                'package_price' => '0',
+                'retail_package_price' => '42900000',
+                'government_package_price' => '37000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '500',
+                'package_price' => '0',
+                'retail_package_price' => '52000000',
+                'government_package_price' => '44000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '600',
+                'package_price' => '0',
+                'retail_package_price' => '63000000',
+                'government_package_price' => '53000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '700',
+                'package_price' => '0',
+                'retail_package_price' => '67900000',
+                'government_package_price' => '61000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '800',
+                'package_price' => '0',
+                'retail_package_price' => '69700000',
+                'government_package_price' => '66000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '900',
+                'package_price' => '0',
+                'retail_package_price' => '78300000',
+                'government_package_price' => '74000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Fiber Optic',
+                'package_categories' => '-',
+                'package_speed' => '1000',
+                'package_price' => '0',
+                'retail_package_price' => '87000000',
+                'government_package_price' => '82000000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Wireless',
+                'package_categories' => '-',
+                'package_speed' => '10',
+                'package_price' => '0',
+                'retail_package_price' => '2700000',
+                'government_package_price' => '2500000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Wireless',
+                'package_categories' => '-',
+                'package_speed' => '15',
+                'package_price' => '0',
+                'retail_package_price' => '3500000',
+                'government_package_price' => '3200000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Wireless',
+                'package_categories' => '-',
+                'package_speed' => '20',
+                'package_price' => '0',
+                'retail_package_price' => '4200000',
+                'government_package_price' => '3800000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Wireless',
+                'package_categories' => '-',
+                'package_speed' => '30',
+                'package_price' => '0',
+                'retail_package_price' => '5500000',
+                'government_package_price' => '5200000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Wireless',
+                'package_categories' => '-',
+                'package_speed' => '40',
+                'package_price' => '0',
+                'retail_package_price' => '6500000',
+                'government_package_price' => '6200000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'package_name' => 'Dedicated 1 : 1',
+                'package_type' => 'Wireless',
+                'package_categories' => '-',
+                'package_speed' => '50',
+                'package_price' => '0',
+                'retail_package_price' => '7700000',
+                'government_package_price' => '7200000',
+                'branch_id' => '062',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ]);
     }
 }
