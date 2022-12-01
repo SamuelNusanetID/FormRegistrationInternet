@@ -280,7 +280,7 @@ class NewCustomerController extends Controller
                     });
 
                     if (User::count() > 0) {
-                        foreach (User::where('branch_id', $request->get('branch_id'))->get()) as $key => $value) {
+                        foreach (User::where('branch_id', $request->get('branch_id'))->get() as $key => $value) {
                             if ($value->utype == 'AuthMaster') {
                                 $dataEm = [
                                     'SalesNamePIC' => $value->name,
@@ -641,26 +641,5 @@ class NewCustomerController extends Controller
         } else {
             return redirect()->to(URL::to('new-member/bussiness/' . $request->get('uuid')))->with('errorMessage', $message);
         }
-    }
-
-    public function generateNewLink(Request $request)
-    {
-        $salesName = $request->get('salesname') != null ? $request->get('salesname') : "";
-        $resellerName = $request->get('resellername') != null ? $request->get('resellername') : null;
-
-        if ($salesName == "" && $resellerName == null) {
-            return redirect()->to('/');
-        }
-
-        $newUUID = (string) Str::orderedUuid();
-
-        $newDataSalesLink = new SalesLink();
-        $dataBaseSave = $newDataSalesLink->create([
-            'uuid' => join(explode("-", $newUUID)),
-            'nama_sales' => $salesName,
-            'nama_reseller' => $resellerName,
-        ]);
-
-        return response()->json($dataBaseSave);
     }
 }
