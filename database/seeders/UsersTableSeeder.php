@@ -97,7 +97,7 @@ class UsersTableSeeder extends Seeder
                 'profile_pic' => null,
                 'isApprovedByAdmin'     => 1,
                 'utype'     => 'AuthMaster',
-                'branch_id' => '062',
+                'branch_id' => '020',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
