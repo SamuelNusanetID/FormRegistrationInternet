@@ -280,7 +280,7 @@ class NewCustomerController extends Controller
                     });
 
                     if (User::count() > 0) {
-                        foreach (User::all() as $key => $value) {
+                        foreach (User::where('branch_id', $request->get('branch_id'))->get()) as $key => $value) {
                             if ($value->utype == 'AuthMaster') {
                                 $dataEm = [
                                     'SalesNamePIC' => $value->name,
@@ -591,7 +591,7 @@ class NewCustomerController extends Controller
                         $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
                     });
 
-                    foreach (User::all() as $key => $value) {
+                    foreach (User::where('branch_id', $request->get('branch_id'))->get() as $key => $value) {
                         if ($value->utype === 'AuthMaster') {
                             $dataEm = [
                                 'CustNamePIC' => $request->get('pic_name'),

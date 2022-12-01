@@ -240,7 +240,7 @@ class OldCustomerController extends Controller
                 });
 
                 if (User::count() > 0) {
-                    foreach (User::all() as $key => $value) {
+                    foreach (User::where('branch_id', $request->get('branch_id'))->get() as $key => $value) {
                         if ($value->utype == 'AuthMaster') {
                             $dataEm = [
                                 'SalesNamePIC' => $value->name,
@@ -403,7 +403,7 @@ class OldCustomerController extends Controller
                 });
 
                 if (User::count() > 0) {
-                    foreach (User::all() as $key => $value) {
+                    foreach (User::where('branch_id', $request->get('branch_id'))->get() as $key => $value) {
                         if ($value->utype == 'AuthMaster') {
                             $dataEm = [
                                 'SalesNamePIC' => $value->name,
