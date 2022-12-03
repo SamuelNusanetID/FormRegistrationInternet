@@ -27,10 +27,6 @@ $(document).ready(function () {
         }
     });
 
-    setInputFilter(document.getElementById("id_number_personal"), function (value) {
-        return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
-    }, "Nomor Identitas harus berupa angka");
-
     setInputFilter(document.getElementById("phone_number_personal"), function (value) {
         return /^\d*\+?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
     }, "Nomor Telepon harus berupa angka");

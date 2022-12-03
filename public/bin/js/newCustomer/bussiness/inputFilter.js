@@ -1,7 +1,4 @@
 $(document).ready(function () {
-    setInputFilter(document.getElementById("pic_identity_number"), function (value) {
-        return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
-    }, "Nomor Identitas harus berupa angka");
     setInputFilter(document.getElementById("pic_phone_number"), function (value) {
         return /^\d*\+?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
     }, "Nomor Handphone harus berupa angka");
