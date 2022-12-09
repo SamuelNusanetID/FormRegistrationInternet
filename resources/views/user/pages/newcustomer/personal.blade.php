@@ -477,9 +477,10 @@
                                     style="overflow-y: scroll; max-height: 800px !important;">
                                     <div class="mb-3">
                                         <label for="package_name" class="form-label">Pilihan Nama Paket</label>
-                                        <select class="form-select" id="package_name" name="package_name">
-                                            <option selected disabled>Pilih Nama Paket...</option>
-                                        </select>
+                                        <input class="form-control" list="package_name_list" id="package_name"
+                                            name="package_name" placeholder="Ketik untuk cari...">
+                                        <datalist id="package_name_list">
+                                        </datalist>
                                     </div>
                                     <div class="mb-3" id="option_package_top">
                                         <label for="package_top" class="form-label">
@@ -600,9 +601,8 @@
                     .then((res) => res.json())
                     .then((services) => {
                         services.forEach(srs => {
-                            $('#package_name').append($('<option>', {
-                                value: `${srs.ServiceId+'||'+srs.ServiceLevel}`,
-                                text: `${srs.ServiceType}`
+                            $('#package_name_list').append($('<option>', {
+                                value: `${srs.ServiceType}`
                             }));
                         });
                     });
