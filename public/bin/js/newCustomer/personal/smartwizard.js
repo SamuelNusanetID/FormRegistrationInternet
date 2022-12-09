@@ -41,6 +41,32 @@ $(document).ready(function () {
     });
 
     function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
+        if (idx == 3) {
+            const kode_cabang = $('#kode_cabang_personal_hidden').val();
+
+            var fetchDataLayanan = fetch(
+                `https://legacy.is5.nusa.net.id/service?branchId=${kode_cabang}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'X-Api-Key': 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                },
+            }
+            );
+
+            fetchDataLayanan
+                .then((res) => res.json())
+                .then((services) => {
+                    services.forEach(srs => {
+                        $('#package_name_list').append($('<option>', {
+                            value: `${srs.ServiceType}`
+                        }));
+                    });
+                }).catch(err => {
+                    alert("Server is not responding, " + err);
+                });
+        }
+
         callback();
     }
 

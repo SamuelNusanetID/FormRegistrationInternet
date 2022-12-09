@@ -475,6 +475,9 @@
                                 style="min-height: 800px !important;">
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark"
                                     style="overflow-y: scroll; max-height: 800px !important;">
+                                    <input type="hidden" name="kode_cabang_personal_hidden"
+                                        id="kode_cabang_personal_hidden">
+                                    <input type="hidden" name="service_charge_personal" id="service_charge_personal">
                                     <div class="mb-3">
                                         <label for="package_name" class="form-label">Pilihan Nama Paket</label>
                                         <input class="form-control" list="package_name_list" id="package_name"
@@ -581,19 +584,25 @@
     <!-- Data Layanan ScriptJS -->
     <script>
         var splittingValue = [];
+        var getDataLayananArr;
+
         $(document).ready(async () => {
             var formatter = new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
             });
 
-            const getDataLayananArr = await getDataLayananAPI();
+            getDataLayananArr = await getDataLayananAPI();
 
             $('#branch_id').on('change', () => {
                 const kode_cabang = $('#branch_id').val();
+                $('#kode_cabang_personal_hidden').val(kode_cabang);
+            });
 
-                var fetchDataLayanan = fetch(
-                    `https://legacy.is5.nusa.net.id/service?branchId=${kode_cabang}`, {
+            async function getDataLayananAPI() {
+                let obj;
+                const res = await fetch(
+                    `https://legacy.is5.nusa.net.id/service`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json;charset=utf-8',
@@ -601,39 +610,22 @@
                         },
                     }
                 );
-
-                fetchDataLayanan
-                    .then((res) => res.json())
-                    .then((services) => {
-                        services.forEach(srs => {
-                            $('#package_name_list').append($('<option>', {
-                                value: `${srs.ServiceType}`
-                            }));
-                        });
-                    });
-            });
+                obj = await res.json();
+                return obj;
+            }
         });
-
-        async function getDataLayananAPI() {
-            let obj;
-            const res = await fetch(
-                `https://legacy.is5.nusa.net.id/service`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8',
-                        'X-Api-Key': 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
-                    },
-                }
-            );
-            obj = await res.json();
-            return obj;
-        }
 
         function onInputDataLayananPersonal() {
             var val = document.getElementById("package_name").value;
             var opts = document.getElementById('package_name_list').childNodes;
             for (var i = 0; i < opts.length; i++) {
                 if (opts[i].value === val) {
+                    getDataLayananArr.forEach(element => {
+                        if (element.ServiceType == opts[i].value) {
+                            $('#service_charge_personal').val(element.ServiceCharge);
+                        }
+                    });
+
                     $('#tnc-home').addClass('d-none');
                     $('#tnc-bussiness').addClass('d-none');
                     $('#tnc-dedicated').addClass('d-none');

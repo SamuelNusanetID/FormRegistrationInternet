@@ -18,6 +18,9 @@ return new class extends Migration
             $table->enum('branch_id', ['020', '062']);
             $table->string('customer_id');
             $table->string('name');
+            $table->enum('gender', ['M', 'F']);
+            $table->string('place_of_birth');
+            $table->date('date_of_birth');
             $table->text('address');
             $table->text('geolocation');
             $table->enum('class', ['Personal', 'Bussiness']);

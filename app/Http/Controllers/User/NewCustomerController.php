@@ -48,7 +48,15 @@ class NewCustomerController extends Controller
 
     public function storePersonal(Request $request)
     {
-        dd($request->all());
+        $requestFormData = $request->all();
+
+        $requestFormData['phone_number_personal'] = "0" . $requestFormData['phone_number_personal'];
+        $requestFormData['phone_number_biller'] = "0" . $requestFormData['phone_number_biller'];
+        $requestFormData['phone_number_technical'] = "0" . $requestFormData['phone_number_technical'];
+        if ($requestFormData['inlineTopPaket'] == 'Tahunan') {
+            $requestFormData['custom_bulanan_tahunan'] = $requestFormData['custom_bulanan_tahunan'] * 12;
+        }
+
         $isSuccess = false;
         $message = "";
 
@@ -89,19 +97,22 @@ class NewCustomerController extends Controller
 
             $savedDataCustomer = [
                 'id' => $uuid,
-                'branch_id' => $request->get('branch_id'),
+                'branch_id' => $requestFormData['branch_id'],
                 'customer_id' => $idPelanggan,
-                'name' => $request->get('fullname_personal'),
-                'address' => json_encode([$request->get('address_personal')]),
-                'geolocation' => json_encode([$request->get('geolocation_personal')]),
+                'name' => $requestFormData['fullname_personal'],
+                'gender' => $requestFormData['gender_personal'],
+                'place_of_birth' => $requestFormData['custPOBPersonal'],
+                'date_of_birth' => $requestFormData['custDOBPersonal'],
+                'address' => json_encode([$requestFormData['address_personal']]),
+                'geolocation' => json_encode([$requestFormData['geolocation_personal']]),
                 'class' => 'Personal',
-                'email' => $request->get('email_address_personal'),
-                'phone_number' => "0" . $request->get('phone_number_personal'),
-                'identity_type' => $request->get('option_id_number_personal'),
-                'identity_number' => $request->get('id_number_personal'),
-                'npwp_number' => $request->get('additionalnpwpnumberpersonal') ? $request->get('additionalnpwpnumberpersonal') : null,
+                'email' => $requestFormData['email_address_personal'],
+                'phone_number' => $requestFormData['phone_number_personal'],
+                'identity_type' => $requestFormData['option_id_number_personal'],
+                'identity_number' => $requestFormData['id_number_personal'],
+                'npwp_number' => $requestFormData['additionalnpwpnumberpersonal'] ? $requestFormData['additionalnpwpnumberpersonal'] : null,
                 'npwp_files' => $urlSavedNPWP,
-                'reference_id' => $request->get('salesID') != null ? $request->get('salesID') : null,
+                'reference_id' => isset($requestFormData['salesID']) ? $requestFormData['salesID'] : null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -109,9 +120,9 @@ class NewCustomerController extends Controller
 
             $savedDataBilling = [
                 'id' => $uuid,
-                'billing_name' => $request->get('fullname_biller'),
-                'billing_contact' => "0" . $request->get('phone_number_biller'),
-                'billing_email' => json_encode([$request->get('email_address_biller_primary'), $request->get('email_address_biller_one'), $request->get('email_address_biller_two')]),
+                'billing_name' => $requestFormData['fullname_biller'],
+                'billing_contact' => $requestFormData['phone_number_biller'],
+                'billing_email' => json_encode([$requestFormData['email_address_biller_primary'], $requestFormData['email_address_biller_one'], $requestFormData['email_address_biller_two']]),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -119,9 +130,9 @@ class NewCustomerController extends Controller
 
             $savedDataTechnical = [
                 'id' => $uuid,
-                'technical_name' => $request->get('fullname_technical'),
-                'technical_contact' => "0" . $request->get('phone_number_technical'),
-                'technical_email' => $request->get('email_address_technical'),
+                'technical_name' => $requestFormData['fullname_technical'],
+                'technical_contact' => $requestFormData['phone_number_technical'],
+                'technical_email' => $requestFormData['email_address_technical'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -132,15 +143,14 @@ class NewCustomerController extends Controller
             $fileIdentityPhoto->move($tujuan_upload1, $fileIdentityPhoto->getClientOriginalName());
             $urlSaved1 = url('/bin/img/Personal/Identity/' . $fileIdentityPhoto->getClientOriginalName());
 
-            $fetchDataLayanan = json_decode($request->get('RequestHandler'));
-            if ($fetchDataLayanan->package_top == "Bulanan") {
-                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted;
+            if ($requestFormData['inlineTopPaket'] == "Bulanan") {
+                $package_name = $requestFormData['package_name'];
+                $package_price = $requestFormData['service_charge_personal'];
+                $package_top = $requestFormData['custom_bulanan_tahunan'];
             } else {
-                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted;
+                $package_name = $requestFormData['package_name'];
+                $package_price = $requestFormData['service_charge_personal'];
+                $package_top = $requestFormData['custom_bulanan_tahunan'];
             }
 
             $savedDataService = [
@@ -324,22 +334,8 @@ class NewCustomerController extends Controller
 
     public function indexBussiness()
     {
-        $fetchDataService = ServicesList::all();
-        $arrdataLayanan = [];
-        foreach ($fetchDataService as $key => $value) {
-            array_push($arrdataLayanan, $value->package_name);
-        }
-
-        $dataLayanan = [];
-        foreach (array_count_values($arrdataLayanan) as $key => $value) {
-            array_push($dataLayanan, $key);
-        }
-
         $datas = [
-            'titlePage' => 'Form Registrasi Layanan Baru',
-            'packageName' => $dataLayanan,
-            'serviceData' => ServicesList::all(),
-            'promoData' => PromoList::all()
+            'titlePage' => 'Form Registrasi Layanan Baru'
         ];
 
         if (isset($_POST['salesID'])) {
