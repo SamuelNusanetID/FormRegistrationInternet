@@ -185,8 +185,8 @@
                                                 style="width: 100%;">
                                                 <select class="form-select bg-success text-white"
                                                     name="option_id_number_personal" id="option_id_number_personal"
-                                                    style="width: 20%;">
-                                                    <option disabled selected>Pilih...</option>
+                                                    style="width: 30%;">
+                                                    <option disabled selected>Pilih Tipe Identitas...</option>
                                                     <option value="KTP">KTP</option>
                                                     <option value="KITAS">KITAS</option>
                                                     <option value="PASPOR">PASPOR</option>
@@ -195,7 +195,7 @@
                                                     class="form-control @error('id_number_personal') is-invalid @enderror col-sm-10"
                                                     id="id_number_personal" name="id_number_personal"
                                                     placeholder="Masukkan Nomor Identitas Anda..."
-                                                    value="{{ old('id_number_personal') }}" style="width: 80%;">
+                                                    value="{{ old('id_number_personal') }}" style="width: 70%;">
                                                 @error('id_number_personal')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -478,7 +478,8 @@
                                     <div class="mb-3">
                                         <label for="package_name" class="form-label">Pilihan Nama Paket</label>
                                         <input class="form-control" list="package_name_list" id="package_name"
-                                            name="package_name" placeholder="Ketik untuk cari...">
+                                            name="package_name" placeholder="Ketik untuk cari..."
+                                            oninput="onInputDataLayananPersonal();">
                                         <datalist id="package_name_list">
                                         </datalist>
                                     </div>
@@ -486,7 +487,7 @@
                                         <label for="package_top" class="form-label">
                                             Pilihan Tipe Waktu Pembayaran Paket
                                         </label>
-                                        <div>
+                                        <div id="inlineTopPaket">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="inlineTopPaket"
                                                     id="inlineTopPaket_1" value="Bulanan">
@@ -500,8 +501,9 @@
                                         </div>
                                     </div>
                                     <div class="mb-3" id="option_custom_bulanan_tahunan">
-                                        <label for="custom_bulanan_tahunan" class="form-label">Custom Field
-                                            Bulan/Tahun</label>
+                                        <label for="custom_bulanan_tahunan" class="form-label">
+                                            Kustom Field Bulan/Tahun
+                                        </label>
                                         <input class="form-control" type="text" id="custom_bulanan_tahunan"
                                             name="custom_bulanan_tahunan" placeholder="Masukkan Jumlah Bulan/Tahun">
                                     </div>
@@ -578,11 +580,14 @@
     <script src="{{ URL::to('bin/js/newCustomer/personal/inputmask.js') }}"></script>
     <!-- Data Layanan ScriptJS -->
     <script>
-        $(document).ready(() => {
+        var splittingValue = [];
+        $(document).ready(async () => {
             var formatter = new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
             });
+
+            const getDataLayananArr = await getDataLayananAPI();
 
             $('#branch_id').on('change', () => {
                 const kode_cabang = $('#branch_id').val();
@@ -608,6 +613,44 @@
                     });
             });
         });
+
+        async function getDataLayananAPI() {
+            let obj;
+            const res = await fetch(
+                `https://legacy.is5.nusa.net.id/service`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8',
+                        'X-Api-Key': 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                    },
+                }
+            );
+            obj = await res.json();
+            return obj;
+        }
+
+        function onInputDataLayananPersonal() {
+            var val = document.getElementById("package_name").value;
+            var opts = document.getElementById('package_name_list').childNodes;
+            for (var i = 0; i < opts.length; i++) {
+                if (opts[i].value === val) {
+                    $('#tnc-home').addClass('d-none');
+                    $('#tnc-bussiness').addClass('d-none');
+                    $('#tnc-dedicated').addClass('d-none');
+                    splittingValue = opts[i].value.split(" ");
+                    if (splittingValue.includes('Home')) {
+                        $('#tnc-home').removeClass('d-none');
+                    } else if (splittingValue.includes('Business')) {
+                        $('#tnc-bussiness').removeClass('d-none');
+                    } else if (splittingValue.includes('Dedicated')) {
+                        $('#tnc-dedicated').removeClass('d-none');
+                    } else {
+                        $('#tnc-bussiness').removeClass('d-none');
+                    }
+                    break;
+                }
+            }
+        }
     </script>
     <script src="{{ URL::to('bin/js/newCustomer/personal/dateconverter.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

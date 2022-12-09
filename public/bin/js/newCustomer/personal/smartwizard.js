@@ -41,40 +41,6 @@ $(document).ready(function () {
     });
 
     function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
-        if (idx == 4) {
-            $('#tnc-home').addClass('d-none');
-            $('#tnc-bussiness').addClass('d-none');
-            $('#tnc-dedicated').addClass('d-none');
-            const namaPaket = $("#package_name").val();
-
-            switch (namaPaket) {
-                case "Broadband Home":
-                    $('#tnc-home').removeClass('d-none');
-                    $('#tnc-bussiness').addClass('d-none');
-                    $('#tnc-dedicated').addClass('d-none');
-                    break;
-                case "Broadband Bussiness":
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').removeClass('d-none');
-                    $('#tnc-dedicated').addClass('d-none');
-                    break;
-                case "Dedicated 1 : 1":
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').addClass('d-none');
-                    $('#tnc-dedicated').removeClass('d-none');
-                    break;
-                case "Dedicated 1 : 4":
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').addClass('d-none');
-                    $('#tnc-dedicated').removeClass('d-none');
-                    break;
-                default:
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').removeClass('d-none');
-                    $('#tnc-dedicated').addClass('d-none');
-                    break;
-            }
-        }
         callback();
     }
 
@@ -89,8 +55,17 @@ $(document).ready(function () {
     $('#personalForm').validate({
         errorPlacement: (error, element) => {
             if (element.parent('.input-group').length) {
+                $(element).addClass('is-invalid');
                 error.insertAfter(element.parent());
+            } else if (element.parent('.form-check').length) {
+                var idOfRadioButton = element.attr('id').split('_')[0];
+                $(`input[type=radio][name=${idOfRadioButton}]`).each(e => {
+                    var idrboval = $(`input[type=radio][name=${idOfRadioButton}]`)[e].id;
+                    $(`#${idrboval}`).addClass('is-invalid');
+                });
+                error.insertAfter($(`#${idOfRadioButton}`));
             } else {
+                $(element).addClass('is-invalid');
                 error.insertAfter(element);
             }
         },
@@ -99,6 +74,15 @@ $(document).ready(function () {
                 required: true
             },
             fullname_personal: {
+                required: true
+            },
+            gender_personal: {
+                required: true
+            },
+            custPOBPersonal: {
+                required: true
+            },
+            custDOBPersonal: {
                 required: true
             },
             option_id_number_personal: {
@@ -158,19 +142,10 @@ $(document).ready(function () {
             package_name: {
                 required: true,
             },
-            package_type: {
-                required: true,
-            },
-            package_categories: {
-                required: true,
-            },
             inlineTopPaket: {
                 required: true,
             },
-            inlineTopPaketType: {
-                required: true,
-            },
-            custom_bulanan: {
+            custom_bulanan_tahunan: {
                 required: true,
             }
         },
@@ -180,6 +155,15 @@ $(document).ready(function () {
             },
             fullname_personal: {
                 required: 'Kolom Nama Lengkap Wajib Diisi'
+            },
+            gender_personal: {
+                required: 'Kolom Jenis Kelamin Wajib Diisi'
+            },
+            custPOBPersonal: {
+                required: 'Kolom Tempat Lahir Wajib Diisi'
+            },
+            custDOBPersonal: {
+                required: 'Kolom Tanggal Lahir Wajib Diisi'
             },
             option_id_number_personal: {
                 required: 'Kolom Opsi Pilihan Identitas Wajib Diisi'
@@ -242,8 +226,8 @@ $(document).ready(function () {
             inlineTopPaketType: {
                 required: 'Kolom Tipe Harga Wajib Diisi'
             },
-            custom_bulanan: {
-                required: 'Kolom Custom Bulan Wajib Diisi'
+            custom_bulanan_tahunan: {
+                required: 'Kolom Kustom Bulan Wajib Diisi'
             }
         }
     });

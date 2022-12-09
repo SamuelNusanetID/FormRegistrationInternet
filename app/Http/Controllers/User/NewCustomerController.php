@@ -48,7 +48,6 @@ class NewCustomerController extends Controller
 
     public function storePersonal(Request $request)
     {
-        dd('This is just for testing');
         dd($request->all());
         $isSuccess = false;
         $message = "";
