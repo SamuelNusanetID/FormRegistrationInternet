@@ -25,22 +25,8 @@ class NewCustomerController extends Controller
 {
     public function indexPersonal()
     {
-        $fetchDataService = ServicesList::all();
-        $arrdataLayanan = [];
-        foreach ($fetchDataService as $key => $value) {
-            array_push($arrdataLayanan, $value->package_name);
-        }
-
-        $dataLayanan = [];
-        foreach (array_count_values($arrdataLayanan) as $key => $value) {
-            array_push($dataLayanan, $key);
-        }
-
         $datas = [
-            'titlePage' => 'Form Registrasi Layanan Baru',
-            'packageName' => $dataLayanan,
-            'serviceData' => ServicesList::all(),
-            'promoData' => PromoList::all()
+            'titlePage' => 'Form Registrasi Layanan Baru'
         ];
 
         if (isset($_POST['salesID'])) {
@@ -62,6 +48,8 @@ class NewCustomerController extends Controller
 
     public function storePersonal(Request $request)
     {
+        dd('This is just for testing');
+        dd($request->all());
         $isSuccess = false;
         $message = "";
 
