@@ -41,39 +41,30 @@ $(document).ready(function () {
     });
 
     function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
-        if (idx == 4) {
-            $('#tnc-home').addClass('d-none');
-            $('#tnc-bussiness').addClass('d-none');
-            $('#tnc-dedicated').addClass('d-none');
-            const namaPaket = $("#package_name").val();
+        if (idx == 3) {
+            const kode_cabang = $('#kode_cabang_personal_hidden').val();
 
-            switch (namaPaket) {
-                case "Broadband Home":
-                    $('#tnc-home').removeClass('d-none');
-                    $('#tnc-bussiness').addClass('d-none');
-                    $('#tnc-dedicated').addClass('d-none');
-                    break;
-                case "Broadband Bussiness":
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').removeClass('d-none');
-                    $('#tnc-dedicated').addClass('d-none');
-                    break;
-                case "Dedicated 1 : 1":
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').addClass('d-none');
-                    $('#tnc-dedicated').removeClass('d-none');
-                    break;
-                case "Dedicated 1 : 4":
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').addClass('d-none');
-                    $('#tnc-dedicated').removeClass('d-none');
-                    break;
-                default:
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').removeClass('d-none');
-                    $('#tnc-dedicated').addClass('d-none');
-                    break;
+            var fetchDataLayanan = fetch(
+                `https://legacy.is5.nusa.net.id/service?branchId=${kode_cabang}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'X-Api-Key': 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                },
             }
+            );
+
+            fetchDataLayanan
+                .then((res) => res.json())
+                .then((services) => {
+                    services.forEach(srs => {
+                        $('#package_name_list').append($('<option>', {
+                            value: `${srs.ServiceType}`
+                        }));
+                    });
+                }).catch(err => {
+                    alert("Server is not responding, " + err);
+                });
         }
         callback();
     }
@@ -89,8 +80,17 @@ $(document).ready(function () {
     $('#bussinessForm').validate({
         errorPlacement: (error, element) => {
             if (element.parent('.input-group').length) {
+                $(element).addClass('is-invalid');
                 error.insertAfter(element.parent());
+            } else if (element.parent('.form-check').length) {
+                var idOfRadioButton = element.attr('id').split('_')[0];
+                $(`input[type=radio][name=${idOfRadioButton}]`).each(e => {
+                    var idrboval = $(`input[type=radio][name=${idOfRadioButton}]`)[e].id;
+                    $(`#${idrboval}`).addClass('is-invalid');
+                });
+                error.insertAfter($(`#${idOfRadioButton}`));
             } else {
+                $(element).addClass('is-invalid');
                 error.insertAfter(element);
             }
         },
@@ -99,6 +99,15 @@ $(document).ready(function () {
                 required: true
             },
             pic_name: {
+                required: true
+            },
+            gender_bussiness: {
+                required: true
+            },
+            custPOBBussiness: {
+                required: true
+            },
+            custDOBBussiness: {
                 required: true
             },
             option_pic_identity_number: {
@@ -171,16 +180,7 @@ $(document).ready(function () {
             package_name: {
                 required: true,
             },
-            package_type: {
-                required: true,
-            },
-            package_categories: {
-                required: true,
-            },
             inlineTopPaket: {
-                required: true,
-            },
-            inlineTopPaketType: {
                 required: true,
             },
             custom_bulanan: {
@@ -193,6 +193,15 @@ $(document).ready(function () {
             },
             pic_name: {
                 required: 'Kolom Nama Lengkap Wajib Diisi'
+            },
+            gender_bussiness: {
+                required: 'Kolom Jenis Kelamin Wajib Diisi'
+            },
+            custPOBBussiness: {
+                required: 'Kolom Tempat Lahir Wajib Diisi'
+            },
+            custDOBBussiness: {
+                required: 'Kolom Tanggal Lahir Wajib Diisi'
             },
             option_pic_identity_number: {
                 required: 'Opsi Pilihan Identitas Wajib Diisi'
@@ -261,17 +270,8 @@ $(document).ready(function () {
             package_name: {
                 required: 'Kolom Nama Paket Wajib Diisi',
             },
-            package_type: {
-                required: 'Kolom Tipe Paket Wajib Diisi',
-            },
-            package_categories: {
-                required: 'Kolom Kategori Paket Wajib Diisi'
-            },
             inlineTopPaket: {
                 required: 'Kolom Jangka Waktu Pembayaran Wajib Diisi'
-            },
-            inlineTopPaketType: {
-                required: 'Kolom Tipe Harga Wajib Diisi'
             },
             custom_bulanan: {
                 required: 'Kolom Custom Bulan Wajib Diisi'

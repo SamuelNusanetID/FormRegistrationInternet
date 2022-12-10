@@ -240,17 +240,8 @@ $(document).ready(function () {
             package_name: {
                 required: 'Kolom Nama Paket Wajib Diisi',
             },
-            package_type: {
-                required: 'Kolom Tipe Paket Wajib Diisi',
-            },
-            package_categories: {
-                required: 'Kolom Kategori Paket Wajib Diisi'
-            },
             inlineTopPaket: {
                 required: 'Kolom Jangka Waktu Pembayaran Wajib Diisi'
-            },
-            inlineTopPaketType: {
-                required: 'Kolom Tipe Harga Wajib Diisi'
             },
             custom_bulanan_tahunan: {
                 required: 'Kolom Kustom Bulan Wajib Diisi'
