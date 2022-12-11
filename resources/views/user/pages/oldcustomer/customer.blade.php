@@ -71,7 +71,7 @@
                             }
                         </style>
                         <div class="tab-content">
-                            <div id="person-in-charge" class="tab-pane" role="tabpanel" aria-labelledby="person-in-charge">
+                            <div id="form-step-0" class="tab-pane" role="tabpanel" aria-labelledby="form-step-0">
                                 <div class="container row">
                                     <div class="col-12">
                                         <input type="hidden" name="uuid" value="{{ Request::segment(3) }}">
@@ -84,20 +84,17 @@
                                             <label for="full_name" class="form-label">Nama
                                                 Lengkap <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="full_name" name="full_name"
-                                                value="{{ $customerData->name }}" readonly>
+                                                value="{{ $customerData['name'] }}" readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label for="address" class="form-label">Alamat Lengkap KTP<span
                                                     class="text-danger">*</span></label>
-                                            @foreach (json_decode($customerData->address) as $key => $value)
-                                                <textarea class="form-control {{ count(json_decode($customerData->address)) > 1 ? 'mb-3' : null }}"
-                                                    id="address-{{ $key }}" name="address[]" aria-describedby="address" rows="4" readonly>{{ $value }}</textarea>
-                                            @endforeach
+                                            <textarea class="form-control" id="address" name="address" aria-describedby="address" rows="4" readonly>{{ $customerData['address'] }}</textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="billing-info" class="tab-pane" role="tabpanel" aria-labelledby="billing-info">
+                            <div id="form-step-1" class="tab-pane" role="tabpanel" aria-labelledby="form-step-1">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
                                         <div class="form-check mb-2">
@@ -185,7 +182,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="technical-info" class="tab-pane" role="tabpanel" aria-labelledby="technical-info">
+                            <div id="form-step-2" class="tab-pane" role="tabpanel" aria-labelledby="form-step-2">
                                 <div class="container row">
                                     <div class="col-0 col-md-6">
                                         <div class="form-check mb-2">
@@ -244,52 +241,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="service-info" class="tab-pane" role="tabpanel" aria-labelledby="service-info"
+                            <div id="form-step-3" class="tab-pane" role="tabpanel" aria-labelledby="form-step-3"
                                 style="min-height:800px !important; overflow:auto;">
-                                @if (isset($customerData->service->service_package))
-                                    <div class="mb-3">
-                                        <label for="product_detail" class="mb-2">
-                                            Detail Layanan
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <ol>
-                                            @foreach (json_decode($customerData->service->service_package) as $service)
-                                                <li class="align-middle">
-                                                    <table class="table border" style="width:100%;">
-                                                        <colgroup>
-                                                            <col style="width: 30%;">
-                                                            <col style="width: 5%;">
-                                                            <col style="width: 65%;">
-                                                        </colgroup>
-                                                        <tbody>
-                                                            @foreach ($service as $key => $value)
-                                                                @if ($key == 'service_name')
-                                                                    <tr>
-                                                                        <td class="fw-bold">Nama Produk</td>
-                                                                        <td>:</td>
-                                                                        <td>{{ $value }}</td>
-                                                                    </tr>
-                                                                @elseif ($key == 'service_price')
-                                                                    <tr>
-                                                                        <td class="fw-bold">Harga Produk</td>
-                                                                        <td>:</td>
-                                                                        <td>{{ $value }}</td>
-                                                                    </tr>
-                                                                @elseif ($key == 'termofpaymentDeals')
-                                                                    <tr>
-                                                                        <td class="fw-bold">Jangka Waktu Pembayaran</td>
-                                                                        <td>:</td>
-                                                                        <td>{{ $value }}</td>
-                                                                    </tr>
-                                                                @endif
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </li>
-                                            @endforeach
-                                        </ol>
-                                    </div>
-                                @endif
                                 <style>
                                     #map {
                                         height: 30em;
@@ -342,33 +295,21 @@
                                     <input type="hidden" name="geolocation_existing" id="geolocation_existing">
                                 </div>
                                 <div class="border rounded px-3 pb-4 pt-2 mb-3 bg-light text-dark"
-                                    style="overflow-y: scroll; max-height: 200px !important;">
+                                    style="overflow-y: scroll; max-height: 800px !important;">
+                                    <input type="hidden" name="service_charge_personal" id="service_charge_personal">
                                     <div class="mb-3">
                                         <label for="package_name" class="form-label">Pilihan Nama Paket</label>
-                                        <select class="form-select" id="package_name" name="package_name">
-                                            <option selected disabled>Pilih Nama Paket...</option>
-                                            @foreach ($packageName as $layananpaket)
-                                                <option value="{{ $layananpaket }}">Paket {{ $layananpaket }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="mb-3" id="option_package_type">
-                                        <label for="package_type" class="form-label">Pilihan Tipe Paket</label>
-                                        <select class="form-select" id="package_type" name="package_type">
-                                            <option selected disabled>Pilih Tipe Paket...</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3" id="option_package_categories">
-                                        <label for="package_categories" class="form-label">Pilihan Kategori Paket</label>
-                                        <select class="form-select" id="package_categories" name="package_categories">
-                                            <option selected disabled>Pilih Kategori Paket...</option>
-                                        </select>
+                                        <input class="form-control" list="package_name_list" id="package_name"
+                                            name="package_name" placeholder="Ketik untuk cari..."
+                                            oninput="onInputDataLayananPersonal();">
+                                        <datalist id="package_name_list">
+                                        </datalist>
                                     </div>
                                     <div class="mb-3" id="option_package_top">
                                         <label for="package_top" class="form-label">
-                                            Pilihan Jangka Waktu Pembayaran Paket
+                                            Pilihan Tipe Waktu Pembayaran Paket
                                         </label>
-                                        <div>
+                                        <div id="inlineTopPaket">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="inlineTopPaket"
                                                     id="inlineTopPaket_1" value="Bulanan">
@@ -382,15 +323,16 @@
                                         </div>
                                     </div>
                                     <div class="mb-3" id="option_custom_bulanan_tahunan">
-                                        <label for="custom_bulanan_tahunan" class="form-label">Custom Field
-                                            Bulan/Tahun</label>
+                                        <label for="custom_bulanan_tahunan" class="form-label">
+                                            Kustom Field Bulan/Tahun
+                                        </label>
                                         <input class="form-control" type="text" id="custom_bulanan_tahunan"
                                             name="custom_bulanan_tahunan" placeholder="Masukkan Jumlah Bulan/Tahun">
                                     </div>
                                 </div>
                                 <input type="hidden" name="RequestHandler" id="RequestHandler">
                             </div>
-                            <div id="terms-info" class="tab-pane" role="tabpanel" aria-labelledby="terms-info"
+                            <div id="form-step-4" class="tab-pane" role="tabpanel" aria-labelledby="form-step-4"
                                 style="min-height:550px !important;">
                                 <div class="container-fluid p-5 mb-3" id="terms-and-condition">
                                     <div class="d-none" id="tnc-home">
@@ -494,40 +436,6 @@
             });
 
             function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
-                if (idx == 4) {
-                    $('#tnc-home').addClass('d-none');
-                    $('#tnc-bussiness').addClass('d-none');
-                    $('#tnc-dedicated').addClass('d-none');
-                    const namaPaket = $("#package_name").val();
-
-                    switch (namaPaket) {
-                        case "Broadband Home":
-                            $('#tnc-home').removeClass('d-none');
-                            $('#tnc-bussiness').addClass('d-none');
-                            $('#tnc-dedicated').addClass('d-none');
-                            break;
-                        case "Broadband Bussiness":
-                            $('#tnc-home').addClass('d-none');
-                            $('#tnc-bussiness').removeClass('d-none');
-                            $('#tnc-dedicated').addClass('d-none');
-                            break;
-                        case "Dedicated 1 : 1":
-                            $('#tnc-home').addClass('d-none');
-                            $('#tnc-bussiness').addClass('d-none');
-                            $('#tnc-dedicated').removeClass('d-none');
-                            break;
-                        case "Dedicated 1 : 4":
-                            $('#tnc-home').addClass('d-none');
-                            $('#tnc-bussiness').addClass('d-none');
-                            $('#tnc-dedicated').removeClass('d-none');
-                            break;
-                        default:
-                            $('#tnc-home').addClass('d-none');
-                            $('#tnc-bussiness').removeClass('d-none');
-                            $('#tnc-dedicated').addClass('d-none');
-                            break;
-                    }
-                }
                 callback();
             }
 
@@ -538,8 +446,8 @@
             });
 
             $("#btnSubmitBussinessForms").on('click', () => {
-                $("#bussinessForm").trigger('submit');
-            })
+                $("#oldCustomerForm").trigger('submit');
+            });
         });
     </script>
     <script>
@@ -691,298 +599,57 @@
                         $('#geolocation_existing').val(JSON.stringify(latlng));
                     });
             }
-
-            var countedData = {!! json_encode(count(json_decode($customerData->address))) !!};
-            for (let index = 0; index < countedData; index++) {
-                var oldalamatPasang = $(`#address-${index}`).val().split('');
-                var countChar = oldalamatPasang.length;
-                var maskingSum = Math.round(countChar / 2);
-
-                var newValueAlamatPasang = [];
-                for (let x = 0; x < maskingSum; x++) {
-                    newValueAlamatPasang[x] = "*";
-                }
-
-                for (let y = maskingSum; y < countChar; y++) {
-                    newValueAlamatPasang[y] = oldalamatPasang[y];
-                }
-
-                $(`#address-${index}`).val(newValueAlamatPasang.join(''));
-            }
         });
     </script>
     <!-- Data Layanan ScriptJS -->
     <script>
-        $(document).ready(() => {
-            var formatter = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-            });
-            var currentdate = new Date();
-            var datetime = currentdate.getFullYear() + "-" + (String(currentdate.getMonth() + 1).padStart(2, '0')) +
-                "-" + currentdate
-                .getDate() + " " +
-                String(currentdate.getHours()).padStart(2, '0') + ":" +
-                String(currentdate.getMinutes()).padStart(2, '0') + ":" +
-                String(currentdate.getSeconds()).padStart(2, '0');
-            const packageData = {!! json_encode($serviceData) !!};
-            const promoData = {!! json_encode($promoData) !!};
-            var branch_id = "";
-            var packageDataArr = [];
-            var dataShowDetail = [];
-            let hargaPaket = 0;
+        var splittingValue = [];
+        var getDataLayananArr;
+
+        $(document).ready(async () => {
+            getDataLayananArr = await getDataLayananAPI();
 
             $('#branch_id').on('change', () => {
-                $('#package_name')
-                    .find('option')
-                    .remove();
+                const kode_cabang = $('#branch_id').val();
 
-                packageDataArr = {!! json_encode($serviceData) !!};
-
-                var IDBranch = $('#branch_id').val();
-
-                var arrNotFilterPackage = [];
-                for (var dataPaket in packageDataArr) {
-                    if (packageDataArr[dataPaket].branch_id !== IDBranch) {
-                        delete packageDataArr[dataPaket];
-                    } else {
-                        arrNotFilterPackage[dataPaket] = packageDataArr[dataPaket].package_name;
+                var fetchDataLayanan = fetch(
+                    `https://legacy.is5.nusa.net.id/service?branchId=${kode_cabang}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'X-Api-Key': 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                        },
                     }
-                }
+                );
 
-                var arrNotFilterPackagecounts = {};
-                for (var i = 0; i < arrNotFilterPackage.length; i++) {
-                    var key = arrNotFilterPackage[i];
-                    if (typeof key !== 'undefined') {
-                        arrNotFilterPackagecounts[key] = (arrNotFilterPackagecounts[key]) ?
-                            arrNotFilterPackagecounts[key] +
-                            1 : 1;
-                    }
-                }
-
-                $('#package_name').append('<option disabled selected>Pilih Nama Paket...</option>');
-                for (const key in arrNotFilterPackagecounts) {
-                    $('#package_name').append($('<option>', {
-                        value: key,
-                        text: key
-                    }));
-                }
-
-                branch_id = IDBranch;
-            });
-
-            $('#option_package_type').addClass('d-none');
-            $('#option_package_categories').addClass('d-none');
-            $('#option_package_top').addClass('d-none');
-            $('#option_custom_bulanan_tahunan').addClass('d-none');
-            $('#custom_bulanan_tahunan').attr('readonly', false);
-
-            $('#package_name').on('change', () => {
-                $('#custom_bulanan_tahunan').attr('readonly', false);
-                $('#package_type').empty();
-                $('#package_categories').empty();
-                $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
-                $('#custom_bulanan_tahunan').empty();
-
-                $('#option_package_categories').addClass('d-none');
-                $('#option_package_top').addClass('d-none');
-                $('#option_custom_bulanan_tahunan').addClass('d-none');
-
-                var packageName = $('#package_name').val();
-
-                if (packageName != "" || packageName != null) {
-                    $('#option_package_type').removeClass('d-none');
-
-                    var arrPackageType = [];
-                    packageData.forEach(package => {
-                        if (package.package_name == packageName && package.branch_id == branch_id) {
-                            arrPackageType[package.package_type] = 0;
-                        }
+                fetchDataLayanan
+                    .then((res) => res.json())
+                    .then((services) => {
+                        services.forEach(srs => {
+                            $('#package_name_list').append($('<option>', {
+                                value: `${srs.ServiceType}`
+                            }));
+                        });
+                    }).catch(err => {
+                        alert("Server is not responding, " + err);
                     });
+            });
 
-                    $('#package_type').append('<option disabled selected>Pilih Tipe Paket...</option>');
-                    for (const [key, value] of Object.entries(arrPackageType)) {
-                        $('#package_type').append($('<option>', {
-                            value: key,
-                            text: key
-                        }));
+            async function getDataLayananAPI() {
+                let obj;
+                const res = await fetch(
+                    `https://legacy.is5.nusa.net.id/service`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'X-Api-Key': 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc'
+                        },
                     }
-
-                    dataShowDetail['package_name'] = packageName;
-                } else {
-                    $('#option_package_type').addClass('d-none');
-                }
-            });
-
-            $('#package_type').on('change', () => {
-                $('#custom_bulanan_tahunan').attr('readonly', false);
-                $('#package_categories').empty();
-                $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
-                $('#custom_bulanan_tahunan').empty();
-
-                $('#option_package_categories').addClass('d-none');
-                $('#option_package_top').addClass('d-none');
-                $('#option_custom_bulanan_tahunan').addClass('d-none');
-
-                var packageName = $('#package_name').val();
-                var packageType = $('#package_type').val();
-                $('#package_categories').empty();
-
-                if (packageType != "" || packageType != null) {
-                    $('#option_package_categories').removeClass('d-none');
-
-                    var arrPackageCategories = [];
-                    var i = 0;
-                    packageData.forEach(package => {
-                        if (package.package_name == packageName && package.package_type ==
-                            packageType && package.branch_id == branch_id) {
-                            if (!isEmpty(package.package_categories)) {
-                                arrPackageCategories[package.package_categories] = package
-                                    .package_speed;
-                                dataShowDetail['package_categories'] = null;
-                            } else {
-                                arrPackageCategories[package
-                                        .package_speed] = package
-                                    .package_speed;
-                                dataShowDetail['package_categories'] = package.package_categories;
-                            }
-                        }
-                        i++;
-                    });
-
-                    $('#package_categories').append(
-                        '<option disabled selected>Pilih Kategori Paket...</option>');
-                    for (const [key, value] of Object.entries(arrPackageCategories)) {
-                        $('#package_categories').append($('<option>', {
-                            value: key != value ? key : value,
-                            text: (key != value ? key + ' ( ' + value + ' Mbps)' : value +
-                                ' Mbps')
-                        }));
-                    }
-
-                    dataShowDetail['package_type'] = packageType;
-                } else {
-                    $('#option_package_categories').addClass('d-none');
-                }
-            });
-
-            $('#package_categories').on('change', () => {
-                $('#custom_bulanan_tahunan').attr('readonly', false);
-                $('input[type=radio][name=inlineTopPaket]').prop('checked', false);
-                $('#custom_bulanan_tahunan').empty();
-
-                $('#option_package_top').addClass('d-none');
-                $('#option_custom_bulanan_tahunan').addClass('d-none');
-
-                $('#option_package_top').removeClass('d-none');
-                dataShowDetail['package_categories'] = $('#package_categories').val();
-                dataShowDetail['package_speed'] = isNaN(parseInt($('#package_categories').val())) ?
-                    $('#package_categories').val() : '-';
-
-
-                $('input[type=radio][name=inlineTopPaket]').change(function() {
-                    $('#custom_bulanan_tahunan').attr('readonly', false);
-                    $('#custom_bulanan_tahunan').val('');
-
-                    if (this.value == 'Bulanan') {
-                        dataShowDetail['package_top'] = 'Bulanan';
-                        $('#option_custom_bulanan_tahunan').removeClass('d-none');
-                    } else if (this.value == 'Tahunan') {
-                        dataShowDetail['package_top'] = 'Tahunan';
-                        $('#option_custom_bulanan_tahunan').addClass('d-none');
-                        $('#option_custom_bulanan_tahunan').removeClass('d-none');
-                    }
-                });
-            });
-
-            $('#custom_bulanan_tahunan').on('input', function() {
-                const hargaCustomBulanan = $('#custom_bulanan_tahunan').val();
-
-                if (dataShowDetail['package_top'] == "Bulanan") {
-                    dataShowDetail['counted'] = hargaCustomBulanan;
-
-                    // Send Data to Database
-                    var arrResultData = {};
-                    packageData.forEach((item) => {
-                        if (dataShowDetail['package_speed'] == dataShowDetail[
-                                'package_categories']) {
-                            if (item.package_name === dataShowDetail['package_name'] &&
-                                item.package_type === dataShowDetail['package_type'] &&
-                                item.package_categories === dataShowDetail['package_categories'] &&
-                                item.branch_id == branch_id) {
-                                arrResultData = item;
-                            }
-                        } else {
-                            if (item.package_name === dataShowDetail['package_name'] &&
-                                item.package_type === dataShowDetail['package_type'] &&
-                                item.package_speed === dataShowDetail['package_categories'] &&
-                                item.branch_id == branch_id) {
-                                arrResultData = item;
-                            }
-                        }
-                    });
-
-                    var ResultJSON = {
-                        'package_name': dataShowDetail['package_name'],
-                        'package_type': dataShowDetail['package_type'],
-                        'package_categories': isNaN(parseInt(dataShowDetail['package_categories'])) ?
-                            dataShowDetail['package_categories'] : '-',
-                        'package_speed': arrResultData['package_speed'],
-                        'package_top': dataShowDetail['package_top'],
-                        'package_price': arrResultData['package_price'] * dataShowDetail['counted'],
-                        'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
-                            dataShowDetail['package_option'],
-                        'counted': dataShowDetail['counted']
-                    };
-
-                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
-                } else if (dataShowDetail['package_top'] == "Tahunan") {
-                    dataShowDetail['counted'] = hargaCustomBulanan;
-
-                    // Send Data to Database
-                    var arrResultData = {};
-                    packageData.forEach((item) => {
-                        if (dataShowDetail['package_speed'] == dataShowDetail[
-                                'package_categories']) {
-                            if (item.package_name === dataShowDetail['package_name'] &&
-                                item.package_type === dataShowDetail['package_type'] &&
-                                item.package_categories === dataShowDetail['package_categories'] &&
-                                item.branch_id == branch_id) {
-                                arrResultData = item;
-                            }
-                        } else {
-                            if (item.package_name === dataShowDetail['package_name'] &&
-                                item.package_type === dataShowDetail['package_type'] &&
-                                item.package_speed === dataShowDetail['package_categories'] &&
-                                item.branch_id == branch_id) {
-                                arrResultData = item;
-                            }
-                        }
-                    });
-
-                    var ResultJSON = {
-                        'package_name': dataShowDetail['package_name'],
-                        'package_type': dataShowDetail['package_type'],
-                        'package_categories': isNaN(parseInt(dataShowDetail['package_categories'])) ?
-                            dataShowDetail['package_categories'] : '-',
-                        'package_speed': arrResultData['package_speed'],
-                        'package_top': dataShowDetail['package_top'],
-                        'package_price': arrResultData['package_price'] * dataShowDetail['counted'] *
-                            12,
-                        'optional_package': isEmpty(dataShowDetail['package_option']) ? null :
-                            dataShowDetail['package_option'],
-                        'counted': dataShowDetail['counted'] * 12
-                    };
-
-                    $('#RequestHandler').val(JSON.stringify(ResultJSON));
-                }
-            });
-        });
-
-        function dateTimeConverter(datetime) {
-            var dateParts = new Date(Date.parse(datetime.replace(/-/g, '/'))).getTime();
-            return dateParts;
-        }
+                );
+                obj = await res.json();
+                return obj;
+            }
+        })
 
         function isEmpty(value) {
             if (value == null || value == undefined) {
@@ -995,55 +662,32 @@
             return false;
         }
 
-        var dates = {
-            convert: function(d) {
-                // Converts the date in d to a date-object. The input can be:
-                //   a date object: returned without modification
-                //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
-                //   a number     : Interpreted as number of milliseconds
-                //                  since 1 Jan 1970 (a timestamp)
-                //   a string     : Any format supported by the javascript engine, like
-                //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
-                //  an object     : Interpreted as an object with year, month and date
-                //                  attributes.  **NOTE** month is 0-11.
-                return (
-                    d.constructor === Date ? d :
-                    d.constructor === Array ? new Date(d[0], d[1], d[2]) :
-                    d.constructor === Number ? new Date(d) :
-                    d.constructor === String ? new Date(d) :
-                    typeof d === "object" ? new Date(d.year, d.month, d.date) :
-                    NaN
-                );
-            },
-            compare: function(a, b) {
-                // Compare two dates (could be of any type supported by the convert
-                // function above) and returns:
-                //  -1 : if a < b
-                //   0 : if a = b
-                //   1 : if a > b
-                // NaN : if a or b is an illegal date
-                // NOTE: The code inside isFinite does an assignment (=).
-                return (
-                    isFinite(a = this.convert(a).valueOf()) &&
-                    isFinite(b = this.convert(b).valueOf()) ?
-                    (a > b) - (a < b) :
-                    NaN
-                );
-            },
-            inRange: function(d, start, end) {
-                // Checks if date in d is between dates in start and end.
-                // Returns a boolean or NaN:
-                //    true  : if d is between start and end (inclusive)
-                //    false : if d is before start or after end
-                //    NaN   : if one or more of the dates is illegal.
-                // NOTE: The code inside isFinite does an assignment (=).
-                return (
-                    isFinite(d = this.convert(d).valueOf()) &&
-                    isFinite(start = this.convert(start).valueOf()) &&
-                    isFinite(end = this.convert(end).valueOf()) ?
-                    start <= d && d <= end :
-                    NaN
-                );
+        function onInputDataLayananPersonal() {
+            var val = document.getElementById("package_name").value;
+            var opts = document.getElementById('package_name_list').childNodes;
+            for (var i = 0; i < opts.length; i++) {
+                if (opts[i].value === val) {
+                    getDataLayananArr.forEach(element => {
+                        if (element.ServiceType == opts[i].value) {
+                            $('#service_charge_personal').val(element.ServiceCharge);
+                        }
+                    });
+
+                    $('#tnc-home').addClass('d-none');
+                    $('#tnc-bussiness').addClass('d-none');
+                    $('#tnc-dedicated').addClass('d-none');
+                    splittingValue = opts[i].value.split(" ");
+                    if (splittingValue.includes('Home')) {
+                        $('#tnc-home').removeClass('d-none');
+                    } else if (splittingValue.includes('Business')) {
+                        $('#tnc-bussiness').removeClass('d-none');
+                    } else if (splittingValue.includes('Dedicated')) {
+                        $('#tnc-dedicated').removeClass('d-none');
+                    } else {
+                        $('#tnc-bussiness').removeClass('d-none');
+                    }
+                    break;
+                }
             }
         }
     </script>

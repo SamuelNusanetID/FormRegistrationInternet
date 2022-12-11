@@ -1,8 +1,18 @@
 $('#oldCustomerForm').validate({
     errorPlacement: (error, element) => {
         if (element.parent('.input-group').length) {
+            $(element).addClass('is-invalid');
             error.insertAfter(element.parent());
+        } else if (element.parent('.form-check').length) {
+            var idOfRadioButton = element.attr('id').split('_')[0];
+            $(`input[type=radio][name=${idOfRadioButton}]`).each(e => {
+                var idrboval = $(`input[type=radio][name=${idOfRadioButton}]`)[e]
+                    .id;
+                $(`#${idrboval}`).addClass('is-invalid');
+            });
+            error.insertAfter($(`#${idOfRadioButton}`));
         } else {
+            $(element).addClass('is-invalid');
             error.insertAfter(element);
         }
     },
@@ -13,16 +23,7 @@ $('#oldCustomerForm').validate({
         package_name: {
             required: true,
         },
-        package_type: {
-            required: true,
-        },
-        package_categories: {
-            required: true,
-        },
         inlineTopPaket: {
-            required: true,
-        },
-        inlineTopPaketType: {
             required: true,
         },
         custom_bulanan_tahunan: {
@@ -36,17 +37,8 @@ $('#oldCustomerForm').validate({
         package_name: {
             required: 'Kolom Nama Paket Wajib Diisi',
         },
-        package_type: {
-            required: 'Kolom Tipe Paket Wajib Diisi',
-        },
-        package_categories: {
-            required: 'Kolom Kategori Paket Wajib Diisi'
-        },
         inlineTopPaket: {
             required: 'Kolom Jangka Waktu Pembayaran Wajib Diisi'
-        },
-        inlineTopPaketType: {
-            required: 'Kolom Tipe Harga Wajib Diisi'
         },
         custom_bulanan_tahunan: {
             required: 'Kolom Custom Bulan Wajib Diisi'

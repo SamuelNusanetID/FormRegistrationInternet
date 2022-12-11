@@ -23,86 +23,35 @@ class OldCustomerController extends Controller
 {
     public function index()
     {
+        // Filter ID Pelanggan
+        $id_customer = null;
         if (isset($_GET['id'])) {
-            $CustomerData = Customer::where('customer_id', $_GET['id']);
+            if ($_GET['id'] != "") {
+                $id_customer = $_GET['id'];
+            } else {
+                return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
+            }
+        }
 
-            if ($CustomerData->exists()) {
-                $fetchDataService = ServicesList::all();
-                $arrdataLayanan = [];
-                foreach ($fetchDataService as $key => $value) {
-                    array_push($arrdataLayanan, $value->package_name);
-                }
+        // Condition of Data Pelanggan
+        if ($id_customer != null) {
+            try {
+                $response = Http::withHeaders([
+                    'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
+                ])->get('https://legacy.is5.nusa.net.id/customers/' . $id_customer);
 
-                $dataLayanan = [];
-                foreach (array_count_values($arrdataLayanan) as $key => $value) {
-                    array_push($dataLayanan, $key);
-                }
-
-                $fetchingDatas = $CustomerData->first();
+                $result = $response->json()[0];
+                $customerClass = isset($result['companyAddress']) && $result['companyAddress'] != null ? 'Bussiness' : 'Personal';
 
                 $datas = [
                     'titlePage' => 'Customer Lama',
-                    'customerClass' => $fetchingDatas->class,
-                    'customerData' => $fetchingDatas,
-                    'packageName' => $dataLayanan,
-                    'serviceData' => ServicesList::all(),
-                    'promoData' => PromoList::all()
+                    'customerClass' => $customerClass,
+                    'customerData' => $result
                 ];
 
                 return view('user.pages.oldcustomer.customer', $datas);
-            } else {
-                try {
-                    $response = Http::withHeaders([
-                        'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
-                    ])->get('https://legacy.is5.nusa.net.id/customers/' . $_GET['id']);
-
-                    if ($response->successful()) {
-                        $resultFetch = json_decode($response->body());
-
-                        $returnType = gettype($resultFetch);
-
-                        if ($returnType == "array") {
-                            return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
-                        } else {
-                            $resultFetch->address = json_encode([$resultFetch->address]);
-
-                            $customerClass = "Personal";
-                            if (isset($resultFetch->company_name)) {
-                                if ($resultFetch->company_name != null || $resultFetch->company_name != "") {
-                                    $customerClass = "Bussiness";
-                                } else {
-                                    $customerClass = "Personal";
-                                }
-                            }
-
-                            $fetchDataService = ServicesList::all();
-                            $arrdataLayanan = [];
-                            foreach ($fetchDataService as $key => $value) {
-                                array_push($arrdataLayanan, $value->package_name);
-                            }
-
-                            $dataLayanan = [];
-                            foreach (array_count_values($arrdataLayanan) as $key => $value) {
-                                array_push($dataLayanan, $key);
-                            }
-
-                            $datas = [
-                                'titlePage' => 'Customer Lama',
-                                'customerClass' => $customerClass,
-                                'customerData' => $resultFetch,
-                                'packageName' => $dataLayanan,
-                                'serviceData' => ServicesList::all(),
-                                'promoData' => PromoList::all()
-                            ];
-
-                            return view('user.pages.oldcustomer.customer', $datas);
-                        }
-                    } else {
-                        return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
-                    }
-                } catch (\Throwable $th) {
-                    return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
-                }
+            } catch (\Throwable $th) {
+                return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
             }
         } else {
             $datas = [
@@ -114,239 +63,84 @@ class OldCustomerController extends Controller
 
     public function showDataCustomer(Request $request, $class_customer, $id_customer)
     {
+        $dataCustomerGetIS = [];
 
-        $branch_code = $request->get('branch_id');
-        $CROFetch = User::where([
-            'branch_id' => $branch_code,
-            'utype' => 'AuthCRO'
-        ]);
-        if ($CROFetch->count() < 1) {
-            return redirect()->to(URL::to('old-member?id=' . $id_customer . '#person-in-charge'))->with('errorMessage', 'Data tidak berhasil dimasukkan');
+        try {
+            $response = Http::withHeaders([
+                'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
+            ])->get('https://legacy.is5.nusa.net.id/customers/' . $id_customer);
+
+            $result = $response->json()[0];
+            $result['class'] = isset($result['companyAddress']) && $result['companyAddress'] != null ? 'Bussiness' : 'Personal';
+            $dataCustomerGetIS = $result;
+        } catch (\Throwable $th) {
+            $dataCustomerGetIS = [];
         }
 
-        $CustomerData = Customer::where('customer_id', $id_customer);
+        // $response = Http::get('https://is.nusa.net.id/o/08b5411f848a2581a41672a759c87380/customer.php', [
+        //     'cid' => $id_customer
+        // ]);
 
-        if ($CustomerData->exists()) {
-            $validator4 = Validator::make(
-                $request->all(),
-                [
-                    'new_address' => 'required',
-                ],
-                [
-                    'new_address.required' => 'Field Alamat Pemasangan Baru Wajib Diisi',
-                ]
-            );
+        // if ($response->failed()) {
+        //     return back()->with('errorMessage', "Server didn't respond the request ID Number.");
+        // }
 
-            if ($validator4->fails()) {
-                return redirect('old-member?id=' . $id_customer . '#service-info')
-                    ->withErrors($validator4)
-                    ->withInput();
-            }
+        // $result = json_decode($response->body());
 
-            // Konversi Data Yang Sudah Ada ke dalam Array
-            $UUIDCustomer = $CustomerData->first()->id;
-            $customerDataFetch = Customer::find($UUIDCustomer);
-            $newSavedDataAddress = json_decode($customerDataFetch->address);
-            $newSavedGeolocation = json_decode($customerDataFetch->geolocation);
-            $isSame = false;
-            foreach (json_decode($customerDataFetch->address) as $key => $value) {
-                if ($value != $request->get('new_address')) {
-                    $isSame = false;
-                } else {
-                    $isSame = true;
-                }
-            }
-
-            if ($isSame == false) {
-                array_push($newSavedDataAddress, $request->get('new_address'));
-                array_push($newSavedGeolocation, $request->get('geolocation_existing'));
-            }
-
-            $customerDataFetch->address = json_encode($newSavedDataAddress);
-            $customerDataFetch->geolocation = json_encode($newSavedGeolocation);
-            $customerDataFetch->save();
-
-            $ServiceCustomer = Service::find($UUIDCustomer);
-            $OldServiceCustomerObj = json_decode($ServiceCustomer->service_package);
-            $OldServiceCustomerArr = [];
-            for ($i = 0; $i < count($OldServiceCustomerObj); $i++) {
-                $OldServiceCustomerArr[$i]['service_name'] = $OldServiceCustomerObj[$i]->service_name;
-                $OldServiceCustomerArr[$i]['service_price'] = $OldServiceCustomerObj[$i]->service_price;
-                $OldServiceCustomerArr[$i]['termofpaymentDeals'] = $OldServiceCustomerObj[$i]->termofpaymentDeals;
-            }
-
-            $fetchDataLayanan = json_decode($request->get('RequestHandler'));
-
-            if ($fetchDataLayanan->package_top == "Bulanan") {
-                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted;
-            } else {
-                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted;
-            }
-
-            $newDataService = [
-                'service_name' => $package_name,
-                'service_price' => $package_price,
-                'termofpaymentDeals' => $package_top
-            ];
-            array_push($OldServiceCustomerArr, $newDataService);
-
-            $ServiceCustomer->service_package = json_encode($OldServiceCustomerArr);
-            $ServiceCustomer->save();
-
-            // Approval Update
-            $ApprovalCustomer = Approval::find($UUIDCustomer);
-            $ApprovalCustomer->array_approval = json_encode([
-                'AuthCRO' => [
-                    'PIC_Name' => null,
-                    'isApproved' => false,
-                    'isRejected' => false,
-                    'message' => null,
-                    'sended_at' => null,
-                    'replied_at' => null
-                ],
-                'AuthSalesManager' => [
-                    'PIC_Name' => null,
-                    'isApproved' => false,
-                    'isRejected' => false,
-                    'message' => null,
-                    'sended_at' => null,
-                    'replied_at' => null
-                ],
-                'AuthSales' => [
-                    'PIC_Name' => null,
-                    'isApproved' => false,
-                    'isRejected' => false,
-                    'message' => null,
-                    'sended_at' => null,
-                    'replied_at' => null
-                ]
-            ]);
-            $ApprovalCustomer->current_staging_area = "AuthCRO";
-            $ApprovalCustomer->save();
-
-            try {
-                $dataEm = [
-                    'CustNamePIC' => $customerDataFetch->name,
-                    'CustEmailPIC' => $customerDataFetch->email
-                ];
-
-                Mail::send('email.customer', $dataEm, function ($message) use ($dataEm) {
-                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                    $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
-                });
-
-                if (User::count() > 0) {
-                    foreach (User::where('branch_id', $request->get('branch_id'))->get() as $key => $value) {
-                        if ($value->utype == 'AuthMaster') {
-                            $dataEm = [
-                                'SalesNamePIC' => $value->name,
-                                'SalesEmailPIC' => $value->email,
-                                'CustNamePIC' => $request->get('fullname_personal'),
-                                'CustEmailPIC' => $request->get('email_address_personal')
-                            ];
-
-                            Mail::send('email.sales', $dataEm, function ($message) use ($value) {
-                                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                                $message->to($value->email)->subject('Registrasi Berhasil!');
-                            });
-                        }
-                    }
-                }
-            } catch (\Throwable $th) {
-                return back()->with('errorMessage', $th->getMessage());
-            }
-
-            return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
-        } else {
-            $validator4 = Validator::make(
-                $request->all(),
-                [
-                    'new_address' => 'required',
-                ],
-                [
-                    'new_address.required' => 'Field Alamat Pemasangan Baru Wajib Diisi',
-                ]
-            );
-
-            if ($validator4->fails()) {
-                return redirect('old-member?id=' . $id_customer . '#service-info')
-                    ->withErrors($validator4)
-                    ->withInput();
-            }
-
-            $response = Http::get('https://is.nusa.net.id/o/08b5411f848a2581a41672a759c87380/customer.php', [
-                'cid' => $id_customer
-            ]);
-
-            if ($response->failed()) {
-                return back()->with('errorMessage', "Server didn't respond the request ID Number.");
-            }
-
-            $result = json_decode($response->body());
+        if (count($dataCustomerGetIS) != 0) {
+            $formDataSubmitted = $request->all();
             $UUIDNewCustomer = $this->generatenewUUID();
-
-            $primaryEmail = "";
-            if ($result->email == "" || $result->email == null) {
-                if ($result->billing_email == "" || $result->billing_email == null) {
-                    if ($result->technical_email == "" || $result->technical_email == null) {
-                        $primaryEmail = "";
-                    } else {
-                        $primaryEmail = $result->technical_email;
-                    }
-                } else {
-                    $primaryEmail = $result->billing_email;
-                }
-            } else {
-                $primaryEmail = $result->email;
-            }
 
             // Customer Table
             $newCustomer = new Customer();
             $newCustomer->id = $UUIDNewCustomer;
-            $newCustomer->branch_id = $request->get('branch_id');
-            $newCustomer->customer_id = $id_customer;
-            $newCustomer->name = $result->name;
-            $newCustomer->address = $result->address == $request->get('new_address') ? json_encode([$result->address]) : json_encode([$result->address, $request->get('new_address')]);
-            $newCustomer->geolocation = json_encode(['{"lat":0,"lng":0}', $request->get('geolocation_existing')]);
-            $newCustomer->class = $class_customer;
-            $newCustomer->email = $primaryEmail;
-            $newCustomer->identity_number = $result->identity_number;
-            $newCustomer->phone_number = $result->phone_number;
-            $newCustomer->company_name = $result->company_name != "" ? $result->company_name : null;
-            $newCustomer->company_address = $result->company_address != "" ? $result->company_address : null;
-            $newCustomer->company_npwp = $result->company_npwp != "" ? $result->company_npwp : null;
-            $newCustomer->company_phone_number = $result->company_phone_number != "" ? $result->company_phone_number : null;
-            $newCustomer->company_employees = $result->company_employees != "" ? $result->company_employees : null;
+            $newCustomer->branch_id = $formDataSubmitted['branch_id'];
+            $newCustomer->customer_id = $dataCustomerGetIS['id'];
+            $newCustomer->name = $dataCustomerGetIS['name'];
+
+            $newCustomer->gender = "M";
+            $newCustomer->place_of_birth = "Medan";
+            $newCustomer->date_of_birth = date('Y-m-d');
+
+            $newCustomer->address = json_encode([$formDataSubmitted['new_address']]);
+            $newCustomer->geolocation = json_encode([$formDataSubmitted['geolocation_existing']]);
+            $newCustomer->class = $dataCustomerGetIS['class'];
+            $newCustomer->email = $dataCustomerGetIS['email'];
+            $newCustomer->identity_number = $dataCustomerGetIS['identityNumber'];
+            $newCustomer->phone_number = $dataCustomerGetIS['phoneNumber'];
+            $newCustomer->company_name = isset($dataCustomerGetIS['companyName']) ? $dataCustomerGetIS['companyName'] : null;
+            $newCustomer->company_address = isset($dataCustomerGetIS['companyAddress']) ? $dataCustomerGetIS['companyAddress'] : null;
+            $newCustomer->company_npwp = isset($dataCustomerGetIS['companyNPWP']) ? $dataCustomerGetIS['companyNPWP'] : null;
+            $newCustomer->company_phone_number = isset($dataCustomerGetIS['companyPhoneNumber']) ? $dataCustomerGetIS['companyPhoneNumber'] : null;
             $newCustomer->save();
 
             // Billing Table
             $newBilling = new Billing();
             $newBilling->id = $UUIDNewCustomer;
-            $newBilling->billing_name = $result->billing_name;
-            $newBilling->billing_contact = $result->billing_contact == null || "" ? '-' : $result->billing_contact;
-            $newBilling->billing_email = json_encode([$primaryEmail, null, null]);
+            $newBilling->billing_name = $dataCustomerGetIS['billingName'];
+            $newBilling->billing_contact = $dataCustomerGetIS['billingContact'];
+            $newBilling->billing_email = json_encode([$dataCustomerGetIS['billingEmail'], null, null]);
             $newBilling->save();
 
             $newTechnical = new Technical();
             $newTechnical->id = $UUIDNewCustomer;
-            $newTechnical->technical_name = $result->technical_name;
-            $newTechnical->technical_contact = $result->technical_contact;
-            $newTechnical->technical_email = $primaryEmail;
+            $newTechnical->technical_name = $dataCustomerGetIS['technicalName'];
+            $newTechnical->technical_contact = $dataCustomerGetIS['technicalContact'];
+            $newTechnical->technical_email = $dataCustomerGetIS['technicalEmail'];
             $newTechnical->save();
 
-            $fetchDataLayanan = json_decode($request->get('RequestHandler'));
-            if ($fetchDataLayanan->package_top == "Bulanan") {
-                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_categories . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted;
+
+            if ($formDataSubmitted['inlineTopPaket'] == 'Tahunan') {
+                $formDataSubmitted['custom_bulanan_tahunan'] = $formDataSubmitted['custom_bulanan_tahunan'] * 12;
+            }
+            if ($formDataSubmitted['inlineTopPaket'] == "Bulanan") {
+                $package_name = $formDataSubmitted['package_name'];
+                $package_price = $formDataSubmitted['service_charge_personal'];
+                $package_top = $formDataSubmitted['custom_bulanan_tahunan'];
             } else {
-                $package_name = $fetchDataLayanan->package_name . ' ' . $fetchDataLayanan->package_type . ' (' . $fetchDataLayanan->package_speed . ' Mbps)';
-                $package_price = $fetchDataLayanan->package_price;
-                $package_top = $fetchDataLayanan->counted;
+                $package_name = $formDataSubmitted['package_name'];
+                $package_price = $formDataSubmitted['service_charge_personal'];
+                $package_top = $formDataSubmitted['custom_bulanan_tahunan'];
             }
 
             $newService = new Service();
@@ -390,40 +184,52 @@ class OldCustomerController extends Controller
             $newApproval->current_staging_area = "AuthCRO";
             $newApproval->save();
 
+            $typeEmail = gettype($dataCustomerGetIS['email']);
+            if ($typeEmail == "string") {
+                $dataCustomerGetIS['email'] = $dataCustomerGetIS['email'];
+            } else {
+                $dataCustomerGetIS['email'] = "";
+            }
 
-            try {
-                $dataEm = [
-                    'CustNamePIC' => $result->name,
-                    'CustEmailPIC' => $primaryEmail
-                ];
+            if ($dataCustomerGetIS['email'] != "") {
+                try {
+                    $dataEm = [
+                        'CustNamePIC' => $dataCustomerGetIS['name'],
+                        'CustEmailPIC' => $dataCustomerGetIS['email']
+                    ];
 
-                Mail::send('email.customer', $dataEm, function ($message) use ($dataEm) {
-                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                    $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
-                });
+                    Mail::send('email.customer', $dataEm, function ($message) use ($dataEm) {
+                        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                        $message->to($dataEm['CustEmailPIC'])->subject('Registrasi Berhasil!');
+                    });
 
-                if (User::count() > 0) {
-                    foreach (User::where('branch_id', $request->get('branch_id'))->get() as $key => $value) {
-                        if ($value->utype == 'AuthMaster') {
-                            $dataEm = [
-                                'SalesNamePIC' => $value->name,
-                                'SalesEmailPIC' => $value->email,
-                                'CustNamePIC' => $request->get('fullname_personal'),
-                                'CustEmailPIC' => $request->get('email_address_personal')
-                            ];
+                    if (User::count() > 0) {
+                        foreach (User::where('branch_id', $request->get('branch_id'))->get() as $key => $value) {
+                            if ($value->utype == 'AuthMaster') {
+                                $dataEm = [
+                                    'SalesNamePIC' => $value->name,
+                                    'SalesEmailPIC' => $value->email,
+                                    'CustNamePIC' => $request->get('fullname_personal'),
+                                    'CustEmailPIC' => $request->get('email_address_personal')
+                                ];
 
-                            Mail::send('email.sales', $dataEm, function ($message) use ($value) {
-                                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                                $message->to($value->email)->subject('Registrasi Berhasil!');
-                            });
+                                Mail::send('email.sales', $dataEm, function ($message) use ($value) {
+                                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                                    $message->to($value->email)->subject('Registrasi Berhasil!');
+                                });
+                            }
                         }
                     }
+                } catch (\Throwable $th) {
+                    return back()->with('errorMessage', $th->getMessage());
                 }
-            } catch (\Throwable $th) {
-                return back()->with('errorMessage', $th->getMessage());
+            } else {
+                return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi. Email notifikasi tidak terkirim, karena email tidak valid.');
             }
 
             return redirect()->to('old-member')->with('successMessage', 'Selamat, Anda Berhasil Registrasi.');
+        } else {
+            return back()->with('errorMessage', "Server didn't respond the request ID Number.");
         }
     }
 
