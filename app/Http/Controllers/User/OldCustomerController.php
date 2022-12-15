@@ -36,20 +36,31 @@ class OldCustomerController extends Controller
         // Condition of Data Pelanggan
         if ($id_customer != null) {
             try {
-                $response = Http::withHeaders([
-                    'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
-                ])->get('https://legacy.is5.nusa.net.id/customers/' . $id_customer);
+                if (env('STAGE_API') == 'production') {
+                    $response = Http::withHeaders([
+                        'X-Api-Key' => env('API_KEY_IS_PRODUCTION'),
+                    ])->get(env('API_URL_IS_PRODUCTION') . 'customers?cid=' . $id_customer);
+                } else if (env('STAGE_API') == 'development') {
+                    $response = Http::withHeaders([
+                        'X-Api-Key' => env('API_KEY_IS_DEVELOPMENT'),
+                    ])->get(env('API_URL_IS_DEVELOPMENT') . 'customers?cid=' . $id_customer);
+                }
 
-                $result = $response->json()[0];
-                $customerClass = isset($result['companyAddress']) && $result['companyAddress'] != null ? 'Bussiness' : 'Personal';
+                if ($response->successful()) {
+                    $result = $response->json()[0];
+                    dd($result);
+                    $customerClass = isset($result['companyAddress']) && $result['companyAddress'] != null ? 'Bussiness' : 'Personal';
 
-                $datas = [
-                    'titlePage' => 'Customer Lama',
-                    'customerClass' => $customerClass,
-                    'customerData' => $result
-                ];
+                    $datas = [
+                        'titlePage' => 'Customer Lama',
+                        'customerClass' => $customerClass,
+                        'customerData' => $result
+                    ];
 
-                return view('user.pages.oldcustomer.customer', $datas);
+                    return view('user.pages.oldcustomer.customer', $datas);
+                } else {
+                    return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
+                }
             } catch (\Throwable $th) {
                 return back()->with('errorMessage', "Maaf, ID Pelanggan anda tidak ditemukan. Silahkan coba lagi.");
             }
@@ -66,10 +77,17 @@ class OldCustomerController extends Controller
         $dataCustomerGetIS = [];
 
         try {
-            $response = Http::withHeaders([
-                'X-Api-Key' => 'lfHvJBMHkoqp93YR:4d059474ecb431eefb25c23383ea65fc',
-            ])->get('https://legacy.is5.nusa.net.id/customers/' . $id_customer);
+            if (env('STAGE_API') == 'production') {
+                $response = Http::withHeaders([
+                    'X-Api-Key' => env('API_KEY_IS_PRODUCTION'),
+                ])->get(env('API_URL_IS_PRODUCTION') . 'customers?cid=' . $id_customer);
+            } else if (env('STAGE_API') == 'development') {
+                $response = Http::withHeaders([
+                    'X-Api-Key' => env('API_KEY_IS_DEVELOPMENT'),
+                ])->get(env('API_URL_IS_DEVELOPMENT') . 'customers?cid=' . $id_customer);
+            }
 
+            dd($response->json());
             $result = $response->json()[0];
             $result['class'] = isset($result['companyAddress']) && $result['companyAddress'] != null ? 'Bussiness' : 'Personal';
             $dataCustomerGetIS = $result;
@@ -77,15 +95,7 @@ class OldCustomerController extends Controller
             $dataCustomerGetIS = [];
         }
 
-        // $response = Http::get('https://is.nusa.net.id/o/08b5411f848a2581a41672a759c87380/customer.php', [
-        //     'cid' => $id_customer
-        // ]);
-
-        // if ($response->failed()) {
-        //     return back()->with('errorMessage', "Server didn't respond the request ID Number.");
-        // }
-
-        // $result = json_decode($response->body());
+        dd($dataCustomerGetIS);
 
         if (count($dataCustomerGetIS) != 0) {
             $formDataSubmitted = $request->all();

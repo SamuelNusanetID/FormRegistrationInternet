@@ -84,7 +84,7 @@
                                             <label for="full_name" class="form-label">Nama
                                                 Lengkap <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="full_name" name="full_name"
-                                                value="{{ $customerData['name'] }}" readonly>
+                                                value="{{ $customerData['full_name'] }}" readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label for="address" class="form-label">Alamat Lengkap KTP<span
